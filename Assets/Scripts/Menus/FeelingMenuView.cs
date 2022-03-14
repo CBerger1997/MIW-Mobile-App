@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -65,9 +64,9 @@ public class FeelingMenuView : View {
                 ViewManager.ShowLast();
             } else {
                 //TODO: Uncomment once journal view is implemented
-                //ViewManager.Show<JournalMenuView>();
+                ViewManager.Show<JournalMenuView>(false);
                 //Remove below once above is implemented
-                ViewManager.ShowLast();
+                //ViewManager.ShowLast();
             }
         }
     }
