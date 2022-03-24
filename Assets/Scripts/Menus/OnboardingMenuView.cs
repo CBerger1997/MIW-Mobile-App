@@ -35,4 +35,9 @@ public class OnboardingMenuView : View {
             _currentToggle.isOn = true;
         }
     }
+
+    private void ContinueButtonOnClick() {
+        AppManager.instance._uData.hasOnboarded = true;
+        _notificationToggles[0].isOn == true ? AppManager.instance._uData.isNotificationsOn = true : AppManager.instance._uData.isNotificationsOn = false;
+    }
 }

@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UserData : MonoBehaviour {
+public class UserData {
 
-    void Start() {
+    [SerializeField] public bool hasOnboarded;
+    [SerializeField] public bool isNotificationsOn;
 
-    }
-
-    void Update() {
-
+    public UserData() {
+        hasOnboarded = false;
+        isNotificationsOn = true;
     }
 }
