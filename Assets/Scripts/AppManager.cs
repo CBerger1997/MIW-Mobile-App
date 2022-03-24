@@ -19,6 +19,8 @@ public class AppManager : MonoBehaviour {
         }
 
         DontDestroyOnLoad(this);
+
+        LoadUserData();
     }
 
     public void SaveUserData() {

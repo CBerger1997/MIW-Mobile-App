@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +11,7 @@ public class OnboardingMenuView : View {
     private Toggle _currentToggle;
 
     public override void Initialise() {
-        _continueButton.onClick.AddListener(() => ViewManager.Show<MainMenuView>(false));
+        _continueButton.onClick.AddListener(delegate { ContinueButtonOnClick(); });
         _affirmationButton.onClick.AddListener(() => ViewManager.Show<AffirmationMenuView>());
 
         foreach (Toggle toggle in _notificationToggles) {
@@ -38,6 +37,8 @@ public class OnboardingMenuView : View {
 
     private void ContinueButtonOnClick() {
         AppManager.instance._uData.hasOnboarded = true;
-        _notificationToggles[0].isOn == true ? AppManager.instance._uData.isNotificationsOn = true : AppManager.instance._uData.isNotificationsOn = false;
+        AppManager.instance._uData.isNotificationsOn = _notificationToggles[0].isOn == true ? true : false;
+        AppManager.instance.SaveUserData();
+        ViewManager.Show<MainMenuView>(false);
     }
 }

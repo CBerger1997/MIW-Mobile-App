@@ -4686,7 +4686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ebf3858d4386364789f778adb6da781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingView: {fileID: 184654193}
+  _startingView: {fileID: 1196131720}
   _views:
   - {fileID: 1196131720}
   - {fileID: 184654193}

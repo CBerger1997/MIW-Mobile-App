@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.UI;
 
 public class SaveAndLoadUserData : MonoBehaviour {
 
@@ -48,7 +47,7 @@ public class SaveAndLoadUserData : MonoBehaviour {
 
             return uData;
         } else {
-            return null;
+            return new UserData();
         }
     }
 }

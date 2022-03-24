@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class StartUpMenuView : View {
@@ -14,11 +13,11 @@ public class StartUpMenuView : View {
     bool isUserTouchingScreen = false;
 
     public override void Initialise() {
-        foreach(TextMeshProUGUI text in _startPageTexts1) {
+        foreach (TextMeshProUGUI text in _startPageTexts1) {
             text.gameObject.SetActive(true);
         }
 
-        foreach(TextMeshProUGUI text in _startPageTexts2) {
+        foreach (TextMeshProUGUI text in _startPageTexts2) {
             text.gameObject.SetActive(false);
         }
 
@@ -26,7 +25,7 @@ public class StartUpMenuView : View {
     }
 
     private void Update() {
-        if(Input.touchCount > 0 && !isUserTouchingScreen) {
+        if ((Input.touchCount > 0 || Input.GetMouseButtonDown(0)) && !isUserTouchingScreen) {
             isUserTouchingScreen = true;
 
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName("StartUpAnim")) {
@@ -44,7 +43,11 @@ public class StartUpMenuView : View {
 
                 _animator.Play("StartUpAnim");
             } else {
-                ViewManager.Show<OnboardingMenuView>(false);
+                if (!AppManager.instance._uData.hasOnboarded) {
+                    ViewManager.Show<OnboardingMenuView>(false);
+                } else {
+                    ViewManager.Show<MainMenuView>(false);
+                }
             }
 
         } else if (Input.touchCount == 0) {
