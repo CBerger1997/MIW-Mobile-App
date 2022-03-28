@@ -46,7 +46,7 @@ public class StartUpMenuView : View {
                 if (!AppManager.instance._uData.hasOnboarded) {
                     ViewManager.Show<OnboardingMenuView>(false);
                 } else {
-                    ViewManager.Show<MainMenuView>(false);
+                    ViewManager.Show<CheckInMenuView>(false);
                 }
             }
 
