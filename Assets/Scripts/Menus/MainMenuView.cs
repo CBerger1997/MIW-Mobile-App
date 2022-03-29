@@ -25,4 +25,13 @@ public class MainMenuView : View {
 
         _checkInButton.onClick.AddListener(() => ViewManager.Show<CheckInMenuView>());
     }
+
+    public override void Show() {
+        base.Show();
+
+        if(AppManager.instance._uData.hasUserCheckedIn) {
+            _checkInButton.GetComponent<Image>().color = Color.green;
+            _checkInButton.enabled = false;
+        }
+    }
 }

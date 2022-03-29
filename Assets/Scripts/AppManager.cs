@@ -6,6 +6,8 @@ public class AppManager : MonoBehaviour {
 
     public UserData _uData { get; set; }
 
+    public TableData _tData { get; set; }
+
     public static AppManager Instance {
         get { return instance; }
     }
@@ -21,6 +23,8 @@ public class AppManager : MonoBehaviour {
         DontDestroyOnLoad(this);
 
         LoadUserData();
+
+        _tData = new TableData();
     }
 
     public void SaveUserData() {

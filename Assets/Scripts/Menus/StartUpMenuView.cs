@@ -45,8 +45,10 @@ public class StartUpMenuView : View {
             } else {
                 if (!AppManager.instance._uData.hasOnboarded) {
                     ViewManager.Show<OnboardingMenuView>(false);
-                } else {
+                } else if (!AppManager.instance._uData.hasUserCheckedIn) {
                     ViewManager.Show<CheckInMenuView>(false);
+                } else {
+                    ViewManager.Show<MainMenuView>(false);
                 }
             }
 

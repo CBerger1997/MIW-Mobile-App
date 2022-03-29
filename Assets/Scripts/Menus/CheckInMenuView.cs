@@ -9,7 +9,6 @@ public class CheckInMenuView : View {
     [SerializeField] private List<Button> _emotionButtons = new List<Button>();
     [SerializeField] private List<Button> _contextButtons = new List<Button>();
     [SerializeField] private List<Button> _backButtons = new List<Button>();
-    [SerializeField] private Button _checkinButton;
 
     public int emotionalValue { get; set; }
     public int contextValue { get; set; }
@@ -18,7 +17,6 @@ public class CheckInMenuView : View {
     public override void Initialise() {
         ResetUI();
 
-
         for (int i = 0; i < _emotionButtons.Count; i++) {
             _emotionButtons[i].onClick.AddListener(delegate { MoveToNextScreen(i); });
         }
@@ -26,7 +24,6 @@ public class CheckInMenuView : View {
         for (int i = 0; i < _contextButtons.Count; i++) {
             _contextButtons[i].onClick.AddListener(delegate { MoveToNextScreen(i); });
         }
-
 
         for (int i = 0; i < _backButtons.Count; i++) {
             _backButtons[i].onClick.AddListener(delegate { MoveToPreviousScreen(i); });
@@ -43,8 +40,10 @@ public class CheckInMenuView : View {
             contextValue = val;
             
             ResetUI();
-            _checkinButton.GetComponent<Image>().color = Color.green;
-            _checkinButton.enabled = false;
+
+            AppManager.instance._uData.hasUserCheckedIn = true;
+            AppManager.instance.SaveUserData();
+
             ViewManager.Show<MainMenuView>(false);
         }
     }
