@@ -15,20 +15,20 @@ public class SaveAndLoadUserData : MonoBehaviour {
         }
     }
 
-    public static void SaveSettingsData(UserData uData) {
+    public static void SaveUserData(UserData uData) {
 
         WrappingClass settingsWrapper = new WrappingClass();
 
         settingsWrapper = SaveDataFromUserData(uData);
 
         string jsonStringToSave = JsonUtility.ToJson(settingsWrapper);
-        string filePath = Path.Combine(Application.persistentDataPath, "Settings.data");
+        string filePath = Path.Combine(Application.persistentDataPath, "User.data");
 
         File.WriteAllText(filePath, jsonStringToSave);
     }
 
-    public static UserData LoadSettingsData() {
-        string filePath = Path.Combine(Application.persistentDataPath, "Settings.data");
+    public static UserData LoadUserData() {
+        string filePath = Path.Combine(Application.persistentDataPath, "User.data");
 
         if (File.Exists(filePath)) {
 

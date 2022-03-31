@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,6 @@ public class CheckInMenuView : View {
 
     public int emotionalValue { get; set; }
     public int contextValue { get; set; }
-
 
     public override void Initialise() {
         ResetUI();
@@ -43,6 +43,8 @@ public class CheckInMenuView : View {
 
             AppManager.instance._uData.hasUserCheckedIn = true;
             AppManager.instance.SaveUserData();
+
+            AppManager.instance._tData._checkInData.Add(new TableData.CheckInClass(emotionalValue, contextValue, DateTime.Now.ToString()));
 
             ViewManager.Show<MainMenuView>(false);
         }

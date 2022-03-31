@@ -24,15 +24,23 @@ public class AppManager : MonoBehaviour {
 
         LoadUserData();
 
-        _tData = new TableData();
+        LoadTableData();
     }
 
     public void SaveUserData() {
-        SaveAndLoadUserData.SaveSettingsData(_uData);
+        SaveAndLoadUserData.SaveUserData(_uData);
     }
 
     public void LoadUserData() {
-        _uData = SaveAndLoadUserData.LoadSettingsData();
+        _uData = SaveAndLoadUserData.LoadUserData();
+    }
+
+    public void SaveTableData() {
+        SaveAndLoadTableData.SaveTableData(_tData);
+    }
+
+    public void LoadTableData() {
+        _tData = SaveAndLoadTableData.LoadTableData();
     }
 
 }
