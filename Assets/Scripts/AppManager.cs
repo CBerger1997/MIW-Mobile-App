@@ -25,6 +25,8 @@ public class AppManager : MonoBehaviour {
         LoadUserData();
 
         LoadTableData();
+
+        CSVFileReader.ReadQuotesCSV();
     }
 
     public void SaveUserData() {
