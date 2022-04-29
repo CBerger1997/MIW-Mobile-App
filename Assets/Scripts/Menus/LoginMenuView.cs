@@ -6,6 +6,7 @@ using TMPro;
 
 public class LoginMenuView : View {
     [SerializeField] private Button _loginButton;
+    [SerializeField] private Button _resetPasswordButton;
     [SerializeField] private TMP_InputField _usernameInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private GameObject _warningText;
@@ -14,6 +15,7 @@ public class LoginMenuView : View {
 
     public override void Initialise() {
         _loginButton.onClick.AddListener(delegate { LoginButtonOnClick(); });
+        _resetPasswordButton.onClick.AddListener(delegate { ResetPasswordButtonOnClick(); });
         _warningText.gameObject.SetActive(false);
     }
 
@@ -42,5 +44,9 @@ public class LoginMenuView : View {
         } else {
             _warningText.SetActive(true);
         }
+    }
+
+    public void ResetPasswordButtonOnClick() {
+        //Input password reset code
     }
 }
