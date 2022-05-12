@@ -8,6 +8,8 @@ public class AppManager : MonoBehaviour {
 
     public TableData _tData { get; set; }
 
+    public QuoteManager _qManager { get; set; }
+
     public static AppManager Instance {
         get { return instance; }
     }
@@ -26,7 +28,9 @@ public class AppManager : MonoBehaviour {
 
         LoadTableData();
 
-        CSVFileReader.ReadQuotesCSV();
+        _qManager = new QuoteManager();
+
+        _qManager.ReadQuotesCSV();
     }
 
     public void SaveUserData() {

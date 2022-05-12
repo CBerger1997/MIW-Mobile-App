@@ -13,6 +13,9 @@ public class StartUpMenuView : View {
     bool isUserTouchingScreen = false;
 
     public override void Initialise() {
+
+        SetQuoteText();
+
         foreach (TextMeshProUGUI text in _startPageTexts1) {
             text.gameObject.SetActive(true);
         }
@@ -55,5 +58,16 @@ public class StartUpMenuView : View {
         } else if (Input.touchCount == 0) {
             isUserTouchingScreen = false;
         }
+    }
+
+    private void SetQuoteText() {
+        int randomNum = Random.Range(0, AppManager.instance._qManager.author.Count - 1);
+
+        string text = AppManager.instance._qManager.quote[randomNum] +
+            " - " +
+            AppManager.instance._qManager.author[randomNum];
+
+        _startPageTexts1[1].text = text;
+        _startPageTexts2[0].text = text;
     }
 }
