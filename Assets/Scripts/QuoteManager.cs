@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class QuoteManager : MonoBehaviour {
-
     public List<string> author { get; set; }
     public List<string> quote { get; set; }
     public List<string> pathway { get; set; }

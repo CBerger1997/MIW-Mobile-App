@@ -16,6 +16,8 @@ public class StartUpMenuView : View {
 
         SetQuoteText();
 
+        SetAffirmationText();
+
         foreach (TextMeshProUGUI text in _startPageTexts1) {
             text.gameObject.SetActive(true);
         }
@@ -69,5 +71,13 @@ public class StartUpMenuView : View {
 
         _startPageTexts1[1].text = text;
         _startPageTexts2[0].text = text;
+    }
+
+    private void SetAffirmationText() {
+        int randomNum = Random.Range(0, AppManager.instance._aManager.affirmationRandom.Count - 1);
+
+        string text = AppManager.instance._aManager.affirmationRandom[randomNum];
+
+        _startPageTexts2[1].text = text;
     }
 }

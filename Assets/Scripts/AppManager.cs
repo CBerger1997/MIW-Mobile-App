@@ -10,6 +10,8 @@ public class AppManager : MonoBehaviour {
 
     public QuoteManager _qManager { get; set; }
 
+    public AffirmationManager _aManager { get; set; }
+
     public static AppManager Instance {
         get { return instance; }
     }
@@ -31,6 +33,12 @@ public class AppManager : MonoBehaviour {
         _qManager = new QuoteManager();
 
         _qManager.ReadQuotesCSV();
+
+        _aManager = new AffirmationManager();
+
+        _aManager.ReadRandom();
+
+        _aManager.ReadSelection();
     }
 
     public void SaveUserData() {
