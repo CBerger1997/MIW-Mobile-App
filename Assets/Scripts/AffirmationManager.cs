@@ -15,8 +15,6 @@ public class AffirmationManager : MonoBehaviour {
     public void ReadSelection() {
         string path = Application.dataPath + "/Documents/Excel/Affirmations Selection.csv";
 
-        Debug.Log("reading selections");
-
         affirmationSelection = ReadQuotesCSV(path);
     }
 
