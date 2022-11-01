@@ -15,6 +15,8 @@ public class AffirmationManager : MonoBehaviour {
     public void ReadSelection() {
         string path = Application.dataPath + "/Documents/Excel/Affirmations Selection.csv";
 
+        Debug.Log("reading selections");
+
         affirmationSelection = ReadQuotesCSV(path);
     }
 
@@ -25,18 +27,11 @@ public class AffirmationManager : MonoBehaviour {
         fileData = fileData.Replace("\"", "");
 
         List<string> quoteFullLines = new List<string>(fileData.Split("\n"[0]));
-
-        //quoteFullLines.RemoveAt(0);
-        //quoteFullLines.RemoveAt(quoteFullLines.Count - 1);
-
         List<string> affirmation = new List<string>();
 
         foreach (string newLine in quoteFullLines) {
-            //List<string> line = new List<string>(newLine.Split(";"[0]));
 
             affirmation.Add(newLine);
-
-            Debug.Log(newLine);
         }
 
         return affirmation;

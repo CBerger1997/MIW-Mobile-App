@@ -16,6 +16,7 @@ public class AffirmationMenuView : View {
 
     [SerializeField] private GameObject _listContent;
     [SerializeField] private GameObject _personalContent;
+    [SerializeField] private GameObject _affirmationButtonPrefab;
 
     private Toggle _currentToggle;
 
@@ -29,6 +30,8 @@ public class AffirmationMenuView : View {
 
         _currentToggle = _affirmationToggles[0];
         _currentToggle.isOn = true;
+
+        SetupAffirmationList();
 
         _toggleScreen.SetActive(true);
         _helpScreen.SetActive(false);
@@ -73,8 +76,15 @@ public class AffirmationMenuView : View {
         }
     }
 
+    private void SetupAffirmationList() {
+        for(int i = 0; i < AppManager.instance._aManager.affirmationSelection.Count - 1; i++) {
+            GameObject affirmationButton = Instantiate(_affirmationButtonPrefab, _listContent.gameObject.transform);
+            affirmationButton.GetComponentInChildren<Text>().text = AppManager.instance._aManager.affirmationSelection[i];
+        }
+    }
+
     private void ToggleHelpMenu() {
-        if(_helpScreen.activeSelf) {
+        if (_helpScreen.activeSelf) {
             _toggleScreen.SetActive(true);
             _helpScreen.SetActive(false);
         } else {
@@ -90,5 +100,5 @@ public class AffirmationMenuView : View {
             _toggleScreen.SetActive(true);
             _helpScreen.SetActive(false);
         }
-    }
+    } 
 }
