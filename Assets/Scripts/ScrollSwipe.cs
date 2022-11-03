@@ -6,7 +6,10 @@ public class ScrollSwipe : MonoBehaviour {
     private float scroll_pos = 0;
     public float[] scrollPositions;
     float distance;
-    public int selection { set; get; }
+    public int selection;// { set; get; }
+
+    public delegate void OnSelectionChangeDelegate();
+    public event OnSelectionChangeDelegate OnSelectionChange;
 
     private void Awake() {
         scrollPositions = new float[transform.childCount];
@@ -28,7 +31,7 @@ public class ScrollSwipe : MonoBehaviour {
                 if (scroll_pos < scrollPositions[i] + (distance / 2) && scroll_pos > scrollPositions[i] - (distance / 2)) {
                     scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[i], 0.1f);
                     selection = i;
-
+                    OnSelectionChange();
                 }
             }
         }

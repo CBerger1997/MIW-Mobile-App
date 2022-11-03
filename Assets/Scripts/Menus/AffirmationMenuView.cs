@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class AffirmationMenuView : View {
     [SerializeField] private Button _backButton;
@@ -21,12 +20,19 @@ public class AffirmationMenuView : View {
     [SerializeField] private GameObject _toggleContent;
 
     private int _currentSelection;
+    private UnityEvent _affirmationChangeEvent = new UnityEvent();
 
     public override void Initialise() {
         _backButton.onClick.AddListener(delegate { MoveToPreviousScreen(); });
         _helpButton.onClick.AddListener(delegate { ToggleHelpMenu(); });
 
-        _topScrollBar.onValueChanged.AddListener(delegate { OnBarValueChange(); });
+        _toggleContent.GetComponent<ScrollSwipe>().OnSelectionChange += OnSelectionChangeHandler;
+
+        _currentSelection = 0;
+
+        _infoText.text = "Provides you with a different affirmation every day";
+        _listContentParent.SetActive(false);
+        _personalContent.SetActive(false);
 
         SetupAffirmationList();
 
@@ -34,7 +40,7 @@ public class AffirmationMenuView : View {
         _helpScreen.SetActive(false);
     }
 
-    private void OnBarValueChange() {
+    private void OnSelectionChangeHandler() {
         SetAffirmationInfoTextAndContent();
     }
 
@@ -42,22 +48,26 @@ public class AffirmationMenuView : View {
 
         int val = _toggleContent.GetComponent<ScrollSwipe>().selection;
 
-        switch (val) {
-            case 0:
-                _infoText.text = "Provides you with a different affirmation every day";
-                _listContentParent.SetActive(false);
-                _personalContent.SetActive(false);
-                break;
-            case 1:
-                _infoText.text = "Choose your affirmation from the list below";
-                _listContentParent.SetActive(true);
-                _personalContent.SetActive(false);
-                break;
-            case 2:
-                _infoText.text = "Create up your own affirmation starting from \"You are\"";
-                _listContentParent.SetActive(false);
-                _personalContent.SetActive(true);
-                break;
+        if (val != _currentSelection) {
+            _currentSelection = val;
+
+            switch (val) {
+                case 0:
+                    _infoText.text = "Provides you with a different affirmation every day";
+                    _listContentParent.SetActive(false);
+                    _personalContent.SetActive(false);
+                    break;
+                case 1:
+                    _infoText.text = "Choose your affirmation from the list below";
+                    _listContentParent.SetActive(true);
+                    _personalContent.SetActive(false);
+                    break;
+                case 2:
+                    _infoText.text = "Create your own affirmation starting from \"You are\"";
+                    _listContentParent.SetActive(false);
+                    _personalContent.SetActive(true);
+                    break;
+            }
         }
     }
 
