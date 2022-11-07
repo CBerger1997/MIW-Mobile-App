@@ -6,7 +6,6 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler {
 
         var text = GetComponent<TextMeshProUGUI>();
 
-
         if (eventData.clickCount > 0) {
             int linkIndex = TMP_TextUtilities.FindIntersectingLink(text, Input.GetTouch(0).position, Camera.main);
 

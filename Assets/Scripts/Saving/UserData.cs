@@ -7,6 +7,11 @@ public class UserData {
     [SerializeField] public bool isDataSet;
     [SerializeField] public bool hasUserCheckedIn;
 
+    [SerializeField] public int userAffirmationSelection;
+    [SerializeField] public int userAffirmationListSelection;
+
+    [SerializeField] public string userAffirmationPersonalSelection;
+
     [SerializeField] public string username;
     [SerializeField] public string password;
 
@@ -14,6 +19,10 @@ public class UserData {
         hasOnboarded = false;
         isNotificationsOn = true;
         hasUserCheckedIn = false;
+
+        userAffirmationSelection = 0;
+        userAffirmationListSelection = 0;
+        userAffirmationPersonalSelection = "";
 
         username = "";
         password = "";

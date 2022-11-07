@@ -4,14 +4,28 @@ using System.IO;
 
 public class SaveAndLoadUserData : MonoBehaviour {
 
+    public class AffirmationSettings {
+        public int selection { get; set; }
+        public int listSelection { get; set; }
+        public string personal { get; set; }
+
+        public AffirmationSettings() {
+            selection = 0;
+            listSelection = 0;
+            personal = "";
+        }
+    }
+
     [System.Serializable]
     public class WrappingClass {
         public List<bool> _settings;
         public List<string> _loginData;
+        public AffirmationSettings _affirmationSettings;
 
         public WrappingClass() {
             _settings = new List<bool>();
             _loginData = new List<string>();
+            _affirmationSettings = new AffirmationSettings();
         }
     }
 
@@ -58,6 +72,10 @@ public class SaveAndLoadUserData : MonoBehaviour {
         dataWrapper._settings.Add(uData.isNotificationsOn);
         dataWrapper._settings.Add(uData.hasUserCheckedIn);
 
+        dataWrapper._affirmationSettings.selection = (uData.userAffirmationSelection);
+        dataWrapper._affirmationSettings.listSelection = (uData.userAffirmationListSelection);
+        dataWrapper._affirmationSettings.personal = (uData.userAffirmationPersonalSelection);
+
         dataWrapper._loginData.Add(uData.username);
         dataWrapper._loginData.Add(uData.password);
 
@@ -70,6 +88,10 @@ public class SaveAndLoadUserData : MonoBehaviour {
         uData.hasOnboarded = dataWrapper._settings[0];
         uData.isNotificationsOn = dataWrapper._settings[1];
         uData.hasUserCheckedIn = dataWrapper._settings[2];
+
+        uData.userAffirmationSelection = dataWrapper._affirmationSettings.selection;
+        uData.userAffirmationListSelection = dataWrapper._affirmationSettings.listSelection;
+        uData.userAffirmationPersonalSelection = dataWrapper._affirmationSettings.personal;
 
         uData.username = dataWrapper._loginData[0];
         uData.password = dataWrapper._loginData[1];

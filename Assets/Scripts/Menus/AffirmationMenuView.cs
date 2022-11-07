@@ -68,6 +68,8 @@ public class AffirmationMenuView : View {
                     _personalContent.SetActive(true);
                     break;
             }
+
+            AppManager.instance._uData.userAffirmationSelection = val;
         }
     }
 
@@ -90,10 +92,23 @@ public class AffirmationMenuView : View {
 
     private void MoveToPreviousScreen() {
         if (_toggleScreen.activeSelf == true) {
+            SaveAffirmationData();
             ViewManager.ShowLast();
         } else if (_helpScreen.activeSelf == true) {
             _toggleScreen.SetActive(true);
             _helpScreen.SetActive(false);
+        }
+    }
+
+    private void SaveAffirmationData() {
+        switch(AppManager.instance._uData.userAffirmationSelection) {
+            case 1:
+                //Need List Index and store this as int and use int when loaded to select correct list affirmation
+                AppManager.instance._uData.userAffirmationListSelection = 
+                break;
+            case 2:
+                //Need to get the text in the input field and store it
+                break;
         }
     }
 }
