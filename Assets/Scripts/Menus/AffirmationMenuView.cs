@@ -75,8 +75,9 @@ public class AffirmationMenuView : View {
     private void SetupAffirmationList() {
         for (int i = 0; i < AppManager.instance._aManager.affirmationSelection.Count - 1; i++) {
             GameObject affirmationButton = Instantiate(_buttonPrefab, _listContent.gameObject.transform);
+            affirmationButton.name = i.ToString();
             affirmationButton.GetComponentInChildren<Text>().text = AppManager.instance._aManager.affirmationSelection[i];
-            affirmationButton.GetComponent<Button>().onClick.AddListener(delegate { OnListAffirmationClicked(i); });
+            affirmationButton.GetComponent<Button>().onClick.AddListener(delegate { OnListAffirmationClicked(int.Parse(affirmationButton.name)); });
             _affirmationButtons.Add(affirmationButton);
         }
     }
@@ -107,10 +108,9 @@ public class AffirmationMenuView : View {
     }
 
     private void SaveAffirmationData() {
-        switch(AppManager.instance._uData.userAffirmationSelection) {
+        switch(_currentSelection) {
             case 1:
                 //Need List Index and store this as int and use int when loaded to select correct list affirmation
-
                 AppManager.instance._uData.userAffirmationListSelection = _currentSelection;
                 break;
             case 2:

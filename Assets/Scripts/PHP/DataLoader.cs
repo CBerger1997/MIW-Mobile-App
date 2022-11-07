@@ -12,18 +12,20 @@ public class DataLoader : MonoBehaviour {
         yield return clientData;
 
         string clientDataString = clientData.text;
-        print(clientDataString);
+        //print(clientDataString);
         clients = clientDataString.Split(';');
-        print(GetDataValueFromString(clients[0], "Password:"));
+        //if (clients[0].Length > 0) {
+        //    GetDataValueFromString(clients[0], "Password:");
+        //}
     }
 
-    string GetDataValueFromString(string data, string index) {
-        string value = data.Substring(data.IndexOf(index) + index.Length);
+    //string GetDataValueFromString(string data, string index) {
+    //    string value = data.Substring(data.IndexOf(index) + index.Length);
 
-        if (value.Contains("|")) {
-            value = value.Remove(value.IndexOf("|"));
-        }
+    //    if (value.Contains("|")) {
+    //        value = value.Remove(value.IndexOf("|"));
+    //    }
 
-        return value;
-    }
+    //    return value;
+    //}
 }
