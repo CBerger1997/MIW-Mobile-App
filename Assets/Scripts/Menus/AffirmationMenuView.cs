@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class AffirmationMenuView : View {
     [SerializeField] private Button _backButton;
     [SerializeField] private Button _helpButton;
+    [SerializeField] private List<GameObject> _affirmationButtons;
 
-    [SerializeField] private Scrollbar _topScrollBar;
     [SerializeField] private TextMeshProUGUI _infoText;
 
     [SerializeField] private GameObject _toggleScreen;
@@ -20,7 +20,6 @@ public class AffirmationMenuView : View {
     [SerializeField] private GameObject _toggleContent;
 
     private int _currentSelection;
-    private UnityEvent _affirmationChangeEvent = new UnityEvent();
 
     public override void Initialise() {
         _backButton.onClick.AddListener(delegate { MoveToPreviousScreen(); });
@@ -77,6 +76,8 @@ public class AffirmationMenuView : View {
         for (int i = 0; i < AppManager.instance._aManager.affirmationSelection.Count - 1; i++) {
             GameObject affirmationButton = Instantiate(_buttonPrefab, _listContent.gameObject.transform);
             affirmationButton.GetComponentInChildren<Text>().text = AppManager.instance._aManager.affirmationSelection[i];
+            affirmationButton.GetComponent<Button>().onClick.AddListener(delegate { OnListAffirmationClicked(i); });
+            _affirmationButtons.Add(affirmationButton);
         }
     }
 
@@ -100,11 +101,17 @@ public class AffirmationMenuView : View {
         }
     }
 
+    private void OnListAffirmationClicked(int index) {
+        _currentSelection = index;
+        Debug.Log(_currentSelection);
+    }
+
     private void SaveAffirmationData() {
         switch(AppManager.instance._uData.userAffirmationSelection) {
             case 1:
                 //Need List Index and store this as int and use int when loaded to select correct list affirmation
-                AppManager.instance._uData.userAffirmationListSelection = 
+
+                AppManager.instance._uData.userAffirmationListSelection = _currentSelection;
                 break;
             case 2:
                 //Need to get the text in the input field and store it
