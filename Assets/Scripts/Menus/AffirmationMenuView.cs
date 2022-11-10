@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class AffirmationMenuView : View {
     [SerializeField] private Button _backButton;
+    [SerializeField] private Button _saveButton;
     [SerializeField] private Button _helpButton;
 
     [SerializeField] private TextMeshProUGUI _infoText;
@@ -25,7 +26,10 @@ public class AffirmationMenuView : View {
 
     public override void Initialise() {
         _backButton.onClick.AddListener(delegate { MoveToPreviousScreen(); });
+        _saveButton.onClick.AddListener(delegate { SaveAndExit(); });
         _helpButton.onClick.AddListener(delegate { ToggleHelpMenu(); });
+
+        _personalInputText.onValueChanged.AddListener(delegate { OnInputFieldChanged(); });
 
         _toggleContent.GetComponent<ScrollSwipe>().OnSelectionChange += OnSelectionChangeHandler;
         _currentOptionSelection = AppManager.instance._uData.userAffirmationSelection;
@@ -33,6 +37,9 @@ public class AffirmationMenuView : View {
 
         _toggleScreen.SetActive(true);
         _helpScreen.SetActive(false);
+        _saveButton.GetComponent<Button>().interactable = false;
+
+        _currentListSelection = -1;
 
         SetAffirmationInfoTextAndContent();
         SetupAffirmationList();
@@ -53,16 +60,34 @@ public class AffirmationMenuView : View {
                 _infoText.text = "Provides you with a different affirmation every day";
                 _listContentParent.SetActive(false);
                 _personalContent.SetActive(false);
+
+                if (_currentOptionSelection != AppManager.instance._uData.userAffirmationSelection) {
+                    _saveButton.GetComponent<Button>().interactable = true;
+                } else {
+                    _saveButton.GetComponent<Button>().interactable = false;
+                }
                 break;
             case 1:
                 _infoText.text = "Choose your affirmation from the list below";
                 _listContentParent.SetActive(true);
                 _personalContent.SetActive(false);
+
+                if (_currentListSelection < 0) {
+                    _saveButton.GetComponent<Button>().interactable = false;
+                }
+
                 break;
             case 2:
                 _infoText.text = "Create your own affirmation starting from \"You are\"";
                 _listContentParent.SetActive(false);
                 _personalContent.SetActive(true);
+
+                if (_personalInputText.text != "" && _personalInputText.text != AppManager.instance._uData.userAffirmationPersonalSelection) {
+                    _saveButton.GetComponent<Button>().interactable = true;
+                } else {
+                    _saveButton.GetComponent<Button>().interactable = false;
+                }
+
                 break;
         }
     }
@@ -76,6 +101,7 @@ public class AffirmationMenuView : View {
 
             if (AppManager.instance._uData.userAffirmationListSelection >= 0) {
                 if (i == AppManager.instance._uData.userAffirmationListSelection) {
+                    _currentListSelection = AppManager.instance._uData.userAffirmationListSelection;
                     _listButton = affirmationButton;
                     _listButton.GetComponent<Image>().color = Color.green;
                 }
@@ -95,7 +121,6 @@ public class AffirmationMenuView : View {
 
     private void MoveToPreviousScreen() {
         if (_toggleScreen.activeSelf == true) {
-            SaveAffirmationData();
             ViewManager.ShowLast();
         } else if (_helpScreen.activeSelf == true) {
             _toggleScreen.SetActive(true);
@@ -103,9 +128,12 @@ public class AffirmationMenuView : View {
         }
     }
 
+    private void SaveAndExit() {
+        SaveAffirmationData();
+        MoveToPreviousScreen();
+    }
+
     private void OnListAffirmationClicked(int index, GameObject button) {
-
-
         if (_listButton != null) {
             _listButton.GetComponent<Image>().color = Color.white;
         }
@@ -113,6 +141,20 @@ public class AffirmationMenuView : View {
         _currentListSelection = index;
         _listButton = button;
         _listButton.GetComponent<Image>().color = Color.green;
+
+        if (_currentListSelection != AppManager.instance._uData.userAffirmationListSelection) {
+            _saveButton.GetComponent<Button>().interactable = true;
+        } else {
+            _saveButton.GetComponent<Button>().interactable = false;
+        }
+    }
+
+    private void OnInputFieldChanged() {
+        if (_personalInputText.text != "" && _personalInputText.text != AppManager.instance._uData.userAffirmationPersonalSelection) {
+            _saveButton.GetComponent<Button>().interactable = true;
+        } else {
+            _saveButton.GetComponent<Button>().interactable = false;
+        }
     }
 
     private void SaveAffirmationData() {
