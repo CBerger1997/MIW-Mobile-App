@@ -11080,6 +11080,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Return Button
       objectReference: {fileID: 0}
+    - target: {fileID: 531868596212397039, guid: 5406b3eab5081fc408caf35f7b52fade, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 531868596212397039, guid: 5406b3eab5081fc408caf35f7b52fade, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 531868596212397039, guid: 5406b3eab5081fc408caf35f7b52fade, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5406b3eab5081fc408caf35f7b52fade, type: 3}
 --- !u!1001 &1010230760
@@ -15470,13 +15482,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backButton: {fileID: 1866251938}
   _helpButton: {fileID: 1420898900}
-  _topScrollBar: {fileID: 1608276546}
   _infoText: {fileID: 1111156957}
   _toggleScreen: {fileID: 1056522508}
   _helpScreen: {fileID: 123032285}
   _listContentParent: {fileID: 1573287227}
   _listContent: {fileID: 785871548}
   _personalContent: {fileID: 592732366}
+  _personalInputText: {fileID: 73871421}
   _buttonPrefab: {fileID: 5857272793076748656, guid: 8bcd740360e145d4db48a2d1c3b3423a, type: 3}
   _toggleContent: {fileID: 209826114}
 --- !u!1 &1493118950
