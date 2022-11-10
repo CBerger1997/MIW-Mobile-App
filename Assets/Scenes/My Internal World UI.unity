@@ -14171,8 +14171,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -75}
-  m_SizeDelta: {x: 650, y: 900}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 650, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1281832456
 MonoBehaviour:
@@ -15561,7 +15561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backButton: {fileID: 1866251938}
-  _saveButton: {fileID: 0}
+  _saveButton: {fileID: 1891995193}
   _helpButton: {fileID: 1420898900}
   _infoText: {fileID: 1111156957}
   _toggleScreen: {fileID: 1056522508}
