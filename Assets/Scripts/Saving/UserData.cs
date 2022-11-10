@@ -21,7 +21,7 @@ public class UserData {
         hasUserCheckedIn = false;
 
         userAffirmationSelection = 0;
-        userAffirmationListSelection = 0;
+        userAffirmationListSelection = -1;
         userAffirmationPersonalSelection = "";
 
         username = "";

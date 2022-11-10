@@ -20,12 +20,16 @@ public class SaveAndLoadUserData : MonoBehaviour {
     public class WrappingClass {
         public List<bool> _settings;
         public List<string> _loginData;
-        public AffirmationSettings _affirmationSettings;
+        public int selection;
+        public int listSelection;
+        public string personal;
 
         public WrappingClass() {
             _settings = new List<bool>();
             _loginData = new List<string>();
-            _affirmationSettings = new AffirmationSettings();
+            selection = 0;
+            listSelection = 0;
+            personal = "";
         }
     }
 
@@ -72,9 +76,9 @@ public class SaveAndLoadUserData : MonoBehaviour {
         dataWrapper._settings.Add(uData.isNotificationsOn);
         dataWrapper._settings.Add(uData.hasUserCheckedIn);
 
-        dataWrapper._affirmationSettings.selection = (uData.userAffirmationSelection);
-        dataWrapper._affirmationSettings.listSelection = (uData.userAffirmationListSelection);
-        dataWrapper._affirmationSettings.personal = (uData.userAffirmationPersonalSelection);
+        dataWrapper.selection = (uData.userAffirmationSelection);
+        dataWrapper.listSelection = (uData.userAffirmationListSelection);
+        dataWrapper.personal = (uData.userAffirmationPersonalSelection);
 
         dataWrapper._loginData.Add(uData.username);
         dataWrapper._loginData.Add(uData.password);
@@ -89,9 +93,9 @@ public class SaveAndLoadUserData : MonoBehaviour {
         uData.isNotificationsOn = dataWrapper._settings[1];
         uData.hasUserCheckedIn = dataWrapper._settings[2];
 
-        uData.userAffirmationSelection = dataWrapper._affirmationSettings.selection;
-        uData.userAffirmationListSelection = dataWrapper._affirmationSettings.listSelection;
-        uData.userAffirmationPersonalSelection = dataWrapper._affirmationSettings.personal;
+        uData.userAffirmationSelection = dataWrapper.selection;
+        uData.userAffirmationListSelection = dataWrapper.listSelection;
+        uData.userAffirmationPersonalSelection = dataWrapper.personal;
 
         uData.username = dataWrapper._loginData[0];
         uData.password = dataWrapper._loginData[1];

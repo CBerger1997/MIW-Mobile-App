@@ -18,9 +18,12 @@ public class ScrollSwipe : MonoBehaviour {
         for (int i = 0; i < scrollPositions.Length; i++) {
             scrollPositions[i] = distance * i;
         }
+    }
 
-        selection = 0;
-        scrollbar.GetComponent<Scrollbar>().value = selection;
+    private void Start() {
+        selection = AppManager.instance._uData.userAffirmationSelection;
+        scrollbar.GetComponent<Scrollbar>().value = scrollPositions[selection];
+        scroll_pos = scrollPositions[selection];
     }
 
     private void Update() {

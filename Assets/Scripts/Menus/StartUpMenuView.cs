@@ -74,10 +74,22 @@ public class StartUpMenuView : View {
     }
 
     private void SetAffirmationText() {
-        int randomNum = Random.Range(0, AppManager.instance._aManager.affirmationRandom.Count - 1);
+        string text = "";
 
-        string text = AppManager.instance._aManager.affirmationRandom[randomNum];
+        switch (AppManager.instance._uData.userAffirmationSelection) {
+            case 0:
+                int randomNum = Random.Range(0, AppManager.instance._aManager.affirmationRandom.Count - 1);
+                text = AppManager.instance._aManager.affirmationRandom[randomNum];
+                break;
+            case 1:
+                text = AppManager.instance._aManager.affirmationSelection[AppManager.instance._uData.userAffirmationListSelection];
+                break;
+            case 2:
+                text = "You are " + AppManager.instance._uData.userAffirmationPersonalSelection;
+                break;
+        }
 
         _startPageTexts2[1].text = text;
+
     }
 }
