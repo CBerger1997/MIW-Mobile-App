@@ -21,7 +21,7 @@ public class AffirmationMenuView : View {
     [SerializeField] private GameObject _toggleContent;
 
     private int _currentOptionSelection;
-    private int _currentListSelection;
+    public int _currentListSelection;
     private GameObject _listButton;
 
     public override void Initialise() {

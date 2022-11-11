@@ -11,7 +11,7 @@ public class SaveAndLoadUserData : MonoBehaviour {
 
         public AffirmationSettings() {
             selection = 0;
-            listSelection = 0;
+            listSelection = -1;
             personal = "";
         }
     }
@@ -28,7 +28,7 @@ public class SaveAndLoadUserData : MonoBehaviour {
             _settings = new List<bool>();
             _loginData = new List<string>();
             selection = 0;
-            listSelection = 0;
+            listSelection = -1;
             personal = "";
         }
     }
