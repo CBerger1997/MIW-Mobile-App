@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 
 public class AffirmationMenuView : View {
     [SerializeField] private Button _backButton;
@@ -173,5 +172,7 @@ public class AffirmationMenuView : View {
         }
 
         AppManager.instance.SaveUserData();
+
+        _saveButton.GetComponent<Button>().interactable = false;
     }
 }

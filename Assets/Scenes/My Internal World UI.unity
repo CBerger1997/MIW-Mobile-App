@@ -2494,7 +2494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You are...
+  m_text: I am...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11198,7 +11198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3880000366966953074, guid: a28c217ffb4bdd046a792e08ec7fe62d, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3439329280
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 4331665023939060229, guid: a28c217ffb4bdd046a792e08ec7fe62d, type: 3}
       propertyPath: m_Pivot.x
@@ -13135,10 +13135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c8e799cd736444d998006d889ccb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startPageTexts1:
+  _firstTimeStartUp:
   - {fileID: 468157151}
   - {fileID: 666579654}
-  _startPageTexts2:
+  _startUpPage:
   - {fileID: 372125269}
   - {fileID: 1902427432}
 --- !u!95 &1196131721
@@ -15083,7 +15083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3880000366966953074, guid: a28c217ffb4bdd046a792e08ec7fe62d, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3439329280
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 4331665023939060229, guid: a28c217ffb4bdd046a792e08ec7fe62d, type: 3}
       propertyPath: m_Pivot.x
@@ -15572,6 +15572,7 @@ MonoBehaviour:
   _personalInputText: {fileID: 73871421}
   _buttonPrefab: {fileID: 5857272793076748656, guid: 8bcd740360e145d4db48a2d1c3b3423a, type: 3}
   _toggleContent: {fileID: 209826114}
+  _currentListSelection: 0
 --- !u!1 &1493118950
 GameObject:
   m_ObjectHideFlags: 0
@@ -21955,7 +21956,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3880000366966953074, guid: a28c217ffb4bdd046a792e08ec7fe62d, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3208856387
+      value: 323175235
       objectReference: {fileID: 0}
     - target: {fileID: 4331665023939060229, guid: a28c217ffb4bdd046a792e08ec7fe62d, type: 3}
       propertyPath: m_Pivot.x

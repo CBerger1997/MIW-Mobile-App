@@ -4,49 +4,47 @@ using TMPro;
 
 public class StartUpMenuView : View {
 
-    [SerializeField] private List<TextMeshProUGUI> _startPageTexts1;
-    [SerializeField] private List<TextMeshProUGUI> _startPageTexts2;
+    [SerializeField] private List<TextMeshProUGUI> _firstTimeStartUp;
+    [SerializeField] private List<TextMeshProUGUI> _startUpPage;
 
     Animator _animator;
 
-    bool isStartUpStage2 = false;
+    bool isStartUp = false;
     bool isUserTouchingScreen = false;
 
     public override void Initialise() {
+
 
         SetQuoteText();
 
         SetAffirmationText();
 
-        foreach (TextMeshProUGUI text in _startPageTexts1) {
-            text.gameObject.SetActive(true);
-        }
+        if (!AppManager.instance._uData.hasOnboarded) {
+            foreach (TextMeshProUGUI text in _firstTimeStartUp) {
+                text.gameObject.SetActive(true);
+            }
 
-        foreach (TextMeshProUGUI text in _startPageTexts2) {
-            text.gameObject.SetActive(false);
-        }
+            foreach (TextMeshProUGUI text in _startUpPage) {
+                text.gameObject.SetActive(false);
+            }
+        } else {
+            foreach (TextMeshProUGUI text in _firstTimeStartUp) {
+                text.gameObject.SetActive(false);
+            }
 
+            foreach (TextMeshProUGUI text in _startUpPage) {
+                text.gameObject.SetActive(true);
+            }
+        }
         _animator = GetComponent<Animator>();
     }
 
-    private void Update() {
+    private void Update() { 
         if ((Input.touchCount > 0 || Input.GetMouseButtonDown(0)) && !isUserTouchingScreen) {
             isUserTouchingScreen = true;
 
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName("StartUpAnim")) {
                 _animator.Play("StaticState");
-            } else if (!isStartUpStage2) {
-                isStartUpStage2 = true;
-
-                foreach (TextMeshProUGUI text in _startPageTexts1) {
-                    text.gameObject.SetActive(false);
-                }
-
-                foreach (TextMeshProUGUI text in _startPageTexts2) {
-                    text.gameObject.SetActive(true);
-                }
-
-                _animator.Play("StartUpAnim");
             } else {
                 if (!AppManager.instance._uData.hasOnboarded) {
                     ViewManager.Show<OnboardingMenuView>(false);
@@ -69,8 +67,8 @@ public class StartUpMenuView : View {
             " - " +
             AppManager.instance._qManager.author[randomNum];
 
-        _startPageTexts1[1].text = text;
-        _startPageTexts2[0].text = text;
+        _firstTimeStartUp[1].text = text;
+        _startUpPage[0].text = text;
     }
 
     private void SetAffirmationText() {
@@ -85,11 +83,11 @@ public class StartUpMenuView : View {
                 text = AppManager.instance._aManager.affirmationSelection[AppManager.instance._uData.userAffirmationListSelection];
                 break;
             case 2:
-                text = "You are " + AppManager.instance._uData.userAffirmationPersonalSelection;
+                text = "I am " + AppManager.instance._uData.userAffirmationPersonalSelection;
                 break;
         }
 
-        _startPageTexts2[1].text = text;
+        _startUpPage[1].text = text;
 
     }
 }
