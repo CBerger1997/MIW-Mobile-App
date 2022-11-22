@@ -13,8 +13,6 @@ public class StartUpMenuView : View {
     bool isUserTouchingScreen = false;
 
     public override void Initialise() {
-
-
         SetQuoteText();
 
         SetAffirmationText();
@@ -39,7 +37,7 @@ public class StartUpMenuView : View {
         _animator = GetComponent<Animator>();
     }
 
-    private void Update() { 
+    private void Update() {
         if ((Input.touchCount > 0 || Input.GetMouseButtonDown(0)) && !isUserTouchingScreen) {
             isUserTouchingScreen = true;
 

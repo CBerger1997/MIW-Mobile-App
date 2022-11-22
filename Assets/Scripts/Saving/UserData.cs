@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UserData {
@@ -15,6 +16,13 @@ public class UserData {
     [SerializeField] public string username;
     [SerializeField] public string password;
 
+    [SerializeField] public List<string> emotionDates;
+    [SerializeField] public List<int> emotionValues;
+    [SerializeField] public List<int> contextValues;
+
+    [SerializeField] public int date;
+
+
     public UserData() {
         hasOnboarded = false;
         isNotificationsOn = true;
@@ -26,5 +34,9 @@ public class UserData {
 
         username = "";
         password = "";
+
+        emotionDates = new List<string>();
+        emotionValues = new List<int>();
+        contextValues = new List<int>();
     }
 }

@@ -31,6 +31,7 @@ public class AffirmationMenuView : View {
         _personalInputText.onValueChanged.AddListener(delegate { OnInputFieldChanged(); });
 
         _toggleContent.GetComponent<ScrollSwipe>().OnSelectionChange += OnSelectionChangeHandler;
+
         _currentOptionSelection = AppManager.instance._uData.userAffirmationSelection;
         _personalInputText.text = AppManager.instance._uData.userAffirmationPersonalSelection;
 

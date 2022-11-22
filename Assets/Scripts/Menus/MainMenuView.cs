@@ -9,6 +9,7 @@ public class MainMenuView : View {
     [SerializeField] private Button _justBreathButton;
     [SerializeField] private Button _journalButton;
     [SerializeField] private Button _checkInButton;
+    [SerializeField] private Button _checkInAnalysisButton;
 
     public override void Initialise() {
         _settingsButton.onClick.AddListener(() => ViewManager.Show<SettingsMenuView>());
@@ -24,12 +25,14 @@ public class MainMenuView : View {
         _journalButton.onClick.AddListener(() => ViewManager.Show<JournalMenuView>());
 
         _checkInButton.onClick.AddListener(() => ViewManager.Show<CheckInMenuView>());
+
+        _checkInAnalysisButton.onClick.AddListener(() => ViewManager.Show<CheckInAnalysisMenuView>());
     }
 
     public override void Show() {
         base.Show();
 
-        if(AppManager.instance._uData.hasUserCheckedIn) {
+        if (AppManager.instance._uData.hasUserCheckedIn) {
             _checkInButton.GetComponent<Image>().color = Color.green;
             _checkInButton.enabled = false;
         }

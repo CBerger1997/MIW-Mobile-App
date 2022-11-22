@@ -4,29 +4,26 @@ using System.IO;
 
 public class SaveAndLoadUserData : MonoBehaviour {
 
-    public class AffirmationSettings {
-        public int selection { get; set; }
-        public int listSelection { get; set; }
-        public string personal { get; set; }
-
-        public AffirmationSettings() {
-            selection = 0;
-            listSelection = -1;
-            personal = "";
-        }
-    }
-
     [System.Serializable]
     public class WrappingClass {
         public List<bool> _settings;
         public List<string> _loginData;
+
         public int selection;
         public int listSelection;
         public string personal;
 
+        public List<string> _emotionDates;
+        public List<int> _emotionValues;
+        public List<int> _contextValues;
+
         public WrappingClass() {
             _settings = new List<bool>();
             _loginData = new List<string>();
+            _emotionDates = new List<string>();
+            _emotionValues = new List<int>();
+            _contextValues = new List<int>();
+
             selection = 0;
             listSelection = -1;
             personal = "";
@@ -83,6 +80,10 @@ public class SaveAndLoadUserData : MonoBehaviour {
         dataWrapper._loginData.Add(uData.username);
         dataWrapper._loginData.Add(uData.password);
 
+        dataWrapper._emotionDates = (uData.emotionDates);
+        dataWrapper._emotionValues = (uData.emotionValues);
+        dataWrapper._contextValues = (uData.contextValues);
+
         return dataWrapper;
     }
 
@@ -91,7 +92,14 @@ public class SaveAndLoadUserData : MonoBehaviour {
 
         uData.hasOnboarded = dataWrapper._settings[0];
         uData.isNotificationsOn = dataWrapper._settings[1];
-        uData.hasUserCheckedIn = dataWrapper._settings[2];
+
+        if (dataWrapper._emotionDates.Count > 0 &&
+            dataWrapper._emotionDates[dataWrapper._emotionDates.Count - 1] != System.DateTime.Now.ToString("yyyy/MM/dd") ||
+            dataWrapper._emotionDates.Count < 1) {
+            uData.hasUserCheckedIn = false;
+        } else {
+            uData.hasUserCheckedIn = true;
+        }
 
         uData.userAffirmationSelection = dataWrapper.selection;
         uData.userAffirmationListSelection = dataWrapper.listSelection;
@@ -99,6 +107,10 @@ public class SaveAndLoadUserData : MonoBehaviour {
 
         uData.username = dataWrapper._loginData[0];
         uData.password = dataWrapper._loginData[1];
+
+        uData.emotionDates = dataWrapper._emotionDates;
+        uData.emotionValues = dataWrapper._emotionValues;
+        uData.contextValues = dataWrapper._contextValues;
 
         return uData;
     }
