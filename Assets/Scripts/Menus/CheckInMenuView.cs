@@ -25,11 +25,13 @@ public class CheckInMenuView : View {
         ResetUI();
 
         for (int i = 0; i < _emotionButtons.Count; i++) {
-            _emotionButtons[i].onClick.AddListener(delegate { OnClickEmotionSelected(i); });
+            int copy = i;
+            _emotionButtons[copy].onClick.AddListener(delegate { OnClickEmotionSelected(copy); });
         }
 
         for (int i = 0; i < _contextButtons.Count; i++) {
-            _contextButtons[i].onClick.AddListener(delegate { OnClickContextSelected(i); });
+            int copy = i;
+            _contextButtons[copy].onClick.AddListener(delegate { OnClickContextSelected(copy); });
         }
 
         for (int i = 0; i < _iDontKnowButtons.Count; i++) {
