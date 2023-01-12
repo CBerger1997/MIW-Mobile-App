@@ -328,6 +328,10 @@ PrefabInstance:
       value: My Internal World
       objectReference: {fileID: 0}
     - target: {fileID: 6361562188386855770, guid: a2ee6b598e567394096a80592cbf72e1, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: c346dc8d31dd81447b7c0b1f0daa2a53, type: 3}
+    - target: {fileID: 6361562188386855770, guid: a2ee6b598e567394096a80592cbf72e1, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 45
       objectReference: {fileID: 0}
