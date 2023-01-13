@@ -12,6 +12,7 @@ public class MainMenuView : View {
     [SerializeField] private Button _checkInButton;
     [SerializeField] private Button _checkInAnalysisButton;
     [SerializeField] private GameObject _calendarContent;
+    [SerializeField] private Scrollbar _calendarScrollbar;
 
     private GameObject _dateButton;
 
@@ -44,17 +45,16 @@ public class MainMenuView : View {
             _checkInButton.GetComponent<Image>().color = Color.green;
             _checkInButton.enabled = false;
         }
+
+        _calendarScrollbar.value = 1;
     }
 
     private void CreateCalendarScrollView() {
-        // 30 sept, apr, jun, nov
-        // 31
-        // 28/29 feb
-
         int curDay = System.DateTime.Now.Day;
         int curMonth = System.DateTime.Now.Month;
         int curYear = System.DateTime.Now.Year;
 
+        int startDay = 1;
         int startMonth = curMonth - 1;
         int startYear;
 
@@ -67,14 +67,14 @@ public class MainMenuView : View {
 
         int startDaysInMonth = DaysInMonth(startMonth, startYear);
 
-        for (int i = 0; i < startDaysInMonth + 1; i++) {
+        for (int i = 0; i < (startDaysInMonth + curDay); i++) {
             GameObject newDate = Instantiate(_dateButton, _calendarContent.transform);
             newDate.transform.GetChild(0).GetComponent<TMP_Text>().text = ConvertMonthToString(startMonth);
-            newDate.transform.GetChild(1).GetComponent<TMP_Text>().text = curDay.ToString();
-            curDay++;
+            newDate.transform.GetChild(1).GetComponent<TMP_Text>().text = startDay.ToString();
+            startDay++;
 
-            if (curDay > startDaysInMonth) {
-                curDay = 1;
+            if (startDay > startDaysInMonth) {
+                startDay = 1;
                 startMonth = curMonth;
             }
         }
