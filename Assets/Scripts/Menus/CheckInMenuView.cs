@@ -15,7 +15,7 @@ public class CheckInMenuView : View {
     [SerializeField] private Button _journalButton;
     [SerializeField] private Button _checkInAnalysisButton;
 
-    [SerializeField] private List<Button> _backButtons = new List<Button>();
+    [SerializeField] private Button _backButton;
     [SerializeField] private ScrollRect _emotionsRect;
 
     public int emotionalValue { get; set; }
@@ -43,9 +43,7 @@ public class CheckInMenuView : View {
             _saveButtons[i].interactable = false;
         }
 
-        for (int i = 0; i < _backButtons.Count; i++) {
-            _backButtons[i].onClick.AddListener(delegate { MoveToPreviousScreen(); });
-        }
+        _backButton.onClick.AddListener(delegate { MoveToPreviousScreen(); });
 
         _journalButton.onClick.AddListener(delegate { ViewManager.Show<JournalMenuView>(true); });
         _checkInAnalysisButton.onClick.AddListener(delegate { ViewManager.Show<CheckInAnalysisMenuView>(true); });
