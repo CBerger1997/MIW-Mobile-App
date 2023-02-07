@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class MainMenuView : View {
     [SerializeField] private Button _settingsButton;
@@ -50,78 +51,26 @@ public class MainMenuView : View {
     }
 
     private void CreateCalendarScrollView() {
-        int curDay = System.DateTime.Now.Day;
-        int curMonth = System.DateTime.Now.Month;
-        int curYear = System.DateTime.Now.Year;
+        DateTime curDate = DateTime.Now.AddMonths(-1);
 
         int startDay = 1;
-        int startMonth = curMonth - 1;
-        int startYear;
 
-        if (startMonth == 0) {
-            startMonth = 12;
-            startYear = curYear - 1;
-        } else {
-            startYear = curYear;
-        }
+        int startDaysInMonth = GetTotalNumberOfDays(curDate.Year, curDate.Month);
 
-        int startDaysInMonth = DaysInMonth(startMonth, startYear);
-
-        for (int i = 0; i < (startDaysInMonth + curDay); i++) {
+        for (int i = 0; i < (startDaysInMonth + DateTime.Now.Day); i++) {
             GameObject newDate = Instantiate(_dateButton, _calendarContent.transform);
-            newDate.transform.GetChild(0).GetComponent<TMP_Text>().text = ConvertMonthToString(startMonth);
+            newDate.transform.GetChild(0).GetComponent<TMP_Text>().text = curDate.ToString("MMM");
             newDate.transform.GetChild(1).GetComponent<TMP_Text>().text = startDay.ToString();
             startDay++;
 
             if (startDay > startDaysInMonth) {
                 startDay = 1;
-                startMonth = curMonth;
+                curDate = DateTime.Now;
             }
         }
     }
 
-    private int DaysInMonth(int month, int year) {
-        if (month == 4 || month == 6 || month == 9 || month == 11) {
-            return 30;
-        } else if (month == 2) {
-            if (year % 4 == 0) {
-                return 29;
-            } else {
-                return 28;
-            }
-        } else {
-            return 31;
-        }
-    }
-
-    private string ConvertMonthToString(int month) {
-        switch (month) {
-            case 1:
-                return "Jan";
-            case 2:
-                return "Feb";
-            case 3:
-                return "Mar";
-            case 4:
-                return "Apr";
-            case 5:
-                return "May";
-            case 6:
-                return "Jun";
-            case 7:
-                return "Jul";
-            case 8:
-                return "Aug";
-            case 9:
-                return "Sep";
-            case 10:
-                return "Oct";
-            case 11:
-                return "Nov";
-            case 12:
-                return "Dec";
-            default:
-                return "";
-        }
+    private int GetTotalNumberOfDays(int year, int month) {
+        return DateTime.DaysInMonth(year, month);
     }
 }
