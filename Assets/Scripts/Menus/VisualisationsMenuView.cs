@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class VisualisationsMenuView : View {
 
     [SerializeField] private Button _backButton;
+    [SerializeField] private Button _volumeButton;
+    [SerializeField] private Slider _volumeSlider;
 
     [SerializeField] private List<Button> _audioButtons;
 
@@ -13,11 +15,16 @@ public class VisualisationsMenuView : View {
 
     public override void Initialise() {
         _backButton.onClick.AddListener(() => ViewManager.ShowLast());
+        _volumeButton.onClick.AddListener(() => OnVolumeButtonClick());
+        _volumeSlider.onValueChanged.AddListener(delegate { OnVolumeChanged(); });
+
 
         for (int i = 0; i < _audioButtons.Count; i++) {
             int copy = i;
             _audioButtons[copy].onClick.AddListener(() => OnAudioButtonClick(copy));
         }
+
+        _volumeSlider.gameObject.SetActive(false);
     }
 
     private void OnAudioButtonClick(int index) {
@@ -27,6 +34,13 @@ public class VisualisationsMenuView : View {
 
         _audioButtons[index].GetComponent<AudioSource>().Play();
         _currentAudioSource = _audioButtons[index].GetComponent<AudioSource>();
+    }
 
+    private void OnVolumeButtonClick() {
+        _volumeSlider.gameObject.SetActive(_volumeSlider.gameObject.activeSelf ? false : true);
+    }
+
+    private void OnVolumeChanged() {
+        _currentAudioSource.volume = _volumeSlider.value;
     }
 }

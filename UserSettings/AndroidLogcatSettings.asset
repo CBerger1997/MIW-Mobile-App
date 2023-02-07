@@ -2,64 +2,52 @@
     "m_SelectedDeviceId": "R5CR806A5ZK",
     "m_SelectedPackage": {
         "deviceId": "R5CR806A5ZK",
-        "name": "com.MyHappinessQuotientLTD.com.unity.template.mobile2D",
-        "processId": 22217,
+        "name": "com.MyHappinessQuotientLTD.MyInternalWorld",
+        "processId": 24194,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "R5CR806A5ZK",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 8559,
-            "exited": true
-        },
-        {
-            "deviceId": "R5CR806A5ZK",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 19941,
-            "exited": true
-        },
-        {
-            "deviceId": "R5CR806A5ZK",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 7764,
-            "exited": true
-        },
-        {
-            "deviceId": "R5CR806A5ZK",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 8587,
-            "exited": true
-        },
-        {
-            "deviceId": "R5CR806A5ZK",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 10047,
-            "exited": true
-        },
-        {
-            "deviceId": "R5CR806A5ZK",
             "name": "com.sec.android.app.launcher",
-            "processId": 3055,
+            "processId": 3104,
             "exited": false
         },
         {
             "deviceId": "R5CR806A5ZK",
-            "name": "com.MyHappinessQuotientLTD.com.unity.template.mobile2D",
-            "processId": 9577,
-            "exited": false
+            "name": "com.MyHappinessQuotientLTD.MyInternalWorld",
+            "processId": 32166,
+            "exited": true
         },
         {
             "deviceId": "R5CR806A5ZK",
-            "name": "com.MyHappinessQuotientLTD.com.unity.template.mobile2D",
-            "processId": 10082,
-            "exited": false
+            "name": "com.MyHappinessQuotientLTD.MyInternalWorld",
+            "processId": 10758,
+            "exited": true
         },
         {
             "deviceId": "R5CR806A5ZK",
-            "name": "com.MyHappinessQuotientLTD.com.unity.template.mobile2D",
-            "processId": 22217,
+            "name": "com.MyHappinessQuotientLTD.MyInternalWorld",
+            "processId": 17132,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CR806A5ZK",
+            "name": "com.MyHappinessQuotientLTD.MyInternalWorld",
+            "processId": 19161,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CR806A5ZK",
+            "name": "com.MyHappinessQuotientLTD.MyInternalWorld",
+            "processId": 19868,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CR806A5ZK",
+            "name": "com.MyHappinessQuotientLTD.MyInternalWorld",
+            "processId": 24194,
             "exited": false
         }
     ],

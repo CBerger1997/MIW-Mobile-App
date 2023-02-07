@@ -33,7 +33,7 @@ public class MainMenuView : View {
 
         _checkInAnalysisButton.onClick.AddListener(() => ViewManager.Show<CheckInAnalysisMenuView>());
 
-        _dateButton = (GameObject)Resources.Load("Prefab/Menu/Date Button (TMP)");
+        _dateButton = (GameObject)Resources.Load("Prefab/Menu Specific/Date Button (TMP)");
 
         CreateCalendarScrollView();
     }

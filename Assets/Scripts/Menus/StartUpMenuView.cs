@@ -6,6 +6,8 @@ public class StartUpMenuView : View {
 
     [SerializeField] private List<TextMeshProUGUI> _firstTimeStartUp;
     [SerializeField] private List<TextMeshProUGUI> _startUpPage;
+    [SerializeField] private GameObject _permanentMenu;
+
 
     Animator _animator;
 
@@ -47,8 +49,10 @@ public class StartUpMenuView : View {
                 if (!AppManager.instance._uData.hasOnboarded) {
                     ViewManager.Show<OnboardingMenuView>(false);
                 } else if (!AppManager.instance._uData.hasUserCheckedIn) {
+                    _permanentMenu.SetActive(true);
                     ViewManager.Show<CheckInMenuView>(false);
                 } else {
+                    _permanentMenu.SetActive(true);
                     ViewManager.Show<MainMenuView>(false);
                 }
             }

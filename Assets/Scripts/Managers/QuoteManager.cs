@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class QuoteManager : MonoBehaviour {
     public List<string> author { get; set; }
@@ -8,9 +10,21 @@ public class QuoteManager : MonoBehaviour {
     public List<string> pathway { get; set; }
 
     public void ReadQuotesCSV() {
-        string path = Application.dataPath + "/Documents/Excel/Quotes.csv";
+        string path;
+        string fileData;
 
-        string fileData = System.IO.File.ReadAllText(path);
+#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
+        path = Application.dataPath + "/Documents/Excel/Quotes.csv";
+        fileData = File.ReadAllText(path);
+#endif
+
+#if UNITY_ANDROID
+        path = Path.Combine(Application.streamingAssetsPath, "Quotes.csv");
+        var loadingRequest = UnityWebRequest.Get(path);
+        loadingRequest.SendWebRequest();
+        while (!loadingRequest.isDone && !loadingRequest.isNetworkError && !loadingRequest.isHttpError) ;
+        fileData = System.Text.Encoding.UTF8.GetString(loadingRequest.downloadHandler.data);
+#endif
 
         fileData = fileData.Replace("\"", "");
 

@@ -7,6 +7,8 @@ public class OnboardingMenuView : View {
     [SerializeField] private Button _continueButton;
     [SerializeField] private Button _affirmationButton;
     [SerializeField] private List<Toggle> _notificationToggles;
+    [SerializeField] private GameObject _permanentMenu;
+
 
     private Toggle _currentToggle;
 
@@ -39,6 +41,7 @@ public class OnboardingMenuView : View {
         AppManager.instance._uData.hasOnboarded = true;
         AppManager.instance._uData.isNotificationsOn = _notificationToggles[0].isOn == true ? true : false;
         AppManager.instance.SaveUserData();
+        _permanentMenu.SetActive(true);
         ViewManager.Show<CheckInMenuView>(false);
     }
 }

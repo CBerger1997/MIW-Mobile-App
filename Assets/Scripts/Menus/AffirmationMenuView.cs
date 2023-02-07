@@ -15,13 +15,14 @@ public class AffirmationMenuView : View {
     [SerializeField] private GameObject _listContentParent;
     [SerializeField] private GameObject _listContent;
     [SerializeField] private GameObject _personalContent;
-    [SerializeField] private InputField _personalInputText;
+    [SerializeField] private TMP_InputField _personalInputText;
     [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private GameObject _toggleContent;
 
     private int _currentOptionSelection;
     public int _currentListSelection;
     private GameObject _listButton;
+    private Color _defaultButtonColor;
 
     public override void Initialise() {
         _backButton.onClick.AddListener(delegate { MoveToPreviousScreen(); });
@@ -43,6 +44,7 @@ public class AffirmationMenuView : View {
 
         SetAffirmationInfoTextAndContent();
         SetupAffirmationList();
+        _defaultButtonColor = _buttonPrefab.GetComponent<Button>().image.color;
     }
 
     private void OnSelectionChangeHandler() {
@@ -96,7 +98,8 @@ public class AffirmationMenuView : View {
         for (int i = 0; i < AppManager.instance._aManager.affirmationSelection.Count - 1; i++) {
             GameObject affirmationButton = Instantiate(_buttonPrefab, _listContent.gameObject.transform);
             affirmationButton.name = i.ToString();
-            affirmationButton.GetComponentInChildren<Text>().text = AppManager.instance._aManager.affirmationSelection[i];
+            affirmationButton.GetComponentInChildren<TMP_Text>().text = AppManager.instance._aManager.affirmationSelection[i];
+            affirmationButton.GetComponentInChildren<TMP_Text>().fontSizeMax = 25;
             affirmationButton.GetComponent<Button>().onClick.AddListener(delegate { OnListAffirmationClicked(int.Parse(affirmationButton.name), affirmationButton); });
 
             if (AppManager.instance._uData.userAffirmationListSelection >= 0) {
@@ -135,7 +138,7 @@ public class AffirmationMenuView : View {
 
     private void OnListAffirmationClicked(int index, GameObject button) {
         if (_listButton != null) {
-            _listButton.GetComponent<Image>().color = Color.white;
+            _listButton.GetComponent<Image>().color = _defaultButtonColor;
         }
 
         _currentListSelection = index;
