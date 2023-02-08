@@ -1,0 +1,156 @@
+--------------------------------------------------------------------
+Start Up Screen
+--------------------------------------------------------------------
+Size of login text bigger
+
+Personal affirmation 140 char limit
+
+Turn text to scrollable text for resize
+
+--------------------------------------------------------------------
+Onboarding Screen
+--------------------------------------------------------------------
+
+Larger text for inner calm: 70
+
+Inner calm text: Welcome to \n Inner Calm!
+
+Privacy policy link to website
+
+All buttons white text
+
+--------------------------------------------------------------------
+Check in menu
+--------------------------------------------------------------------
+
+Add in chevrons for mood buttons
+
+light up mood button backgrounds
+
+IDK button: Hex: DDD
+Size: 350 x 100
+Colour text: white
+
+Back button: smaller line bolding / thinner
+
+Continue Button colour: 
+
+--------------------------------------------------------------------
+Top Permanent Bar
+--------------------------------------------------------------------
+
+White Icons
+Diff colour backgrounds: 8BD2EB
+image size: 90 x 90
+Rounded: 6
+
+Bring back button in line with permanent menu
+
+Change message button to home button
+
+Link to crisis in notification and profile page
+
+Change profile button to crisis button
+
+--------------------------------------------------------------------
+Journal Menu
+--------------------------------------------------------------------
+
+Grey box is free text
+
+Store text with date
+
+Free text goes to Save button
+
+Past Entries view all past entries
+
+Allow multiple entries
+
+scrollable list of entries like a diary
+
+Date : text
+
+Date : text
+
+Change buttons
+
+Green for save: 74D14A
+
+Turqoise for past entries: 8BD2EB
+
+--------------------------------------------------------------------
+Check In Analysis Menu
+--------------------------------------------------------------------
+
+Move calendar up
+
+bring in mood and reason box
+
+Change colours for calendar
+
+make back panels larger so buttons don't reach out of panels
+
+Graph view:
+
+All day view is laid out with mood vertical (lil notification num in corner of mood for multiple)
+
+Specific day view shows graph of mood over time
+
+--------------------------------------------------------------------
+Main Menu
+--------------------------------------------------------------------
+
+Buttons all diff colour: yellow -> blue change navy to blue
+
+remove check in analysis button
+
+remove calendar, resize scroll view
+
+--------------------------------------------------------------------
+Visualisations Menu
+--------------------------------------------------------------------
+
+Combine both panels to one panel and change the male and female on choice
+
+button colours change to same as home screen
+
+visualisation icons and text like menu
+
+Go to diff screen for visualisations
+
+visualisation star screen saver view (DO LATER)
+
+make video player options
+
+continue playing after phone locked
+
+--------------------------------------------------------------------
+Affirmation Menu
+--------------------------------------------------------------------
+
+Chevrons for scrolling side to side
+
+--------------------------------------------------------------------
+BUTTON CODES / FONT
+--------------------------------------------------------------------
+
+.text-yellow {color: #ffc91d;}
+.text-navy {color: #011e41;}
+.text-turquoise {color: #3fdcb0;}
+.text-green {color: #74d14a;}
+.text-pink {color: #fc59a3;}
+.text-purple {color: #bf83e5;}
+.text-red {color: #ff5c35;}
+.text-blue {color: #8bd2eb;}
+.text-grey {color: #aaaaaa;}
+
+Montserrat font
+
+--------------------------------------------------------------------
+SCREEN CHANGES
+--------------------------------------------------------------------
+
+Turn all screens to scrollable screens
+
+
+https://icons8.com/icons/set/settings-button

@@ -1579,11 +1579,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8738691896213325112, guid: 65f9774c0ba8f7b4ea5e7d6575ec18e7, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 800
+      value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 8738691896213325112, guid: 65f9774c0ba8f7b4ea5e7d6575ec18e7, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 800
+      value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 8738691896213325112, guid: 65f9774c0ba8f7b4ea5e7d6575ec18e7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5941,15 +5941,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_fontSize
-      value: 55
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_fontStyle
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_fontSizeBase
-      value: 55
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -5981,7 +5993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_AnchorMin.x
@@ -5989,11 +6001,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 640
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6033,7 +6045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 50
+      value: -23
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12105,8 +12117,16 @@ PrefabInstance:
       value: Quote of the day!
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 33554432
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_TextStyleHashCode
@@ -12146,7 +12166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 640
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.y
@@ -14169,7 +14189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1358222900
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14206,8 +14226,20 @@ PrefabInstance:
       value: Affirmation text!
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 33554432
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -14243,7 +14275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 640
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.y
@@ -14283,7 +14315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -400
+      value: -580
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -14335,6 +14367,14 @@ PrefabInstance:
         still find the joy'
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4278190080
       objectReference: {fileID: 0}
@@ -14372,7 +14412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 640
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.y
@@ -16544,7 +16584,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1608276547}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
-  m_Value: 0.5
+  m_Value: 0.49999994
   m_Size: 0.28248587
   m_NumberOfSteps: 0
   m_OnValueChanged:
