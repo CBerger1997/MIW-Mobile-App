@@ -50,7 +50,7 @@ public class StartUpMenuView : View {
                     ViewManager.Show<OnboardingMenuView>(false);
                 } else if (!AppManager.instance._uData.hasUserCheckedIn) {
                     _permanentMenu.SetActive(true);
-                    ViewManager.Show<CheckInMenuView>(false);
+                    ViewManager.Show<CheckInMoodMenu>(false);
                 } else {
                     _permanentMenu.SetActive(true);
                     ViewManager.Show<MainMenuView>(false);

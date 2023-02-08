@@ -71,4 +71,12 @@ public class ViewManager : MonoBehaviour {
             Show(s_instance._history.Pop(), false);
         }
     }
+
+    public static int HistoryCount() {
+        return s_instance._history.Count;
+    }
+
+    public static void ClearHistory() {
+        s_instance._history.Clear();
+    }
 }

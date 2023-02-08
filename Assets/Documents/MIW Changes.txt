@@ -1,6 +1,22 @@
 --------------------------------------------------------------------
+CHANGES TO ALL
+--------------------------------------------------------------------
+
+All buttons white text
+
+All button icons white
+
+All screens scrollable
+
+Back button: smaller line bolding / thinner
+
+All button colours to be coordinated
+
+--------------------------------------------------------------------
 Start Up Screen
 --------------------------------------------------------------------
+Logo: 900 x 900
+
 Size of login text bigger
 
 Personal affirmation 140 char limit
@@ -17,21 +33,15 @@ Inner calm text: Welcome to \n Inner Calm!
 
 Privacy policy link to website
 
-All buttons white text
-
 --------------------------------------------------------------------
 Check in menu
 --------------------------------------------------------------------
-
-Add in chevrons for mood buttons
 
 light up mood button backgrounds
 
 IDK button: Hex: DDD
 Size: 350 x 100
 Colour text: white
-
-Back button: smaller line bolding / thinner
 
 Continue Button colour: 
 
@@ -149,8 +159,6 @@ Montserrat font
 --------------------------------------------------------------------
 SCREEN CHANGES
 --------------------------------------------------------------------
-
-Turn all screens to scrollable screens
 
 
 https://icons8.com/icons/set/settings-button

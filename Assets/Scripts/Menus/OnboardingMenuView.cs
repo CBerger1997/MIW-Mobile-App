@@ -42,6 +42,6 @@ public class OnboardingMenuView : View {
         AppManager.instance._uData.isNotificationsOn = _notificationToggles[0].isOn == true ? true : false;
         AppManager.instance.SaveUserData();
         _permanentMenu.SetActive(true);
-        ViewManager.Show<CheckInMenuView>(false);
+        ViewManager.Show<CheckInMoodMenu>(false);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,9 @@ public class UserData {
     [SerializeField] public List<int> emotionValues;
     [SerializeField] public List<int> contextValues;
 
+    public int currentEmotionValue;
+    public int currentContextValue;
+
     [SerializeField] public int date;
 
 
@@ -38,5 +42,15 @@ public class UserData {
         emotionDates = new List<string>();
         emotionValues = new List<int>();
         contextValues = new List<int>();
+
+        currentEmotionValue = -2;
+        currentContextValue = -2;
+    }
+
+    public void SaveCheckInData() {
+        emotionValues.Add(currentEmotionValue);
+        contextValues.Add(currentContextValue);
+        emotionDates.Add(DateTime.Now.ToString("yyyy/MM/dd"));
+        hasUserCheckedIn = true;
     }
 }
