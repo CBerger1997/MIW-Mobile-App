@@ -1,20 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class StartUpMenuView : View {
-
+    //[SerializeField] private GameObject _scrollView;
     [SerializeField] private List<TextMeshProUGUI> _firstTimeStartUp;
     [SerializeField] private List<TextMeshProUGUI> _startUpPage;
     [SerializeField] private GameObject _permanentMenu;
+    [SerializeField] private Button _continueButton;
 
 
     Animator _animator;
 
-    bool isStartUp = false;
     bool isUserTouchingScreen = false;
 
     public override void Initialise() {
+
+        _continueButton.onClick.AddListener(delegate { ContinueButtonClicked(); });
+
         SetQuoteText();
 
         SetAffirmationText();
@@ -39,24 +43,21 @@ public class StartUpMenuView : View {
         _animator = GetComponent<Animator>();
     }
 
+    public override void Show() {
+        base.Show();
+    }
+
+    public override void Hide() {
+        base.Hide();
+    }
+
     private void Update() {
         if ((Input.touchCount > 0 || Input.GetMouseButtonDown(0)) && !isUserTouchingScreen) {
             isUserTouchingScreen = true;
 
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName("StartUpAnim")) {
                 _animator.Play("StaticState");
-            } else {
-                if (!AppManager.instance._uData.hasOnboarded) {
-                    ViewManager.Show<OnboardingMenuView>(false);
-                } else if (!AppManager.instance._uData.hasUserCheckedIn) {
-                    _permanentMenu.SetActive(true);
-                    ViewManager.Show<CheckInMoodMenu>(false);
-                } else {
-                    _permanentMenu.SetActive(true);
-                    ViewManager.Show<MainMenuView>(false);
-                }
             }
-
         } else if (Input.touchCount == 0) {
             isUserTouchingScreen = false;
         }
@@ -66,7 +67,7 @@ public class StartUpMenuView : View {
         int randomNum = Random.Range(0, AppManager.instance._qManager.author.Count - 1);
 
         string text = AppManager.instance._qManager.quote[randomNum] +
-            " - " +
+            "\n \n" +
             AppManager.instance._qManager.author[randomNum];
 
         _firstTimeStartUp[1].text = text;
@@ -90,6 +91,17 @@ public class StartUpMenuView : View {
         }
 
         _startUpPage[1].text = text;
+    }
 
+    private void ContinueButtonClicked() {
+        if (!AppManager.instance._uData.hasOnboarded) {
+            ViewManager.Show<OnboardingMenuView>(false);
+        } else if (!AppManager.instance._uData.hasUserCheckedIn) {
+            _permanentMenu.SetActive(true);
+            ViewManager.Show<CheckInMoodMenu>(false);
+        } else {
+            _permanentMenu.SetActive(true);
+            ViewManager.Show<MainMenuView>(false);
+        }
     }
 }

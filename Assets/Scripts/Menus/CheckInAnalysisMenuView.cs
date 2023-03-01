@@ -41,8 +41,6 @@ public class CheckInAnalysisMenuView : View {
         }
     }
 
-    [SerializeField] private Button _backButton;
-
     private List<Day> days = new List<Day>();
 
     public Transform[] Weeks;
@@ -52,8 +50,6 @@ public class CheckInAnalysisMenuView : View {
     public DateTime curDate = DateTime.Now;
 
     public override void Initialise() {
-        _backButton.onClick.AddListener(() => ViewManager.ShowLast());
-
         UpdateCalendar(DateTime.Now.Year, DateTime.Now.Month);
     }
 

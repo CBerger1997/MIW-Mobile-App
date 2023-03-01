@@ -15,21 +15,21 @@ All button colours to be coordinated
 --------------------------------------------------------------------
 Start Up Screen
 --------------------------------------------------------------------
-Logo: 900 x 900
+Logo: 900 x 900 [x]
 
-Size of login text bigger
+Size of login text bigger [x]
 
-Personal affirmation 140 char limit
+Personal affirmation 140 char limit [x]
 
-Turn text to scrollable text for resize
+Turn text to scrollable text for resize [x]
 
 --------------------------------------------------------------------
 Onboarding Screen
 --------------------------------------------------------------------
 
-Larger text for inner calm: 70
+Larger text for inner calm: 70 [x]
 
-Inner calm text: Welcome to \n Inner Calm!
+Inner calm text: Welcome to \n Inner Calm! [x]
 
 Privacy policy link to website
 
@@ -37,7 +37,7 @@ Privacy policy link to website
 Check in menu
 --------------------------------------------------------------------
 
-light up mood button backgrounds
+light up mood button backgrounds [x]
 
 IDK button: Hex: DDD
 Size: 350 x 100

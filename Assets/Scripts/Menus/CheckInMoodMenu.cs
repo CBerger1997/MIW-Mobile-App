@@ -15,11 +15,13 @@ public class CheckInMoodMenu : View {
 
     [SerializeField] private ScrollRect _emotionsRect;
 
+    private Button _selectedButton;
+
     public override void Initialise() {
 
         for (int i = 0; i < _emotionButtons.Count; i++) {
             int copy = i;
-            _emotionButtons[copy].onClick.AddListener(() => OnClickEmotionSelected(copy));
+            _emotionButtons[copy].onClick.AddListener(() => OnClickEmotionSelected(copy, _emotionButtons[copy]));
         }
 
         _iDontKnowButton.onClick.AddListener(OnIDKButtonClicked);
@@ -36,9 +38,16 @@ public class CheckInMoodMenu : View {
         _emotionsRect.horizontalNormalizedPosition = 0.5f;
     }
 
-    private void OnClickEmotionSelected(int val) {
+    private void OnClickEmotionSelected(int val, Button button) {
         AppManager.instance._uData.currentEmotionValue = val;
         _saveButton.interactable = true;
+
+        if(_selectedButton != null) {
+            _selectedButton.GetComponent<Image>().color = Color.white;
+        }
+
+        _selectedButton = button;
+        _selectedButton.GetComponent<Image>().color = new Color32(139, 210, 235, 255);
     }
 
     private void OnIDKButtonClicked() {
