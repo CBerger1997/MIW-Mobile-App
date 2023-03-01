@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NHS - <link=NHS> <u><color=blue>111</color></u></link>
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: add3c61352fe39f4483c858a95f58494, type: 2}
-  m_sharedMaterial: {fileID: 6315132607586059283, guid: add3c61352fe39f4483c858a95f58494, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d6ba6a865afdd1443afb3dc674f9ca7f, type: 2}
+  m_sharedMaterial: {fileID: -6554596366623876982, guid: d6ba6a865afdd1443afb3dc674f9ca7f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

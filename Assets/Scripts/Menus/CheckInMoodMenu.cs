@@ -39,6 +39,10 @@ public class CheckInMoodMenu : View {
     }
 
     private void OnClickEmotionSelected(int val, Button button) {
+        if(AppManager.instance._uData.currentEmotionValue == -1) {
+            _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.white;
+        }
+
         AppManager.instance._uData.currentEmotionValue = val;
         _saveButton.interactable = true;
 
@@ -51,6 +55,11 @@ public class CheckInMoodMenu : View {
     }
 
     private void OnIDKButtonClicked() {
+        if (_selectedButton != null) {
+            _selectedButton.GetComponent<Image>().color = Color.white;
+        }
+
+        _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.grey;
         AppManager.instance._uData.currentEmotionValue = -1;
         _saveButton.interactable = true;
     }

@@ -3,9 +3,9 @@ using UnityEngine.UI;
 using TMPro;
 
 public class AffirmationMenuView : View {
-    [SerializeField] private Button _backButton;
     [SerializeField] private Button _saveButton;
     [SerializeField] private Button _helpButton;
+
 
     [SerializeField] private TextMeshProUGUI _infoText;
 
@@ -25,7 +25,6 @@ public class AffirmationMenuView : View {
     private Color _defaultButtonColor;
 
     public override void Initialise() {
-        _backButton.onClick.AddListener(delegate { MoveToPreviousScreen(); });
         _saveButton.onClick.AddListener(delegate { SaveAndExit(); });
         _helpButton.onClick.AddListener(delegate { ToggleHelpMenu(); });
 
@@ -99,14 +98,14 @@ public class AffirmationMenuView : View {
             GameObject affirmationButton = Instantiate(_buttonPrefab, _listContent.gameObject.transform);
             affirmationButton.name = i.ToString();
             affirmationButton.GetComponentInChildren<TMP_Text>().text = AppManager.instance._aManager.affirmationSelection[i];
-            affirmationButton.GetComponentInChildren<TMP_Text>().fontSizeMax = 25;
+            //affirmationButton.GetComponentInChildren<TMP_Text>().fontSizeMax = 35;
             affirmationButton.GetComponent<Button>().onClick.AddListener(delegate { OnListAffirmationClicked(int.Parse(affirmationButton.name), affirmationButton); });
 
             if (AppManager.instance._uData.userAffirmationListSelection >= 0) {
                 if (i == AppManager.instance._uData.userAffirmationListSelection) {
                     _currentListSelection = AppManager.instance._uData.userAffirmationListSelection;
                     _listButton = affirmationButton;
-                    _listButton.GetComponent<Image>().color = Color.green;
+                    _listButton.GetComponentInChildren<TMP_Text>().color = Color.grey;
                 }
             }
         }
@@ -116,9 +115,11 @@ public class AffirmationMenuView : View {
         if (_helpScreen.activeSelf) {
             _toggleScreen.SetActive(true);
             _helpScreen.SetActive(false);
+            _saveButton.gameObject.SetActive(true);
         } else {
             _toggleScreen.SetActive(false);
             _helpScreen.SetActive(true);
+            _saveButton.gameObject.SetActive(false);
         }
     }
 
@@ -138,12 +139,12 @@ public class AffirmationMenuView : View {
 
     private void OnListAffirmationClicked(int index, GameObject button) {
         if (_listButton != null) {
-            _listButton.GetComponent<Image>().color = _defaultButtonColor;
+            _listButton.GetComponentInChildren<TMP_Text>().color = Color.white;
         }
 
         _currentListSelection = index;
         _listButton = button;
-        _listButton.GetComponent<Image>().color = Color.green;
+        _listButton.GetComponentInChildren<TMP_Text>().color = Color.grey;
 
         if (_currentListSelection != AppManager.instance._uData.userAffirmationListSelection) {
             _saveButton.GetComponent<Button>().interactable = true;

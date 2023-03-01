@@ -5,8 +5,8 @@ public class ViewManager : MonoBehaviour {
     private static ViewManager s_instance;
 
     [SerializeField] private View _startingView;
-
     [SerializeField] private View[] _views;
+    [SerializeField] private TopBarManager _topBarManager;
 
     private View _currentView;
 
@@ -42,6 +42,9 @@ public class ViewManager : MonoBehaviour {
                 if (s_instance._currentView != null) {
                     if (remember) {
                         s_instance._history.Push(s_instance._currentView);
+                        s_instance._topBarManager.AllowBackButton(true);
+                    } else {
+                        s_instance._topBarManager.AllowBackButton(false);
                     }
                     s_instance._currentView.Hide();
                 }
@@ -57,6 +60,9 @@ public class ViewManager : MonoBehaviour {
         if (s_instance._currentView != null) {
             if (remember) {
                 s_instance._history.Push(s_instance._currentView);
+                s_instance._topBarManager.AllowBackButton(true);
+            } else if (s_instance._history.Count == 0) {
+                s_instance._topBarManager.AllowBackButton(false);
             }
             s_instance._currentView.Hide();
         }
@@ -70,10 +76,6 @@ public class ViewManager : MonoBehaviour {
         if (s_instance._history.Count != 0) {
             Show(s_instance._history.Pop(), false);
         }
-    }
-
-    public static int HistoryCount() {
-        return s_instance._history.Count;
     }
 
     public static void ClearHistory() {

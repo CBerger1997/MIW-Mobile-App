@@ -2,11 +2,17 @@
 using UnityEngine.UI;
 
 public class ScrollSwipe : MonoBehaviour {
+    [SerializeField] private Button _leftButton;
+    [SerializeField] private Button _rightButton;
+
     public GameObject scrollbar;
-    private float scroll_pos = 0;
+    public float scroll_pos = 0;
     public float[] scrollPositions;
     float distance;
-    public int selection;// { set; get; }
+
+    bool isDisableMovement = false;
+
+    public int selection { get; set; }
 
     public delegate void OnSelectionChangeDelegate();
     public event OnSelectionChangeDelegate OnSelectionChange;
@@ -18,6 +24,9 @@ public class ScrollSwipe : MonoBehaviour {
         for (int i = 0; i < scrollPositions.Length; i++) {
             scrollPositions[i] = distance * i;
         }
+
+        _leftButton.onClick.AddListener(OnLeftClicked);
+        _rightButton.onClick.AddListener(OnRightClicked);
     }
 
     private void Start() {
@@ -27,9 +36,9 @@ public class ScrollSwipe : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) && !isDisableMovement) {
             scroll_pos = scrollbar.GetComponent<Scrollbar>().value;
-        } else {
+        } else if (!isDisableMovement) {
             for (int i = 0; i < scrollPositions.Length; i++) {
                 if (scroll_pos < scrollPositions[i] + (distance / 2) && scroll_pos > scrollPositions[i] - (distance / 2)) {
                     scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[i], 0.1f);
@@ -37,6 +46,44 @@ public class ScrollSwipe : MonoBehaviour {
                     OnSelectionChange();
                 }
             }
+        } else if (isDisableMovement) {
+            if (scrollbar.GetComponent<Scrollbar>().value < scrollPositions[selection] || scrollbar.GetComponent<Scrollbar>().value > scrollPositions[selection]) {
+                scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[selection], 0.1f);
+                if (scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] > -0.1f && scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] < 0.1f) {
+                    scroll_pos = scrollbar.GetComponent<Scrollbar>().value;
+                    isDisableMovement = false;
+                }
+            }
+        }
+    }
+
+    private void OnLeftClicked() {
+        switch (selection) {
+            case 1:
+                selection = 0;
+                OnSelectionChange();
+                isDisableMovement = true;
+                break;
+            case 2:
+                selection = 1;
+                OnSelectionChange();
+                isDisableMovement = true;
+                break;
+        }
+    }
+
+    private void OnRightClicked() {
+        switch (selection) {
+            case 0:
+                selection = 1;
+                OnSelectionChange();
+                isDisableMovement = true;
+                break;
+            case 1:
+                selection = 2;
+                OnSelectionChange();
+                isDisableMovement = true;
+                break;
         }
     }
 }

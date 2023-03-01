@@ -16,7 +16,7 @@ public class TopBarManager : MonoBehaviour {
     void Start() {
         _homeButton.onClick.AddListener(delegate { ViewManager.Show<MainMenuView>(false); ViewManager.ClearHistory(); });
 
-        _notificationsButton.onClick.AddListener(() => ViewManager.Show<CrisisMenuView>());
+        //_notificationsButton.onClick.AddListener(() => ViewManager.Show<CrisisMenuView>());
 
         _crisisButton.onClick.AddListener(() => ViewManager.Show<CrisisMenuView>());
 
@@ -25,12 +25,11 @@ public class TopBarManager : MonoBehaviour {
         _backButton.onClick.AddListener(() => ViewManager.ShowLast());
     }
 
-    // Update is called once per frame
-    void Update() {
-        if(ViewManager.HistoryCount() == 0) {
-            _backButton.gameObject.SetActive(false);
-        } else if(!_backButton.gameObject.activeSelf) {
+    public void AllowBackButton(bool isAllow) {
+        if(isAllow) {
             _backButton.gameObject.SetActive(true);
+        } else {
+            _backButton.gameObject.SetActive(false);
         }
     }
 }

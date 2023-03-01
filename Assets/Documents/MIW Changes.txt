@@ -39,28 +39,26 @@ Check in menu
 
 light up mood button backgrounds [x]
 
-IDK button: Hex: DDD
-Size: 350 x 100
-Colour text: white
+IDK button: Hex: DDD [x]
+Size: 350 x 100 [x]
+Colour text: white [x]
 
-Continue Button colour: 
+Continue Button colour: [x]
 
 --------------------------------------------------------------------
 Top Permanent Bar
 --------------------------------------------------------------------
 
-White Icons
-Diff colour backgrounds: 8BD2EB
-image size: 90 x 90
-Rounded: 6
+White Icons [x]
+Diff colour backgrounds: 8BD2EB [x]
+image size: 90 x 90 [x]
+Rounded: 6 [x]
 
-Bring back button in line with permanent menu
+Bring back button in line with permanent menu [x]
 
-Change message button to home button
+Change message button to home button [x]
 
-Link to crisis in notification and profile page
-
-Change profile button to crisis button
+Change profile button to crisis button [x]
 
 --------------------------------------------------------------------
 Journal Menu

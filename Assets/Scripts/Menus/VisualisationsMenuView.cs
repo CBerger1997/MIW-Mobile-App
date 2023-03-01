@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class VisualisationsMenuView : View {
-
-    [SerializeField] private Button _backButton;
     [SerializeField] private Button _volumeButton;
     [SerializeField] private Slider _volumeSlider;
 
@@ -14,7 +12,6 @@ public class VisualisationsMenuView : View {
     [SerializeField] private AudioSource _currentAudioSource;
 
     public override void Initialise() {
-        _backButton.onClick.AddListener(() => ViewManager.ShowLast());
         _volumeButton.onClick.AddListener(() => OnVolumeButtonClick());
         _volumeSlider.onValueChanged.AddListener(delegate { OnVolumeChanged(); });
 
