@@ -7,15 +7,15 @@ public class CheckInMoodMenu : View {
     [SerializeField] private List<Button> _emotionButtons = new List<Button>();
     [SerializeField] private Button _iDontKnowButton;
     [SerializeField] private Button _saveButton;
-    [SerializeField] private Button _leftButton;
-    [SerializeField] private Button _rightButton;
 
     [SerializeField] private Button _journalButton;
     [SerializeField] private Button _checkInAnalysisButton;
 
     [SerializeField] private ScrollRect _emotionsRect;
+    [SerializeField] private GameObject _toggleContent;
 
     private Button _selectedButton;
+    private int _currentOptionSelection;
 
     public override void Initialise() {
 
@@ -26,14 +26,13 @@ public class CheckInMoodMenu : View {
 
         _iDontKnowButton.onClick.AddListener(OnIDKButtonClicked);
 
-        _leftButton.onClick.AddListener(OnLeftClicked);
-        _rightButton.onClick.AddListener(OnRightClicked);
-
         _saveButton.onClick.AddListener(() => ViewManager.Show<CheckInReasonMenu>());
         _saveButton.interactable = false;
 
         _journalButton.onClick.AddListener(() => ViewManager.Show<JournalMenuView>());
         _checkInAnalysisButton.onClick.AddListener(() => ViewManager.Show<CheckInAnalysisMenuView>());
+
+        _toggleContent.GetComponent<ScrollSwipe>().OnSelectionChange += OnSelectionChangeHandler;
 
         _emotionsRect.horizontalNormalizedPosition = 0.5f;
     }
@@ -64,11 +63,11 @@ public class CheckInMoodMenu : View {
         _saveButton.interactable = true;
     }
 
-    private void OnLeftClicked() {
-        _emotionsRect.horizontalNormalizedPosition -= 0.5f;
-    }
+    private void OnSelectionChangeHandler() {
+        int val = _toggleContent.GetComponent<ScrollSwipe>().selection;
 
-    private void OnRightClicked() {
-        _emotionsRect.horizontalNormalizedPosition += 0.5f;
+        if (val != _currentOptionSelection) {
+            _currentOptionSelection = val;
+        }
     }
 }

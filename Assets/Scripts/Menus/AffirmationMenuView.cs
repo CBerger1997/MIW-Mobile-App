@@ -22,7 +22,6 @@ public class AffirmationMenuView : View {
     private int _currentOptionSelection;
     public int _currentListSelection;
     private GameObject _listButton;
-    private Color _defaultButtonColor;
 
     public override void Initialise() {
         _saveButton.onClick.AddListener(delegate { SaveAndExit(); });
@@ -43,7 +42,6 @@ public class AffirmationMenuView : View {
 
         SetAffirmationInfoTextAndContent();
         SetupAffirmationList();
-        _defaultButtonColor = _buttonPrefab.GetComponent<Button>().image.color;
     }
 
     private void OnSelectionChangeHandler() {
