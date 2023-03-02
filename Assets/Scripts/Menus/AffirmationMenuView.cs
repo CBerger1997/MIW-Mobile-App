@@ -40,6 +40,9 @@ public class AffirmationMenuView : View {
 
         SetAffirmationInfoTextAndContent();
         SetupAffirmationList();
+
+        _toggleContent.GetComponent<ScrollSwipe>().PresetPosition(AppManager.instance._uData.userAffirmationSelection);
+
         _autoSpaceOnResolutionMain.PerformAutoSpace();
         _autoSpaceOnResolutionHelp.PerformAutoSpace();
     }

@@ -35,6 +35,8 @@ public class CheckInMoodMenu : View {
 
         _emotionsRect.horizontalNormalizedPosition = 0.5f;
 
+        _toggleContent.GetComponent<ScrollSwipe>().PresetPosition(2);
+
         _autoSpaceOnResolution.PerformAutoSpace();
     }
 

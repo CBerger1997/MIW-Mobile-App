@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ScrollSwipe : MonoBehaviour {
+public class ScrollSwipe : MonoBehaviour
+{
     [SerializeField] private Button _leftButton;
     [SerializeField] private Button _rightButton;
 
@@ -17,11 +18,13 @@ public class ScrollSwipe : MonoBehaviour {
     public delegate void OnSelectionChangeDelegate();
     public event OnSelectionChangeDelegate OnSelectionChange;
 
-    private void Awake() {
+    private void Awake()
+    {
         scrollPositions = new float[transform.childCount];
         distance = 1f / (scrollPositions.Length - 1);
 
-        for (int i = 0; i < scrollPositions.Length; i++) {
+        for (int i = 0; i < scrollPositions.Length; i++)
+        {
             scrollPositions[i] = distance * i;
         }
 
@@ -29,27 +32,31 @@ public class ScrollSwipe : MonoBehaviour {
         _rightButton.onClick.AddListener(OnRightClicked);
     }
 
-    private void Start() {
-        selection = AppManager.instance._uData.userAffirmationSelection;
-        scrollbar.GetComponent<Scrollbar>().value = scrollPositions[selection];
-        scroll_pos = scrollPositions[selection];
-    }
-
-    private void Update() {
-        if (Input.GetMouseButton(0) && !isDisableMovement) {
+    private void Update()
+    {
+        if (Input.GetMouseButton(0) && !isDisableMovement)
+        {
             scroll_pos = scrollbar.GetComponent<Scrollbar>().value;
-        } else if (!isDisableMovement) {
-            for (int i = 0; i < scrollPositions.Length; i++) {
-                if (scroll_pos < scrollPositions[i] + (distance / 2) && scroll_pos > scrollPositions[i] - (distance / 2)) {
+        }
+        else if (!isDisableMovement)
+        {
+            for (int i = 0; i < scrollPositions.Length; i++)
+            {
+                if (scroll_pos < scrollPositions[i] + (distance / 2) && scroll_pos > scrollPositions[i] - (distance / 2))
+                {
                     scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[i], 0.1f);
                     selection = i;
                     OnSelectionChange();
                 }
             }
-        } else if (isDisableMovement) {
-            if (scrollbar.GetComponent<Scrollbar>().value < scrollPositions[selection] || scrollbar.GetComponent<Scrollbar>().value > scrollPositions[selection]) {
+        }
+        else if (isDisableMovement)
+        {
+            if (scrollbar.GetComponent<Scrollbar>().value < scrollPositions[selection] || scrollbar.GetComponent<Scrollbar>().value > scrollPositions[selection])
+            {
                 scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[selection], 0.1f);
-                if (scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] > -0.05f && scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] < 0.05f) {
+                if (scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] > -0.05f && scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] < 0.05f)
+                {
                     scroll_pos = scrollbar.GetComponent<Scrollbar>().value;
                     isDisableMovement = false;
                 }
@@ -57,19 +64,30 @@ public class ScrollSwipe : MonoBehaviour {
         }
     }
 
-    private void OnLeftClicked() {
-        if (selection > 0) {
+    private void OnLeftClicked()
+    {
+        if (selection > 0)
+        {
             selection--;
             OnSelectionChange();
             isDisableMovement = true;
         }
     }
 
-    private void OnRightClicked() {
-        if (selection < scrollPositions.Length - 1) {
+    private void OnRightClicked()
+    {
+        if (selection < scrollPositions.Length - 1)
+        {
             selection++;
             OnSelectionChange();
             isDisableMovement = true;
         }
+    }
+
+    public void PresetPosition(int val)
+    {
+        selection = val;
+        scrollbar.GetComponent<Scrollbar>().value = scrollPositions[selection];
+        scroll_pos = scrollPositions[selection];
     }
 }
