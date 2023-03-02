@@ -49,7 +49,7 @@ public class ScrollSwipe : MonoBehaviour {
         } else if (isDisableMovement) {
             if (scrollbar.GetComponent<Scrollbar>().value < scrollPositions[selection] || scrollbar.GetComponent<Scrollbar>().value > scrollPositions[selection]) {
                 scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[selection], 0.1f);
-                if (scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] > -0.1f && scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] < 0.1f) {
+                if (scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] > -0.05f && scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] < 0.05f) {
                     scroll_pos = scrollbar.GetComponent<Scrollbar>().value;
                     isDisableMovement = false;
                 }
@@ -58,32 +58,18 @@ public class ScrollSwipe : MonoBehaviour {
     }
 
     private void OnLeftClicked() {
-        switch (selection) {
-            case 1:
-                selection = 0;
-                OnSelectionChange();
-                isDisableMovement = true;
-                break;
-            case 2:
-                selection = 1;
-                OnSelectionChange();
-                isDisableMovement = true;
-                break;
+        if (selection > 0) {
+            selection--;
+            OnSelectionChange();
+            isDisableMovement = true;
         }
     }
 
     private void OnRightClicked() {
-        switch (selection) {
-            case 0:
-                selection = 1;
-                OnSelectionChange();
-                isDisableMovement = true;
-                break;
-            case 1:
-                selection = 2;
-                OnSelectionChange();
-                isDisableMovement = true;
-                break;
+        if (selection < scrollPositions.Length - 1) {
+            selection++;
+            OnSelectionChange();
+            isDisableMovement = true;
         }
     }
 }
