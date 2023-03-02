@@ -4,12 +4,12 @@ using TMPro;
 using UnityEngine.UI;
 
 public class StartUpMenuView : View {
-    //[SerializeField] private GameObject _scrollView;
-    [SerializeField] private List<TextMeshProUGUI> _firstTimeStartUp;
-    [SerializeField] private List<TextMeshProUGUI> _startUpPage;
+    [SerializeField] private List<GameObject> _firstTimeStartUp;
+    [SerializeField] private List<GameObject> _startUpPage;
     [SerializeField] private GameObject _permanentMenu;
     [SerializeField] private Button _continueButton;
-
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPt1;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPt2;
 
     Animator _animator;
 
@@ -24,23 +24,28 @@ public class StartUpMenuView : View {
         SetAffirmationText();
 
         if (!AppManager.instance._uData.hasOnboarded) {
-            foreach (TextMeshProUGUI text in _firstTimeStartUp) {
-                text.gameObject.SetActive(true);
+            foreach (GameObject obj in _firstTimeStartUp) {
+                obj.SetActive(true);
             }
 
-            foreach (TextMeshProUGUI text in _startUpPage) {
-                text.gameObject.SetActive(false);
+            foreach (GameObject obj in _startUpPage) {
+                obj.SetActive(false);
             }
         } else {
-            foreach (TextMeshProUGUI text in _firstTimeStartUp) {
-                text.gameObject.SetActive(false);
+            foreach (GameObject obj in _firstTimeStartUp) {
+                obj.SetActive(false);
             }
 
-            foreach (TextMeshProUGUI text in _startUpPage) {
-                text.gameObject.SetActive(true);
+            foreach (GameObject obj in _startUpPage) {
+                obj.SetActive(true);
             }
         }
         _animator = GetComponent<Animator>();
+
+        Canvas.ForceUpdateCanvases();
+
+        _autoSpaceOnResolutionPt1.PerformAutoSpace();
+        _autoSpaceOnResolutionPt2.PerformAutoSpace();
     }
 
     public override void Show() {
@@ -70,8 +75,8 @@ public class StartUpMenuView : View {
             "\n \n" +
             AppManager.instance._qManager.author[randomNum];
 
-        _firstTimeStartUp[1].text = text;
-        _startUpPage[0].text = text;
+        _firstTimeStartUp[1].GetComponent<TMP_Text>().text = text;
+        _startUpPage[0].GetComponent<TMP_Text>().text = text;
     }
 
     private void SetAffirmationText() {
@@ -90,7 +95,7 @@ public class StartUpMenuView : View {
                 break;
         }
 
-        _startUpPage[1].text = text;
+        _startUpPage[1].GetComponent<TMP_Text>().text = text;
     }
 
     private void ContinueButtonClicked() {

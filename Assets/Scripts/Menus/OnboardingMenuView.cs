@@ -8,7 +8,7 @@ public class OnboardingMenuView : View {
     [SerializeField] private Button _affirmationButton;
     [SerializeField] private List<Toggle> _notificationToggles;
     [SerializeField] private GameObject _permanentMenu;
-
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     private Toggle _currentToggle;
 
@@ -22,6 +22,8 @@ public class OnboardingMenuView : View {
 
         _currentToggle = _notificationToggles[0];
         _currentToggle.isOn = true;
+
+        _autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void OnToggleValueChange(Toggle toggle) {

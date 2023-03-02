@@ -7,6 +7,7 @@ public class CheckInReasonMenu : View {
     [SerializeField] private List<Button> _contextButtons = new List<Button>();
     [SerializeField] private Button _iDontKnowButton;
     [SerializeField] private Button _saveButton;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     private Button _selectedButton;
 
@@ -20,6 +21,7 @@ public class CheckInReasonMenu : View {
 
         _saveButton.onClick.AddListener(delegate { MoveToNextScreen(2); });
         _saveButton.interactable = false;
+        _autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void OnClickContextSelected(int val, Button button) {

@@ -5,17 +5,14 @@ using UnityEngine.UI;
 public class VisualisationsMenuView : View {
     [SerializeField] private Button _volumeButton;
     [SerializeField] private Slider _volumeSlider;
-
     [SerializeField] private List<Button> _audioButtons;
-
     [SerializeField] private AudioSource _currentAudioSource;
     [SerializeField] private GameObject _toggleContent;
-
-    [SerializeField] private AudioClip[] _audioFilesMale;
-    [SerializeField] private AudioClip[] _audioFilesFemale;
-
     [SerializeField] private AudioSource _audioPlayer;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
+    private AudioClip[] _audioFilesMale;
+    private AudioClip[] _audioFilesFemale;
     private int _currentOptionSelection;
 
     public override void Initialise() {
@@ -33,6 +30,8 @@ public class VisualisationsMenuView : View {
 
         _audioFilesMale = Resources.LoadAll<AudioClip>(@"Audio\Male");
         _audioFilesFemale = Resources.LoadAll<AudioClip>(@"Audio\Female");
+
+        _autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void OnAudioButtonClick(int index) {

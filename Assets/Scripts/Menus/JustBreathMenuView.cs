@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class JustBreathMenuView : View {
-
-    [SerializeField] private Button _backButton;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     public override void Initialise() {
-        _backButton.onClick.AddListener(() => ViewManager.ShowLast());
+        _autoSpaceOnResolution.PerformAutoSpace();
     }
 }

@@ -7,25 +7,23 @@ public class SettingsMenuView : View {
 
     [SerializeField] private Button _notificationsButton;
     [SerializeField] private Button _declarationsButton;
-    [SerializeField] private Button _backButton;
     [SerializeField] private Button _deleteUserButton;
     [SerializeField] private Button _changePasswordButton;
     [SerializeField] private Button _saveButton;
-
     [SerializeField] private List<Toggle> _notificationToggles;
-
     [SerializeField] private List<GameObject> _screens;
-
     [SerializeField] private GameObject _warningText;
-
     [SerializeField] private TMP_InputField _curPasswordInputField;
     [SerializeField] private TMP_InputField _newPasswordInputField;
     [SerializeField] private TMP_InputField _newCopyPasswordInputField;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionMain;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionNot;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionDec;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPass;
 
     private Toggle _currentToggle;
 
     public override void Initialise() {
-        _backButton.onClick.AddListener(delegate { BackButtonOnClick(); });
         _saveButton.onClick.AddListener(delegate { SaveButtonOnClick(); });
         _deleteUserButton.onClick.AddListener(delegate { DeleteUserDataOnClick(); });
         _notificationsButton.onClick.AddListener(delegate { ShowNotificationsScreen(1); });
@@ -37,6 +35,11 @@ public class SettingsMenuView : View {
         }
 
         ShowSpecificScreen(0);
+
+        _autoSpaceOnResolutionMain.PerformAutoSpace();
+        _autoSpaceOnResolutionNot.PerformAutoSpace();
+        _autoSpaceOnResolutionDec.PerformAutoSpace();
+        _autoSpaceOnResolutionPass.PerformAutoSpace();
     }
 
     private void OnToggleValueChange(Toggle toggle) {

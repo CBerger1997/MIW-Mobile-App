@@ -9,6 +9,7 @@ public class MainMenuView : View {
     [SerializeField] private Button _justBreathButton;
     [SerializeField] private Button _journalButton;
     [SerializeField] private Button _checkInButton;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     public override void Initialise() {
         _affirmationButton.onClick.AddListener(() => ViewManager.Show<AffirmationMenuView>());
@@ -20,5 +21,7 @@ public class MainMenuView : View {
         _journalButton.onClick.AddListener(() => ViewManager.Show<JournalMenuView>());
 
         _checkInButton.onClick.AddListener(() => ViewManager.Show<CheckInMoodMenu>());
+
+        _autoSpaceOnResolution.PerformAutoSpace();
     }
 }

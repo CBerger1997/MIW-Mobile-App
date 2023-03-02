@@ -5,19 +5,17 @@ using TMPro;
 public class AffirmationMenuView : View {
     [SerializeField] private Button _saveButton;
     [SerializeField] private Button _helpButton;
-
-
     [SerializeField] private TextMeshProUGUI _infoText;
-
     [SerializeField] private GameObject _toggleScreen;
     [SerializeField] private GameObject _helpScreen;
-
     [SerializeField] private GameObject _listContentParent;
     [SerializeField] private GameObject _listContent;
     [SerializeField] private GameObject _personalContent;
     [SerializeField] private TMP_InputField _personalInputText;
     [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private GameObject _toggleContent;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionMain;
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionHelp;
 
     private int _currentOptionSelection;
     public int _currentListSelection;
@@ -42,6 +40,8 @@ public class AffirmationMenuView : View {
 
         SetAffirmationInfoTextAndContent();
         SetupAffirmationList();
+        _autoSpaceOnResolutionMain.PerformAutoSpace();
+        _autoSpaceOnResolutionHelp.PerformAutoSpace();
     }
 
     private void OnSelectionChangeHandler() {

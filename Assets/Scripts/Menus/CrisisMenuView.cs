@@ -3,7 +3,9 @@ using UnityEngine.UI;
 
 public class CrisisMenuView : View {
 
-    public override void Initialise() {
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
+    public override void Initialise() {
+        _autoSpaceOnResolution.PerformAutoSpace();
     }
 }

@@ -64,11 +64,11 @@ Change profile button to crisis button [x]
 Journal Menu
 --------------------------------------------------------------------
 
-Grey box is free text
+Grey box is free text [x]
 
 Store text with date
 
-Free text goes to Save button
+Free text goes to Save button [x]
 
 Past Entries view all past entries
 
@@ -80,11 +80,11 @@ Date : text
 
 Date : text
 
-Change buttons
+Change buttons [x]
 
-Green for save: 74D14A
+Green for save: 74D14A [x]
 
-Turqoise for past entries: 8BD2EB
+Turqoise for past entries: 8BD2EB [x]
 
 --------------------------------------------------------------------
 Check In Analysis Menu
@@ -108,17 +108,17 @@ Specific day view shows graph of mood over time
 Main Menu
 --------------------------------------------------------------------
 
-Buttons all diff colour: yellow -> blue change navy to blue
+Buttons all diff colour: yellow -> blue change navy to blue [x]
 
-remove check in analysis button
+remove check in analysis button [x]
 
-remove calendar, resize scroll view
+remove calendar, resize scroll view [x]
 
 --------------------------------------------------------------------
 Visualisations Menu
 --------------------------------------------------------------------
 
-Combine both panels to one panel and change the male and female on choice
+Combine both panels to one panel and change the male and female on choice [x]
 
 button colours change to same as home screen
 
@@ -136,7 +136,7 @@ continue playing after phone locked
 Affirmation Menu
 --------------------------------------------------------------------
 
-Chevrons for scrolling side to side
+Chevrons for scrolling side to side [x]
 
 --------------------------------------------------------------------
 BUTTON CODES / FONT
@@ -155,8 +155,12 @@ BUTTON CODES / FONT
 Montserrat font
 
 --------------------------------------------------------------------
-SCREEN CHANGES
+THINGS TO ASK
 --------------------------------------------------------------------
 
+Start up quote and affirmation close, difficult to tell difference, how want differentiate them?
+
+	maybe line between
+	maybe colour or size difference
 
 https://icons8.com/icons/set/settings-button

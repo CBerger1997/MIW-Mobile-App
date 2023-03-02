@@ -41,16 +41,16 @@ public class CheckInAnalysisMenuView : View {
         }
     }
 
+    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    [SerializeField] private Transform[] Weeks;
+    [SerializeField] private TMP_Text MonthAndYear;
+    
+    private DateTime curDate = DateTime.Now;
     private List<Day> days = new List<Day>();
-
-    public Transform[] Weeks;
-
-    public TMP_Text MonthAndYear;
-
-    public DateTime curDate = DateTime.Now;
 
     public override void Initialise() {
         UpdateCalendar(DateTime.Now.Year, DateTime.Now.Month);
+        _autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void UpdateCalendar(int year, int month) {
