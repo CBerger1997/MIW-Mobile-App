@@ -7,6 +7,8 @@ public class DataLoader : MonoBehaviour {
     public string[] clients;
 
     IEnumerator Start() {
+
+
         WWW clientData = new WWW("http://localhost/MIW_APP/ClientData.php");
 
         yield return clientData;

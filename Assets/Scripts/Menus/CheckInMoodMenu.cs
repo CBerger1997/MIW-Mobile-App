@@ -11,7 +11,7 @@ public class CheckInMoodMenu : View {
     [SerializeField] private Button _checkInAnalysisButton;
     [SerializeField] private ScrollRect _emotionsRect;
     [SerializeField] private GameObject _toggleContent;
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     private Button _selectedButton;
     private int _currentOptionSelection;
@@ -37,7 +37,7 @@ public class CheckInMoodMenu : View {
 
         _toggleContent.GetComponent<ScrollSwipe>().PresetPosition(2);
 
-        _autoSpaceOnResolution.PerformAutoSpace();
+        //_autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void OnClickEmotionSelected(int val, Button button) {

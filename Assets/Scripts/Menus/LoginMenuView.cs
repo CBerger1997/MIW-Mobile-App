@@ -8,7 +8,7 @@ public class LoginMenuView : View {
     [SerializeField] private TMP_InputField _usernameInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private GameObject _warningText;
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
     [SerializeField] private bool isLoginSuccessful = false;
 
     public override void Initialise() {
@@ -16,7 +16,7 @@ public class LoginMenuView : View {
         _resetPasswordButton.onClick.AddListener(delegate { ResetPasswordButtonOnClick(); });
         _warningText.gameObject.SetActive(false);
 
-        _autoSpaceOnResolution.PerformAutoSpace();
+        //_autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void Update() {

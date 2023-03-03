@@ -41,7 +41,7 @@ public class CheckInAnalysisMenuView : View {
         }
     }
 
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
     [SerializeField] private Transform[] Weeks;
     [SerializeField] private TMP_Text MonthAndYear;
     
@@ -50,7 +50,7 @@ public class CheckInAnalysisMenuView : View {
 
     public override void Initialise() {
         UpdateCalendar(DateTime.Now.Year, DateTime.Now.Month);
-        _autoSpaceOnResolution.PerformAutoSpace();
+        //_autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void UpdateCalendar(int year, int month) {

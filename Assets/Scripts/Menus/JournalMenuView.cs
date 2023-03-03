@@ -13,7 +13,7 @@ public class JournalMenuView : View {
     [SerializeField] private Button _saveButton;
     [SerializeField] private Button _continueButton;
     [SerializeField] private Button _pastEntriesButton;
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     private string _journalEntry;
 
@@ -23,7 +23,7 @@ public class JournalMenuView : View {
 
         _saveButton.onClick.AddListener(OnSavedClicked);
         _continueButton.onClick.AddListener(delegate { ViewManager.ShowLast(); });
-        _autoSpaceOnResolution.PerformAutoSpace();
+        //_autoSpaceOnResolution.PerformAutoSpace();
     }
 
     public override void Show() {

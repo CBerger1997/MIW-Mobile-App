@@ -14,8 +14,8 @@ public class AffirmationMenuView : View {
     [SerializeField] private TMP_InputField _personalInputText;
     [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private GameObject _toggleContent;
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionMain;
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionHelp;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionMain;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionHelp;
 
     private int _currentOptionSelection;
     public int _currentListSelection;
@@ -43,8 +43,8 @@ public class AffirmationMenuView : View {
 
         _toggleContent.GetComponent<ScrollSwipe>().PresetPosition(AppManager.instance._uData.userAffirmationSelection);
 
-        _autoSpaceOnResolutionMain.PerformAutoSpace();
-        _autoSpaceOnResolutionHelp.PerformAutoSpace();
+        //_autoSpaceOnResolutionMain.PerformAutoSpace();
+        //_autoSpaceOnResolutionHelp.PerformAutoSpace();
     }
 
     private void OnSelectionChangeHandler() {

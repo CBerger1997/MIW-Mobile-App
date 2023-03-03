@@ -7,9 +7,12 @@ public class StartUpMenuView : View {
     [SerializeField] private List<GameObject> _firstTimeStartUp;
     [SerializeField] private List<GameObject> _startUpPage;
     [SerializeField] private GameObject _permanentMenu;
-    [SerializeField] private Button _continueButton;
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPt1;
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPt2;
+    [SerializeField] private GameObject _startUpParent1;
+    [SerializeField] private GameObject _startUpParent2;
+    [SerializeField] private Button _continueButton1;
+    [SerializeField] private Button _continueButton2;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPt1;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPt2;
 
     Animator _animator;
 
@@ -17,35 +20,29 @@ public class StartUpMenuView : View {
 
     public override void Initialise() {
 
-        _continueButton.onClick.AddListener(delegate { ContinueButtonClicked(); });
+        _continueButton1.onClick.AddListener(delegate { ContinueButtonClicked(); });
+        _continueButton2.onClick.AddListener(delegate { ContinueButtonClicked(); });
 
         SetQuoteText();
 
         SetAffirmationText();
 
+        _startUpParent1.SetActive(false);
+        _startUpParent2.SetActive(false);
+
         if (!AppManager.instance._uData.hasOnboarded) {
-            foreach (GameObject obj in _firstTimeStartUp) {
-                obj.SetActive(true);
-            }
-
-            foreach (GameObject obj in _startUpPage) {
-                obj.SetActive(false);
-            }
+            _startUpParent1.SetActive(true);
+            _startUpParent2.SetActive(false);
         } else {
-            foreach (GameObject obj in _firstTimeStartUp) {
-                obj.SetActive(false);
-            }
-
-            foreach (GameObject obj in _startUpPage) {
-                obj.SetActive(true);
-            }
+            _startUpParent1.SetActive(false);
+            _startUpParent2.SetActive(true);
         }
         _animator = GetComponent<Animator>();
 
         Canvas.ForceUpdateCanvases();
 
-        _autoSpaceOnResolutionPt1.PerformAutoSpace();
-        _autoSpaceOnResolutionPt2.PerformAutoSpace();
+        //_autoSpaceOnResolutionPt1.PerformAutoSpace();
+        //_autoSpaceOnResolutionPt2.PerformAutoSpace();
     }
 
     public override void Show() {

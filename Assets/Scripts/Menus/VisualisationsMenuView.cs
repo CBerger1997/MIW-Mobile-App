@@ -9,7 +9,7 @@ public class VisualisationsMenuView : View {
     [SerializeField] private AudioSource _currentAudioSource;
     [SerializeField] private GameObject _toggleContent;
     [SerializeField] private AudioSource _audioPlayer;
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     private AudioClip[] _audioFilesMale;
     private AudioClip[] _audioFilesFemale;
@@ -31,7 +31,7 @@ public class VisualisationsMenuView : View {
         _audioFilesMale = Resources.LoadAll<AudioClip>(@"Audio\Male");
         _audioFilesFemale = Resources.LoadAll<AudioClip>(@"Audio\Female");
 
-        _autoSpaceOnResolution.PerformAutoSpace();
+        //_autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void OnAudioButtonClick(int index) {

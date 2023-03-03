@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class JustBreathMenuView : View {
-    [SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     public override void Initialise() {
-        _autoSpaceOnResolution.PerformAutoSpace();
+        //_autoSpaceOnResolution.PerformAutoSpace();
     }
 }
