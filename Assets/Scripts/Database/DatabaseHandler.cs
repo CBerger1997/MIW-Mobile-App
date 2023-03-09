@@ -33,25 +33,22 @@ public class DatabaseHandler : MonoBehaviour {
 
 		try{
 			con = new MySqlConnection(connectionString);
+			string sql = "SELECT * FROM wp_users";
+			cmd = new MySqlCommand(sql, con);
 			con.Open();
-			Debug.Log("Mysql state: "+con.State);
+			Debug.Log("Mysql state: " + con.State);
+			Debug.Log("Mysql port: " + con.ConnectionString);
+			Debug.Log("Mysql database: " + con.Database);
 
-			//string sql = "SELECT * FROM clothes";
-			//cmd = new MySqlCommand(sql, con);
+			rdr = cmd.ExecuteReader();
 
-//			string sql = "SELECT * FROM clothes";
-//			cmd = new MySqlCommand(sql, con);
-//			rdr = cmd.ExecuteReader();
-//
-//			while (rdr.Read())
-//			{
-//				Debug.Log("???");
-//				Debug.Log(rdr[0]+" -- "+rdr[1]);
-//			}
-//			rdr.Close();
-
-		}catch(Exception e){
-			Debug.Log (e);
+			//while (rdr.Read())
+			//{
+			//	Debug.Log(rdr);
+			//}
+		}
+        catch(Exception e){
+			Debug.Log ("Error: " + e);
 		}
 	}
 
