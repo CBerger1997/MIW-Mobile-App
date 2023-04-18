@@ -39,7 +39,7 @@ public class ViewManager : MonoBehaviour {
     public static void Show<T>(bool remember = true) where T : View {
         for (int i = 0; i < s_instance._views.Length; i++) {
             if (s_instance._views[i] is T) {
-                if (s_instance._currentView != null) {
+                if (s_instance._currentView != null && s_instance._currentView != s_instance._views[i]) {
                     if (remember) {
                         s_instance._history.Push(s_instance._currentView);
                         s_instance._topBarManager.AllowBackButton(true);

@@ -9,68 +9,105 @@ using System.Security.Cryptography;
 
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using UnityEngine.Networking;
 
-public class DatabaseHandler : MonoBehaviour {
-	public string host, database, user, password;
-	public bool pooling = true;
+public class DatabaseHandler : MonoBehaviour
+{
+    public string host, database, user, password;
+    public bool pooling = true;
 
-	private string connectionString;
-	private MySqlConnection con = null;
-	private MySqlCommand cmd = null;
-	private MySqlDataReader rdr = null;
+    private string connectionString;
+    private MySqlConnection con = null;
+    private MySqlCommand cmd = null;
+    private MySqlDataReader rdr = null;
 
-	private MD5 _md5Hash;
+    private MD5 _md5Hash;
 
-	void Awake(){
-		DontDestroyOnLoad (this.gameObject);
+    string LoginFile = "https://matthews335.sg-host.com/user_login.php?";
+    string email = "";
 
-		connectionString = "Server=" + host + ";Database=" + database + ";User=" + user + ";Password=" + password + ";Pooling=";
-		if (pooling) {
-			connectionString += "True";
-		} else {
-			connectionString += "False";
-		}
 
-		try{
-			con = new MySqlConnection(connectionString);
-			string sql = "SELECT * FROM wp_users";
-			cmd = new MySqlCommand(sql, con);
-			con.Open();
-			Debug.Log("Mysql state: " + con.State);
-			Debug.Log("Mysql port: " + con.ConnectionString);
-			Debug.Log("Mysql database: " + con.Database);
+    void Awake ()
+    {
+        DontDestroyOnLoad ( this.gameObject );
 
-			rdr = cmd.ExecuteReader();
 
-			//while (rdr.Read())
-			//{
-			//	Debug.Log(rdr);
-			//}
-		}
-        catch(Exception e){
-			Debug.Log ("Error: " + e);
-		}
-	}
+        string username = "charlie.jones@myinternalworld.com";
 
-	void onApplicationQuit(){
-		if (con != null) {
-			if (con.State.ToString () != "Closed") {
-				con.Close ();
-				Debug.Log ("Mysql connection closed");
-			}
-			con.Dispose ();
-		}
-	}
+        string password = "$P$Bhy1IsTVIdohmBFld2nmJ1.QdAvM9e0";
 
-	public string getFirstShops(){
-		using (rdr = cmd.ExecuteReader ()) {
-			while (rdr.Read ()) {
-				return rdr [0] + " -- " + rdr [1];
-			}
-		}
-		return "empty";
-	}
-	public string GetConnectionState(){
-		return con.State.ToString ();
-	}
+
+        string status = "";
+
+        UnityWebRequest login = new UnityWebRequest ( LoginFile );
+
+        StartCoroutine ( LoginUser ( username, password ) );
+
+    }
+
+    IEnumerator LoginUser ( string username, string password )
+    {
+        UnityWebRequest login = new UnityWebRequest ( LoginFile );
+
+        yield return login.SendWebRequest ();
+
+        Debug.Log ( "Start Login" );
+
+        if ( login.result == UnityWebRequest.Result.ConnectionError )
+        {
+            Debug.LogError ( "Login Failed" );
+            Debug.Log ( login.error );
+        }
+        else
+        {
+            Debug.Log ( "Start Login 2" );
+
+            string[] credentials = login.result.ToString ().Split ( '/' );
+
+            foreach ( string str in credentials )
+            {
+                Debug.Log ( "Start Login 3" + str );
+                Debug.Log ( login.error );
+
+                string[] creds = str.Split ( '=' );
+
+                for ( int i = 0; i < creds.Length; i++ )
+                {
+                    if ( creds[ i ] == "email" )
+                    {
+                        email = creds[ i + 1 ];
+                    }
+                }
+            }
+        }
+    }
+
+    void onApplicationQuit ()
+    {
+        if ( con != null )
+        {
+            if ( con.State.ToString () != "Closed" )
+            {
+                con.Close ();
+                Debug.Log ( "Mysql connection closed" );
+            }
+            con.Dispose ();
+        }
+    }
+
+    public string getFirstShops ()
+    {
+        using ( rdr = cmd.ExecuteReader () )
+        {
+            while ( rdr.Read () )
+            {
+                return rdr[ 0 ] + " -- " + rdr[ 1 ];
+            }
+        }
+        return "empty";
+    }
+    public string GetConnectionState ()
+    {
+        return con.State.ToString ();
+    }
 }
