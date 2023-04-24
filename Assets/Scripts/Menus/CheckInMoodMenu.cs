@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,6 @@ public class CheckInMoodMenu : View {
     [SerializeField] private Button _checkInAnalysisButton;
     [SerializeField] private ScrollRect _emotionsRect;
     [SerializeField] private GameObject _toggleContent;
-    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     private Button _selectedButton;
     private int _currentOptionSelection;
@@ -36,8 +34,6 @@ public class CheckInMoodMenu : View {
         _emotionsRect.horizontalNormalizedPosition = 0.5f;
 
         _toggleContent.GetComponent<ScrollSwipe>().PresetPosition(2);
-
-        //_autoSpaceOnResolution.PerformAutoSpace();
     }
 
     private void OnClickEmotionSelected(int val, Button button) {
@@ -62,7 +58,7 @@ public class CheckInMoodMenu : View {
         }
 
         _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.grey;
-        AppManager.instance._uData.currentEmotionValue = -1;
+        AppManager.instance._uData.currentEmotionValue = 6;
         _saveButton.interactable = true;
     }
 

@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine.Networking;
+using UnityEngine.Tilemaps;
 
 public class CheckInAnalysisMenuView : View {
     public class Day {
@@ -36,7 +39,6 @@ public class CheckInAnalysisMenuView : View {
         }
     }
 
-    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
     [SerializeField] private Transform[] Weeks;
     [SerializeField] private TMP_Text MonthAndYear;
     [SerializeField] private GameObject CheckInTextPanel;
@@ -45,6 +47,9 @@ public class CheckInAnalysisMenuView : View {
     private List<Day> days = new List<Day> ();
 
     private List<TMP_Text> checkInTexts = new List<TMP_Text> ();
+
+    private List<string> moods = new List<string> ();
+    private List<string> contexts = new List<string> ();
 
     public override void Initialise () {
         UpdateCalendar ( DateTime.Now.Year, DateTime.Now.Month );
@@ -56,6 +61,8 @@ public class CheckInAnalysisMenuView : View {
         foreach ( Day day in days ) {
             day.obj.GetComponent<Button> ().onClick.AddListener ( delegate { OnDateButtonClicked ( day ); } );
         }
+
+        ReadInTextData ();
     }
 
     private void UpdateCalendar ( int year, int month ) {
@@ -78,10 +85,8 @@ public class CheckInAnalysisMenuView : View {
                     int curDay = ( w * 7 ) + i;
                     if ( curDay < startDay || curDay - startDay >= totalDays ) {
                         newDay = new Day ( curDay - startDay, Color.grey, Weeks[ w ].GetChild ( i ).gameObject );
-                        //newDay.obj.GetComponent<Button>().interactable = false;
                     } else {
                         newDay = new Day ( curDay - startDay, Color.white, Weeks[ w ].GetChild ( i ).gameObject );
-                        //newDay.obj.GetComponent<Button>().interactable = true;
                     }
                     days.Add ( newDay );
                 }
@@ -105,7 +110,7 @@ public class CheckInAnalysisMenuView : View {
         UpdateCalendarWithUserData ( year, month, startDay );
     }
 
-    void UpdateCalendarWithUserData ( int year, int month, int startDay ) {
+    private void UpdateCalendarWithUserData ( int year, int month, int startDay ) {
         for ( int i = 0; i < AppManager.instance._uData.emotionDates.Count; i++ ) {
             string[] splitDate = AppManager.instance._uData.emotionDates[ i ].Split ( '/' );
 
@@ -117,7 +122,7 @@ public class CheckInAnalysisMenuView : View {
     }
 
 
-    int GetMonthStartDay ( int year, int month ) {
+    private int GetMonthStartDay ( int year, int month ) {
         DateTime temp = new DateTime ( year, month, 1 );
 
         return ( int ) temp.DayOfWeek;
@@ -127,7 +132,7 @@ public class CheckInAnalysisMenuView : View {
         return DateTime.DaysInMonth ( year, month );
     }
 
-    public void SwitchMonth ( int direction ) {
+    private void SwitchMonth ( int direction ) {
         if ( direction < 0 ) {
             curDate = curDate.AddMonths ( -1 );
         } else {
@@ -137,13 +142,59 @@ public class CheckInAnalysisMenuView : View {
         UpdateCalendar ( curDate.Year, curDate.Month );
     }
 
-    public void OnDateButtonClicked ( Day day ) {
+    private void OnDateButtonClicked ( Day day ) {
+        checkInTexts[ 0 ].text = "Mood: ";
+        checkInTexts[ 1 ].text = "Reason: ";
+
         if ( day.userDataIndex >= 0 ) {
-            checkInTexts[ 0 ].text = AppManager.instance._uData.emotionValues[ day.userDataIndex ].ToString ();
-            checkInTexts[ 1 ].text = AppManager.instance._uData.emotionValues[ day.userDataIndex ].ToString ();
+            checkInTexts[ 0 ].text += moods[ AppManager.instance._uData.emotionValues[ day.userDataIndex ] ].ToString ();
+            checkInTexts[ 1 ].text += contexts[ AppManager.instance._uData.contextValues[ day.userDataIndex ] ].ToString ();
         } else {
-            checkInTexts[ 0 ].text = "No data found";
-            checkInTexts[ 1 ].text = "No data found";
+            checkInTexts[ 0 ].text += "No data found";
+            checkInTexts[ 1 ].text += "No data found";
+        }
+    }
+
+    private void ReadInTextData () {
+        string moodPath;
+        string moodFileData;
+
+        string contextPath;
+        string contextFileData;
+
+#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
+        moodPath = Path.Combine ( Application.streamingAssetsPath, "Moods.txt" );
+        moodFileData = File.ReadAllText ( moodPath );
+
+        contextPath = Path.Combine ( Application.streamingAssetsPath, "Contexts.txt" );
+        contextFileData = File.ReadAllText ( contextPath );
+#endif
+
+#if UNITY_ANDROID
+        moodPath = Path.Combine ( Application.streamingAssetsPath, "Moods.txt" );
+        var loadingMoodRequest = UnityWebRequest.Get ( moodPath );
+        loadingMoodRequest.SendWebRequest ();
+        while ( !loadingMoodRequest.isDone && !loadingMoodRequest.isNetworkError && !loadingMoodRequest.isHttpError )
+            ;
+        moodFileData = System.Text.Encoding.UTF8.GetString ( loadingMoodRequest.downloadHandler.data );
+
+        contextPath = Path.Combine ( Application.streamingAssetsPath, "Contexts.txt" );
+        var loadingContextRequest = UnityWebRequest.Get ( contextPath );
+        loadingContextRequest.SendWebRequest ();
+        while ( !loadingContextRequest.isDone && !loadingContextRequest.isNetworkError && !loadingContextRequest.isHttpError )
+            ;
+        contextFileData = System.Text.Encoding.UTF8.GetString ( loadingContextRequest.downloadHandler.data );
+#endif
+
+        string[] splitMoodData = moodFileData.Split ( '\n' );
+        string[] splitContextData = contextFileData.Split ( '\n' );
+
+        foreach ( string line in splitMoodData ) {
+            moods.Add ( line );
+        }
+
+        foreach ( string line in splitContextData ) {
+            contexts.Add ( line );
         }
     }
 }

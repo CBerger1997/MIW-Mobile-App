@@ -11,8 +11,6 @@ public class StartUpMenuView : View {
     [SerializeField] private GameObject _startUpParent2;
     [SerializeField] private Button _continueButton1;
     [SerializeField] private Button _continueButton2;
-    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPt1;
-    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolutionPt2;
 
     Animator _animator;
 
@@ -40,9 +38,6 @@ public class StartUpMenuView : View {
         _animator = GetComponent<Animator>();
 
         Canvas.ForceUpdateCanvases();
-
-        //_autoSpaceOnResolutionPt1.PerformAutoSpace();
-        //_autoSpaceOnResolutionPt2.PerformAutoSpace();
     }
 
     public override void Show() {

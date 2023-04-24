@@ -45,7 +45,7 @@ public class CheckInReasonMenu : View {
         }
 
         _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.grey;
-        AppManager.instance._uData.currentContextValue = -1;
+        AppManager.instance._uData.currentContextValue = 14;
         _saveButton.interactable = true;
     }
 
