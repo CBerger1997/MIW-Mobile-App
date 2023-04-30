@@ -13,9 +13,9 @@ public class JournalMenuView : View {
     [SerializeField] private Button _saveButton;
     [SerializeField] private Button _continueButton;
     [SerializeField] private Button _pastEntriesButton;
-    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
     private string _journalEntry;
+    private HelpScreen _helpScreen;
 
     public override void Initialise() {
         _dateText.text = "Entry: " + DateTime.Now.ToString("ddd") + ", " + DateTime.Now.ToString("d");
@@ -23,7 +23,9 @@ public class JournalMenuView : View {
 
         _saveButton.onClick.AddListener(OnSavedClicked);
         _continueButton.onClick.AddListener(delegate { ViewManager.ShowLast(); });
-        //_autoSpaceOnResolution.PerformAutoSpace();
+
+        _helpScreen = this.GetComponent<HelpScreen> ();
+        _helpScreen.ConfigureHelpScreen ();
     }
 
     public override void Show() {
@@ -31,6 +33,7 @@ public class JournalMenuView : View {
 
         _savedText.gameObject.SetActive(false);
         _journalEntryInput.text = "";
+        _helpScreen.ToggleOffHelpMenu ();
     }
 
     private void OnSavedClicked() {

@@ -7,8 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
-using MySql.Data;
-using MySql.Data.MySqlClient;
 using UnityEngine.Networking;
 
 public class DatabaseHandler : MonoBehaviour
@@ -17,9 +15,9 @@ public class DatabaseHandler : MonoBehaviour
     public bool pooling = true;
 
     private string connectionString;
-    private MySqlConnection con = null;
-    private MySqlCommand cmd = null;
-    private MySqlDataReader rdr = null;
+    //private MySqlConnection con = null;
+    //private MySqlCommand cmd = null;
+    //private MySqlDataReader rdr = null;
 
     private MD5 _md5Hash;
 
@@ -39,9 +37,9 @@ public class DatabaseHandler : MonoBehaviour
 
         string status = "";
 
-        UnityWebRequest login = new UnityWebRequest ( LoginFile );
+        //UnityWebRequest login = new UnityWebRequest ( LoginFile );
 
-        StartCoroutine ( LoginUser ( username, password ) );
+        //StartCoroutine ( LoginUser ( username, password ) );
 
     }
 
@@ -82,32 +80,32 @@ public class DatabaseHandler : MonoBehaviour
         }
     }
 
-    void onApplicationQuit ()
-    {
-        if ( con != null )
-        {
-            if ( con.State.ToString () != "Closed" )
-            {
-                con.Close ();
-                Debug.Log ( "Mysql connection closed" );
-            }
-            con.Dispose ();
-        }
-    }
+    //void onApplicationQuit ()
+    //{
+    //    if ( con != null )
+    //    {
+    //        if ( con.State.ToString () != "Closed" )
+    //        {
+    //            con.Close ();
+    //            Debug.Log ( "Mysql connection closed" );
+    //        }
+    //        con.Dispose ();
+    //    }
+    //}
 
-    public string getFirstShops ()
-    {
-        using ( rdr = cmd.ExecuteReader () )
-        {
-            while ( rdr.Read () )
-            {
-                return rdr[ 0 ] + " -- " + rdr[ 1 ];
-            }
-        }
-        return "empty";
-    }
-    public string GetConnectionState ()
-    {
-        return con.State.ToString ();
-    }
+    //public string getFirstShops ()
+    //{
+    //    using ( rdr = cmd.ExecuteReader () )
+    //    {
+    //        while ( rdr.Read () )
+    //        {
+    //            return rdr[ 0 ] + " -- " + rdr[ 1 ];
+    //        }
+    //    }
+    //    return "empty";
+    //}
+    //public string GetConnectionState ()
+    //{
+    //    return con.State.ToString ();
+    //}
 }

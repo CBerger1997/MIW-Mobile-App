@@ -132,7 +132,7 @@ public class CheckInAnalysisMenuView : View {
         return DateTime.DaysInMonth ( year, month );
     }
 
-    private void SwitchMonth ( int direction ) {
+    public void SwitchMonth ( int direction ) {
         if ( direction < 0 ) {
             curDate = curDate.AddMonths ( -1 );
         } else {

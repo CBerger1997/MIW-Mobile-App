@@ -25,7 +25,7 @@ RectTransform:
   m_GameObject: {fileID: 3041398989276451595}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0008886, y: 1.0008886, z: 1.0008886}
   m_Children:
   - {fileID: 5828391502001408318}
   m_Father: {fileID: 0}
@@ -36,6 +36,107 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 0, y: -500}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &3041398989571211613
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4158471361332565979}
+    m_Modifications:
+    - target: {fileID: 3006849491822364625, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_text
+      value: Close
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 640
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782942175283252322, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8303410241556664142, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
+      propertyPath: m_Name
+      value: Close Button (TMP)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b07ba9e38b56e8d4fad085806a473098, type: 3}
 --- !u!1001 &5597650922893449720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77,7 +178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2111135905417826502, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -450
       objectReference: {fileID: 0}
     - target: {fileID: 2111135905417826502, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
       propertyPath: m_LocalPosition.x
@@ -113,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2111135905417826502, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -125
       objectReference: {fileID: 0}
     - target: {fileID: 2111135905417826502, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -126,6 +227,18 @@ PrefabInstance:
     - target: {fileID: 2111135905417826502, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436197731492118403, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
+      propertyPath: m_Spacing
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436197731492118403, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436197731492118403, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7520297759875439723, guid: 6f053ffa933c6604c8fe30eaa7b40c16, type: 3}
       propertyPath: m_Name
@@ -161,8 +274,24 @@ PrefabInstance:
     - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_text
       value: "An affirmation is a brief, impactful statement that affirms positive
-        qualities or experiences you would like to create in your life. Here are
-        two examples:\n\n1)\tYou are amazing.\n\n2)\tYou are worthwhile."
+        qualities or experiences you would like to create or emphasise in your life.\r\n\r\nBy
+        exposing yourself to positive self-affirmations every day you will gradually
+        break down old neural pathways that affirm negative aspects of your personality
+        and allow yourself to experience, enjoy and affirm the positive aspects of
+        your personality.\r\n\r\nIf this feels uncomfortable at first that is part
+        of your brain called your inhibition. This is part of your mind that thinks
+        it protects you by labelling certain activities as stupid or ridiculous.
+        In fact, all it does is hold you back from experiencing new things and enjoying
+        life more.\r\n\r\nResearch published by Lisa Legault of Clarkson University
+        and colleagues showed that those using positive self-affirmations scored
+        higher scores in \u201Cgo-no go tests\u201D and, interestingly, when they
+        made mistakes were more resilient and open to improvement.\r\n\r\nWant to
+        know more? Tap<link=SelfEsteem> <u><color=blue>here</color></u></link> to
+        go to the self Esteem pathway on the Inner Calm site"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068850481776372030, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_Pivot.x
@@ -194,11 +323,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1000
+      value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 600
+      value: 2050
       objectReference: {fileID: 0}
     - target: {fileID: 2068850481776372031, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -250,3 +379,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+--- !u!1 &5523509537056014686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2068850481776372024, guid: 875ad129596b6ca4182119bf94c0e5e9, type: 3}
+  m_PrefabInstance: {fileID: 5769526901099587686}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &31715654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5523509537056014686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88d2dcab2a67de4294b1440ae0e0f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

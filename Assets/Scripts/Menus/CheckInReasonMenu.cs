@@ -4,61 +4,69 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CheckInReasonMenu : View {
-    [SerializeField] private List<Button> _contextButtons = new List<Button>();
+    [SerializeField] private List<Button> _contextButtons = new List<Button> ();
     [SerializeField] private Button _iDontKnowButton;
     [SerializeField] private Button _saveButton;
-    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
 
+    private HelpScreen _helpScreen;
     private Button _selectedButton;
 
-    public override void Initialise() {
-        for (int i = 0; i < _contextButtons.Count; i++) {
+    public override void Initialise () {
+        for ( int i = 0; i < _contextButtons.Count; i++ ) {
             int copy = i;
-            _contextButtons[copy].onClick.AddListener(delegate { OnClickContextSelected(copy, _contextButtons[copy]); });
+            _contextButtons[ copy ].onClick.AddListener ( delegate { OnClickContextSelected ( copy, _contextButtons[ copy ] ); } );
         }
 
-        _iDontKnowButton.onClick.AddListener(delegate { OnIDKButtonClicked(); });
+        _iDontKnowButton.onClick.AddListener ( delegate { OnIDKButtonClicked (); } );
 
-        _saveButton.onClick.AddListener(delegate { MoveToNextScreen(2); });
+        _saveButton.onClick.AddListener ( delegate { MoveToNextScreen ( 2 ); } );
         _saveButton.interactable = false;
-        //_autoSpaceOnResolution.PerformAutoSpace();
+
+        _helpScreen = this.GetComponent<HelpScreen> ();
+        _helpScreen.ConfigureHelpScreen ();
     }
 
-    private void OnClickContextSelected(int val, Button button) {
-        if (AppManager.instance._uData.currentContextValue == -1) {
-            _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.white;
+    public override void Show () {
+        base.Show ();
+
+        _helpScreen.ToggleOffHelpMenu ();
+    }
+
+    private void OnClickContextSelected ( int val, Button button ) {
+        if ( AppManager.instance._uData.currentContextValue == -1 ) {
+            _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
         }
 
-        if (_selectedButton != null) {
-            _selectedButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.white;
+        if ( _selectedButton != null ) {
+            _selectedButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
         }
 
         _selectedButton = button;
-        _selectedButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.grey;
+        _selectedButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.grey;
 
         AppManager.instance._uData.currentContextValue = val;
         _saveButton.interactable = true;
     }
-    private void OnIDKButtonClicked() {
-        if (_selectedButton != null) {
-            _selectedButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.white;
+    private void OnIDKButtonClicked () {
+        if ( _selectedButton != null ) {
+            _selectedButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
         }
 
-        _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text>().color = Color.grey;
+        _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.grey;
         AppManager.instance._uData.currentContextValue = 14;
         _saveButton.interactable = true;
     }
 
-    private void MoveToNextScreen(int val) {
-        SaveCheckInData();
+    private void MoveToNextScreen ( int val ) {
+        SaveCheckInData ();
 
-        AppManager.instance._tData._checkInData.Add(new TableData.CheckInClass(AppManager.instance._uData.currentEmotionValue, AppManager.instance._uData.currentContextValue, DateTime.Now.ToString()));
-        
-        ViewManager.Show<MainMenuView>(false);
+        AppManager.instance._tData._checkInData.Add ( new TableData.CheckInClass ( AppManager.instance._uData.currentEmotionValue, AppManager.instance._uData.currentContextValue, DateTime.Now.ToString () ) );
+
+        ViewManager.Show<MainMenuView> ( false );
     }
 
-    private void SaveCheckInData() {
-        AppManager.instance._uData.SaveCheckInData();
-        AppManager.instance.SaveUserData();
+    private void SaveCheckInData () {
+        AppManager.instance._uData.SaveCheckInData ();
+        AppManager.instance.SaveUserData ();
     }
 }

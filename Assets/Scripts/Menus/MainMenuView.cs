@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 
 public class MainMenuView : View {
     [SerializeField] private Button _affirmationButton;
@@ -9,19 +7,19 @@ public class MainMenuView : View {
     [SerializeField] private Button _justBreathButton;
     [SerializeField] private Button _journalButton;
     [SerializeField] private Button _checkInButton;
-    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    [SerializeField] private Button _commitmentButton;
 
-    public override void Initialise() {
-        _affirmationButton.onClick.AddListener(() => ViewManager.Show<AffirmationMenuView>());
+    public override void Initialise () {
+        _affirmationButton.onClick.AddListener ( () => ViewManager.Show<AffirmationMenuView> () );
 
-        _visualisationsButton.onClick.AddListener(() => ViewManager.Show<VisualisationsMenuView>());
+        _visualisationsButton.onClick.AddListener ( () => ViewManager.Show<VisualisationsMenuView> () );
 
-        _justBreathButton.onClick.AddListener(() => ViewManager.Show<JustBreathMenuView>());
+        _justBreathButton.onClick.AddListener ( () => ViewManager.Show<JustBreathMenuView> () );
 
-        _journalButton.onClick.AddListener(() => ViewManager.Show<JournalMenuView>());
+        _journalButton.onClick.AddListener ( () => ViewManager.Show<JournalMenuView> () );
 
-        _checkInButton.onClick.AddListener(() => ViewManager.Show<CheckInMoodMenu>());
+        _checkInButton.onClick.AddListener ( () => ViewManager.Show<CheckInMoodMenu> () );
 
-        //_autoSpaceOnResolution.PerformAutoSpace();
+        _commitmentButton.onClick.AddListener ( () => ViewManager.Show<SelfCommitmentMenuView> () );
     }
 }

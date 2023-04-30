@@ -4,9 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class JustBreathMenuView : View {
-    //[SerializeField] private AutoSpaceOnResolution _autoSpaceOnResolution;
+    private HelpScreen _helpScreen;
 
-    public override void Initialise() {
-        //_autoSpaceOnResolution.PerformAutoSpace();
+    public override void Initialise () {
+        _helpScreen = this.GetComponent<HelpScreen> ();
+        _helpScreen.ConfigureHelpScreen ();
+    }
+
+    public override void Show () {
+        base.Show ();
+
+        _helpScreen.ToggleOffHelpMenu ();
     }
 }

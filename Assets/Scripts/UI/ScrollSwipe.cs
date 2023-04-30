@@ -9,6 +9,9 @@ public class ScrollSwipe : MonoBehaviour
     public GameObject scrollbar;
     public float scroll_pos = 0;
     public float[] scrollPositions;
+
+    public float swipeSpeed = 0.5f;
+
     float distance;
 
     bool isDisableMovement = false;
@@ -44,7 +47,7 @@ public class ScrollSwipe : MonoBehaviour
             {
                 if (scroll_pos < scrollPositions[i] + (distance / 2) && scroll_pos > scrollPositions[i] - (distance / 2))
                 {
-                    scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[i], 0.1f);
+                    scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[i], swipeSpeed);
                     selection = i;
                     OnSelectionChange();
                 }
@@ -54,7 +57,7 @@ public class ScrollSwipe : MonoBehaviour
         {
             if (scrollbar.GetComponent<Scrollbar>().value < scrollPositions[selection] || scrollbar.GetComponent<Scrollbar>().value > scrollPositions[selection])
             {
-                scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[selection], 0.1f);
+                scrollbar.GetComponent<Scrollbar>().value = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, scrollPositions[selection], swipeSpeed);
                 if (scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] > -0.05f && scrollbar.GetComponent<Scrollbar>().value - scrollPositions[selection] < 0.05f)
                 {
                     scroll_pos = scrollbar.GetComponent<Scrollbar>().value;
