@@ -4,8 +4,6 @@ using TMPro;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine.Networking;
-using UnityEngine.Tilemaps;
 
 public class CheckInAnalysisMenuView : View {
     public class Day {
@@ -120,7 +118,6 @@ public class CheckInAnalysisMenuView : View {
             }
         }
     }
-
 
     private int GetMonthStartDay ( int year, int month ) {
         DateTime temp = new DateTime ( year, month, 1 );
