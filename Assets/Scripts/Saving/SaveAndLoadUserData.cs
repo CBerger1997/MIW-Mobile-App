@@ -38,9 +38,9 @@ public class SaveAndLoadUserData : MonoBehaviour {
 
         string jsonStringToSave = JsonUtility.ToJson(settingsWrapper);
         string filePath = Path.Combine(Application.persistentDataPath, "User.data");
-        Debug.Log(Application.persistentDataPath);
-
         File.WriteAllText(filePath, jsonStringToSave);
+
+        //Chaneg to writealllines and see how this alters
     }
 
     public static UserData LoadUserData() {
