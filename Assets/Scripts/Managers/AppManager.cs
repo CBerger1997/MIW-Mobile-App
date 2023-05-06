@@ -5,10 +5,6 @@ public class AppManager : MonoBehaviour
 
     public static AppManager instance = null;
 
-    public UserData _uData { get; set; }
-
-    public TableData _tData { get; set; }
-
     public QuoteManager _qManager { get; set; }
 
     public AffirmationManager _aManager { get; set; }
@@ -21,33 +17,29 @@ public class AppManager : MonoBehaviour
         get { return instance; }
     }
 
-    private void Awake()
+    private void Awake ()
     {
         // Check for singleton instance and set or destory the instance accordingly
-        if (instance == null)
+        if ( instance == null )
         {
             instance = this;
         }
-        else if (instance != this)
+        else if ( instance != this )
         {
-            Destroy(gameObject);
+            Destroy ( gameObject );
         }
 
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad ( this );
 
-        LoadUserData();
+        _qManager = new QuoteManager ();
 
-        LoadTableData();
+        _qManager.ReadQuotesCSV ();
 
-        _qManager = new QuoteManager();
+        _aManager = new AffirmationManager ();
 
-        _qManager.ReadQuotesCSV();
+        _aManager.ReadRandom ();
 
-        _aManager = new AffirmationManager();
-
-        _aManager.ReadRandom();
-
-        _aManager.ReadSelection();
+        _aManager.ReadSelection ();
 
         //InitialiseFirebase();
     }
@@ -75,25 +67,4 @@ public class AppManager : MonoBehaviour
     //        }
     //    });
     //}
-
-    public void SaveUserData()
-    {
-        SaveAndLoadUserData.SaveUserData(_uData);
-    }
-
-    public void LoadUserData()
-    {
-        _uData = SaveAndLoadUserData.LoadUserData();
-    }
-
-    public void SaveTableData()
-    {
-        SaveAndLoadTableData.SaveTableData(_tData);
-    }
-
-    public void LoadTableData()
-    {
-        _tData = SaveAndLoadTableData.LoadTableData();
-    }
-
 }
