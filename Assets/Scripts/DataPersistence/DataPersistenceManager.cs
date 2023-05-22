@@ -67,7 +67,7 @@ public class DataPersistenceManager : MonoBehaviour
         dataHandler.Save ( userData );
     }
 
-    private void OnApplicationQuit ()
+    private void OnApplicationPause ()
     {
         SaveUser ();
     }
