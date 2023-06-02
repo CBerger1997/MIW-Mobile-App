@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckInReasonMenu : View
-{
+public class CheckInReasonMenu : View {
     [SerializeField] private List<Button> _reasonButtons = new List<Button> ();
     [SerializeField] private Button _iDontKnowButton;
     [SerializeField] private Button _saveButton;
@@ -16,10 +15,8 @@ public class CheckInReasonMenu : View
     private bool hasCheckedIn = false;
     private int reasonVal = 0;
 
-    public override void Initialise ()
-    {
-        for ( int i = 0; i < _reasonButtons.Count; i++ )
-        {
+    public override void Initialise () {
+        for ( int i = 0; i < _reasonButtons.Count; i++ ) {
             int copy = i;
             _reasonButtons[ copy ].onClick.AddListener ( delegate { OnClickContextSelected ( copy, _reasonButtons[ copy ] ); } );
         }
@@ -33,22 +30,24 @@ public class CheckInReasonMenu : View
         _helpScreen.ConfigureHelpScreen ();
     }
 
-    public override void Show ()
-    {
+    public override void Show () {
         base.Show ();
 
         _helpScreen.ToggleOffHelpMenu ();
+        _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
+
+        foreach ( Button reasonButton in _reasonButtons ) {
+            reasonButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
+        }
+
     }
 
-    private void OnClickContextSelected ( int val, Button button )
-    {
-        if ( reasonVal == 14 )
-        {
+    private void OnClickContextSelected ( int val, Button button ) {
+        if ( reasonVal == 14 ) {
             _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
         }
 
-        if ( _selectedButton != null )
-        {
+        if ( _selectedButton != null ) {
             _selectedButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
         }
 
@@ -59,10 +58,8 @@ public class CheckInReasonMenu : View
         _saveButton.interactable = true;
     }
 
-    private void OnIDKButtonClicked ()
-    {
-        if ( _selectedButton != null )
-        {
+    private void OnIDKButtonClicked () {
+        if ( _selectedButton != null ) {
             _selectedButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
         }
 
@@ -71,15 +68,10 @@ public class CheckInReasonMenu : View
         _saveButton.interactable = true;
     }
 
-    private void MoveToNextScreen ( int val )
-    {
-        _checkinManager.reasonVal = reasonVal;
+    private void MoveToNextScreen ( int val ) {
+        _checkinManager.emotionVals.Add ( _checkinManager.curEmotionVal );
+        _checkinManager.reasonVals.Add ( reasonVal );
         _checkinManager.hasCheckedIn = true;
-
-        //AppManager.instance._tData._checkInData.Add ( new TableData.CheckInClass (
-        //AppManager.instance._uData.currentEmotionValue,
-        //AppManager.instance._uData.currentContextValue,
-        //DateTime.Now.ToString () ) );
 
         ViewManager.Show<MainMenuView> ( false );
     }

@@ -5,42 +5,47 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public class JournalMenuView : View {
+public class JournalMenuView : View, IDataPersistence {
 
     [SerializeField] private TMP_Text _dateText;
-    [SerializeField] private TMP_Text _savedText;
     [SerializeField] private TMP_InputField _journalEntryInput;
-    [SerializeField] private Button _saveButton;
     [SerializeField] private Button _continueButton;
     [SerializeField] private Button _pastEntriesButton;
 
-    private string _journalEntry;
+    private List<string> _journalEntries = new List<string> ();
     private HelpScreen _helpScreen;
 
-    public override void Initialise() {
-        _dateText.text = "Entry: " + DateTime.Now.ToString("ddd") + ", " + DateTime.Now.ToString("d");
-        _savedText.gameObject.SetActive(false);
+    public override void Initialise () {
+        _dateText.text = "Entry: " + DateTime.Now.ToString ( "ddd" ) + ", " + DateTime.Now.ToString ( "d" );
 
-        _saveButton.onClick.AddListener(OnSavedClicked);
-        _continueButton.onClick.AddListener(delegate { ViewManager.ShowLast(); });
+        _continueButton.onClick.AddListener ( OnContinueClicked );
+        _pastEntriesButton.onClick.AddListener ( delegate { ViewManager.Show<JournalPastView> (); } );
 
         _helpScreen = this.GetComponent<HelpScreen> ();
         _helpScreen.ConfigureHelpScreen ();
     }
 
-    public override void Show() {
-        base.Show();
+    public override void Show () {
+        base.Show ();
 
-        _savedText.gameObject.SetActive(false);
         _journalEntryInput.text = "";
         _helpScreen.ToggleOffHelpMenu ();
     }
 
-    private void OnSavedClicked() {
-        _journalEntry = DateTime.Now.ToString("d") + "," + _journalEntryInput.text;
+    private void OnContinueClicked () {
+        _journalEntries.Add ( DateTime.Now.ToString ( "yyyy/MM/dd" ) + "," + DateTime.UtcNow.ToString ( "HH:mm" ) + "," + _journalEntryInput.text );
+        ViewManager.ShowLast ();
+    }
 
-        //Save the journal entry to user data
+    public void LoadData ( UserData data ) {
 
-        _savedText.gameObject.SetActive(true);
+    }
+
+    public void SaveData ( ref UserData data ) {
+        foreach ( string entry in _journalEntries ) {
+            data.dataEntries.Add ( entry );
+        }
+
+        _journalEntries.Clear ();
     }
 }

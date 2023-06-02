@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class UserData
-{
+public class UserData {
     //Initial Setup Variables
     public bool hasOnboarded;
     //public bool isDataSet;
@@ -30,11 +29,12 @@ public class UserData
     public List<int> emotionValues;
     public List<int> reasonValues;
     public int date;
-    public bool hasCheckedin;
     public bool shouldSaveCheckin;
 
-    public UserData ()
-    {
+    //Journal Variables
+    public List<string> dataEntries;
+
+    public UserData () {
         hasOnboarded = false;
 
         checkinNotificationsSet = true;
@@ -55,7 +55,8 @@ public class UserData
         emotionValues = new List<int> ();
         reasonValues = new List<int> ();
         date = 0;
-        hasCheckedin = false;
         shouldSaveCheckin = false;
+
+        dataEntries = new List<string> ();
     }
 }

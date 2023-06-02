@@ -94,7 +94,7 @@ public class AffirmationMenuView : View, IDataPersistence
 
                 break;
             case 2:
-                _infoText.text = "Create your own affirmation starting from \"You are\"";
+                _infoText.text = "Create your own affirmation starting from \"I am\"";
                 _listContentParent.SetActive ( false );
                 _personalContent.SetActive ( true );
 
@@ -171,6 +171,10 @@ public class AffirmationMenuView : View, IDataPersistence
         _savedOptionSelection = data.AffSelection;
         _savedListSelection = data.AffListSelection;
         _savedPersonalSelection = data.AffPersonalSelection;
+
+        _currentOptionSelection = data.AffSelection;
+        _personalInputText.text = data.AffPersonalSelection;
+        _currentListSelection = data.AffListSelection;
     }
 
     public void SaveData ( ref UserData data )

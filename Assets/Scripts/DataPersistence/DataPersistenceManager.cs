@@ -72,6 +72,10 @@ public class DataPersistenceManager : MonoBehaviour
         SaveUser ();
     }
 
+    private void OnApplicationQuit () {
+        SaveUser ();
+    }
+
     private List<IDataPersistence> FindAllDataPersistences ()
     {
         IEnumerable<IDataPersistence> dataPersistences = FindObjectsOfType<MonoBehaviour> ().OfType<IDataPersistence> ();

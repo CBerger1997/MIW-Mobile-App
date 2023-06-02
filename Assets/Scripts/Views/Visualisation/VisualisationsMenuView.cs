@@ -7,6 +7,8 @@ public class VisualisationsMenuView : View {
     [SerializeField] private List<Button> _audioButtons;
     [SerializeField] private GameObject _toggleContent;
     [SerializeField] private VisualisationPlayerView _playerView;
+    [SerializeField] private Button _leftButton;
+    [SerializeField] private Button _rightButton;
 
     public AudioClip[] _audioFilesMale;
     public AudioClip[] _audioFilesFemale;
@@ -27,6 +29,9 @@ public class VisualisationsMenuView : View {
 
         _helpScreen = this.GetComponent<HelpScreen> ();
         _helpScreen.ConfigureHelpScreen ();
+
+        _leftButton.onClick.AddListener ( OnLeftButtonClicked );
+        _rightButton.onClick.AddListener ( OnRightButtonClicked );
     }
 
     private void OnAudioButtonClick ( int index ) {
@@ -51,5 +56,18 @@ public class VisualisationsMenuView : View {
         if ( val != _currentOptionSelection ) {
             _currentOptionSelection = val;
         }
+    }
+
+    //TODO: This needs work, need to figure out a way of changing the first and last sibling without messing up the scrollswipe script
+
+
+    private void OnLeftButtonClicked () {
+        int childCount = _toggleContent.transform.childCount;
+
+        _toggleContent.transform.GetChild ( childCount - 1 ).SetAsFirstSibling ();
+    }
+
+    private void OnRightButtonClicked () {
+        _toggleContent.transform.GetChild ( 0 ).SetAsLastSibling ();
     }
 }
