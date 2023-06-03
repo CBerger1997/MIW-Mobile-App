@@ -60,7 +60,7 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
 
     private List<string> emotionDates = new List<string> ();
     private List<int> emotionVals = new List<int> ();
-    private List<int> reasonVals = new List<int> ();
+    private List<string> reasonVals = new List<string> ();
 
     public override void Initialise ()
     {
@@ -128,6 +128,7 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
                 }
 
                 days[ i ].UpdateDay ( i - startDay );
+                days[ i ].userDataIndex = -1;
             }
         }
 
@@ -181,16 +182,35 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
 
     private void OnDateButtonClicked ( Day day )
     {
+        //Presets the text for mood and reason
         checkInTexts[ 0 ].text = "Mood: ";
         checkInTexts[ 1 ].text = "Reason: ";
 
+        //Checks the selected day contains data for mood and reason
         if ( day.userDataIndex >= 0 )
         {
+            //Sets the text for the mood chosen on the selected day
             checkInTexts[ 0 ].text += moods[ emotionVals[ day.userDataIndex ] ].ToString ();
-            checkInTexts[ 1 ].text += contexts[ reasonVals[ day.userDataIndex ] ].ToString ();
+
+            //Splits the string of the saved reasons for the selected day
+            string[] reasons = reasonVals[ day.userDataIndex ].Split ( ':' );
+
+            //Adds each reason to the reasons text to show all reasons selected on the selected day
+            for ( int i = 0; i < reasons.Length; i++ )
+            {
+                checkInTexts[ 1 ].text += contexts[ int.Parse ( reasons[ i ] ) ].ToString ();
+
+                if ( reasons.Length > 0 && i < reasons.Length - 1 )
+                {
+                    checkInTexts[ 1 ].text += ", ";
+                }
+            }
+            //Remove overlapping text by removing the carriage return character
+            checkInTexts[ 1 ].text = checkInTexts[ 1 ].text.Replace ( "\r", "" );
         }
         else
         {
+            //Sets the mood and reason texts to no data found if the date contains no past data
             checkInTexts[ 0 ].text += "No data found";
             checkInTexts[ 1 ].text += "No data found";
         }

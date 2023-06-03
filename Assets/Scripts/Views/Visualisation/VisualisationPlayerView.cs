@@ -1,117 +1,125 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class VisualisationPlayerView : View {
+public class VisualisationPlayerView : View
+{
 
     [SerializeField] private AudioSource _currentAudioSource;
     [SerializeField] private Button _volumeButton;
     [SerializeField] private Slider _volumeSlider;
+    [SerializeField] private Slider _videoSlider;
     [SerializeField] private Button _playButton;
     [SerializeField] private Image _playButtonImage;
-    [SerializeField] private List<GameObject> _backPanels;
-    [SerializeField] private TopBarManager _topBar;
-    [SerializeField] private GameObject _backPanel;
     [SerializeField] private Sprite _pauseImage;
     [SerializeField] private Sprite _playImage;
+    [SerializeField] private TMP_Text _titleText;
+    [SerializeField] private TMP_Text _curVidTimeTxt;
+    [SerializeField] private TMP_Text _maxVidTimeTxt;
 
-    private bool isPanelsActive = false;
-    private bool isUserTouchingScreen = false;
-    private float screenShowTimer = 0.0f;
+    private bool _isUpdating;
 
-    public override void Initialise () {
+    public override void Initialise ()
+    {
         _volumeButton.onClick.AddListener ( OnVolumeButtonClick );
         _volumeSlider.onValueChanged.AddListener ( delegate { OnVolumeChanged (); } );
+        _videoSlider.onValueChanged.AddListener ( delegate { OnVideoTimeChanged (); } );
         _playButton.onClick.AddListener ( OnPlayButtonClicked );
         _volumeSlider.gameObject.SetActive ( false );
     }
 
-    private void Update () {
-        if ( ( Input.touchCount > 0 || Input.GetMouseButtonDown ( 0 ) ) && !isUserTouchingScreen ) {
-            isUserTouchingScreen = true;
-            screenShowTimer = 5.0f;
+    private void Update ()
+    {
+        _isUpdating = true;
 
-            if ( !isPanelsActive ) {
-                foreach ( GameObject panel in _backPanels ) {
-                    panel.SetActive ( true );
-                }
+        _videoSlider.value = _currentAudioSource.time;
 
-                _topBar.gameObject.SetActive ( true );
-                isPanelsActive = true;
-            } else {
-                PointerEventData eventDataCurrentPosition = new PointerEventData ( EventSystem.current );
-                eventDataCurrentPosition.position = new Vector2 ( Input.GetTouch ( 0 ).position.x, Input.GetTouch ( 0 ).position.y );
-                List<RaycastResult> results = new List<RaycastResult> ();
-                EventSystem.current.RaycastAll ( eventDataCurrentPosition, results );
+        _curVidTimeTxt.text = TimeToString ( TimeSpan.FromSeconds ( _currentAudioSource.time ).Seconds, TimeSpan.FromSeconds ( _currentAudioSource.time ).Minutes );
 
-                if ( results.Count > 0 && results[ 0 ].gameObject.name.Equals ( _backPanel.name ) ) {
-                    foreach ( GameObject panel in _backPanels ) {
-                        panel.SetActive ( false );
-                    }
-
-                    _topBar.gameObject.SetActive ( false );
-                    screenShowTimer = 0.0f;
-                    isPanelsActive = false;
-                }
-            }
-        } else if ( Input.touchCount == 0 ) {
-            isUserTouchingScreen = false;
-        }
-
-        if ( screenShowTimer > 0.0f ) {
-            screenShowTimer -= Time.deltaTime;
-
-            if ( screenShowTimer <= 0.0f ) {
-                foreach ( GameObject panel in _backPanels ) {
-                    panel.SetActive ( false );
-                }
-
-                _topBar.gameObject.SetActive ( false );
-            }
-        }
+        _isUpdating = false;
     }
 
-    public override void Show () {
+    public override void Show ()
+    {
         base.Show ();
 
+        _currentAudioSource.time = 0;
         _currentAudioSource.Play ();
 
         _playButtonImage.sprite = _pauseImage;
 
-        foreach ( GameObject panel in _backPanels ) {
-            panel.SetActive ( false );
-        }
+        _videoSlider.value = 0;
+        _videoSlider.maxValue = _currentAudioSource.clip.length;
 
-        _topBar.gameObject.SetActive ( false );
-        isPanelsActive = false;
-        isUserTouchingScreen = false;
-        screenShowTimer = 0.0f;
+        _maxVidTimeTxt.text = TimeToString ( TimeSpan.FromSeconds ( _currentAudioSource.clip.length ).Seconds, TimeSpan.FromSeconds ( _currentAudioSource.clip.length ).Minutes );
+        _curVidTimeTxt.text = "00:00";
     }
 
-    public override void Hide () {
+    public override void Hide ()
+    {
         base.Hide ();
     }
 
-    private void OnVolumeButtonClick () {
+    private void OnVolumeButtonClick ()
+    {
         _volumeSlider.gameObject.SetActive ( _volumeSlider.gameObject.activeSelf ? false : true );
     }
 
-    private void OnVolumeChanged () {
+    private void OnVolumeChanged ()
+    {
         _currentAudioSource.volume = _volumeSlider.value;
     }
 
-    private void OnPlayButtonClicked () {
-        if ( _currentAudioSource.isPlaying ) {
+    private void OnVideoTimeChanged ()
+    {
+        if(!_isUpdating)
+        {
+            _currentAudioSource.time = _videoSlider.value;
+        }
+    }
+
+    private void OnPlayButtonClicked ()
+    {
+        if ( _currentAudioSource.isPlaying )
+        {
             _currentAudioSource.Pause ();
             _playButtonImage.sprite = _playImage;
-        } else {
+        }
+        else
+        {
             _currentAudioSource.Play ();
             _playButtonImage.sprite = _pauseImage;
         }
     }
 
-    public void SetAudioClip ( AudioClip clip ) {
+    private string TimeToString ( float seconds, float minutes )
+    {
+        string minutesText = minutes.ToString ();
+        string secondsText = seconds.ToString ();
+
+        if ( minutes < 10 )
+        {
+            minutesText = "0" + minutes;
+        }
+
+        if ( seconds < 10 )
+        {
+            secondsText = "0" + seconds;
+        }
+
+        return minutesText + ":" + secondsText;
+    }
+
+    public void SetAudioClip ( AudioClip clip )
+    {
         _currentAudioSource.clip = clip;
+    }
+
+    public void SetTitle (string text)
+    {
+        _titleText.text = text;
     }
 }

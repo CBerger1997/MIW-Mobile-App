@@ -4,7 +4,8 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckInMoodMenu : View {
+public class CheckInMoodMenu : View
+{
     [SerializeField] private List<Button> _emotionButtons = new List<Button> ();
     [SerializeField] private Button _iDontKnowButton;
     [SerializeField] private Button _continueButton;
@@ -13,6 +14,7 @@ public class CheckInMoodMenu : View {
     [SerializeField] private ScrollRect _emotionsRect;
     [SerializeField] private GameObject _toggleContent;
     [SerializeField] private CheckinManager _checkinManager;
+    [SerializeField] private GameObject _historyUI;
 
     private Button _selectedButton;
     private int _currentOptionSelection;
@@ -20,8 +22,10 @@ public class CheckInMoodMenu : View {
 
     private int emotionVal;
 
-    public override void Initialise () {
-        for ( int i = 0; i < _emotionButtons.Count; i++ ) {
+    public override void Initialise ()
+    {
+        for ( int i = 0; i < _emotionButtons.Count; i++ )
+        {
             int copy = i;
             _emotionButtons[ copy ].onClick.AddListener ( () => OnClickEmotionSelected ( copy, _emotionButtons[ copy ] ) );
         }
@@ -42,29 +46,44 @@ public class CheckInMoodMenu : View {
 
         _helpScreen = this.GetComponent<HelpScreen> ();
         _helpScreen.ConfigureHelpScreen ();
+
+        _historyUI.gameObject.SetActive ( false );
     }
 
-    public override void Show () {
+    public override void Show ()
+    {
         base.Show ();
 
         _helpScreen.ToggleOffHelpMenu ();
         _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
 
-        foreach ( Button emotion in _emotionButtons ) {
+        foreach ( Button emotion in _emotionButtons )
+        {
             emotion.GetComponent<Image> ().color = Color.white;
         }
 
+        if ( _checkinManager.isHistoryAvailable)
+        {
+            _historyUI.gameObject.SetActive ( true );
+        }
+        else
+        {
+            _checkinManager.isHistoryAvailable = true;
+        }
     }
 
-    private void OnClickEmotionSelected ( int val, Button button ) {
-        if ( emotionVal == 6 ) {
+    private void OnClickEmotionSelected ( int val, Button button )
+    {
+        if ( emotionVal == 6 )
+        {
             _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
         }
 
         emotionVal = val;
         _continueButton.interactable = true;
 
-        if ( _selectedButton != null ) {
+        if ( _selectedButton != null )
+        {
             _selectedButton.GetComponent<Image> ().color = Color.white;
         }
 
@@ -72,8 +91,10 @@ public class CheckInMoodMenu : View {
         _selectedButton.GetComponent<Image> ().color = new Color32 ( 139, 210, 235, 255 );
     }
 
-    private void OnIDKButtonClicked () {
-        if ( _selectedButton != null ) {
+    private void OnIDKButtonClicked ()
+    {
+        if ( _selectedButton != null )
+        {
             _selectedButton.GetComponent<Image> ().color = Color.white;
         }
 
@@ -82,15 +103,18 @@ public class CheckInMoodMenu : View {
         _continueButton.interactable = true;
     }
 
-    private void OnContinueButtonClicked () {
+    private void OnContinueButtonClicked ()
+    {
         _checkinManager.curEmotionVal = emotionVal;
         ViewManager.Show<CheckInReasonMenu> ();
     }
 
-    private void OnSelectionChangeHandler () {
+    private void OnSelectionChangeHandler ()
+    {
         int val = _toggleContent.GetComponent<ScrollSwipe> ().selection;
 
-        if ( val != _currentOptionSelection ) {
+        if ( val != _currentOptionSelection )
+        {
             _currentOptionSelection = val;
         }
     }

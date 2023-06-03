@@ -5,38 +5,59 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JournalPastView : View, IDataPersistence {
+public class JournalPastView : View, IDataPersistence
+{
     public List<string> _pastEntries = new List<string> ();
     public List<GameObject> _pastEntryObjects = new List<GameObject> ();
 
     [SerializeField] private GameObject _pastEntryPrefab;
     [SerializeField] private GameObject _pastEntryParent;
+    [SerializeField] private GameObject _lineSeparator;
 
-    public override void Initialise () {
+    public override void Initialise ()
+    {
+
+    }
+
+    public override void Show ()
+    {
+        base.Show ();
+
         string previousDate = "";
 
-        foreach ( string entry in _pastEntries ) {
+        foreach ( string entry in _pastEntries )
+        {
+            if(_pastEntryParent.transform.childCount > 0)
+            {
+                Instantiate ( _lineSeparator, _pastEntryParent.transform );
+            }
+
             string[] splitString = entry.Split ( ',' );
 
             GameObject newPastEntry = Instantiate ( _pastEntryPrefab, _pastEntryParent.transform );
 
-            TMP_Text[] entryTexts = newPastEntry.GetComponentsInChildren<TMP_Text> ();
+            TMP_Text entryTexts = newPastEntry.GetComponentInChildren<TMP_Text> ();
 
-            if ( previousDate == splitString[ 0 ] ) {
-                Destroy ( entryTexts[ 0 ] );
-            } else {
-                entryTexts[ 0 ].text = splitString[ 0 ];
+            if ( previousDate == splitString[ 0 ] )
+            {
+                entryTexts.text = "";
+            }
+            else
+            {
+                entryTexts.text = "<size=100%><u>" + splitString[ 0 ] + "</u>\n\n";
             }
 
             previousDate = splitString[ 0 ];
 
-            entryTexts[ 1 ].text = splitString[ 1 ];
-            entryTexts[ 2 ].text = "";
+            entryTexts.text += "<size=90%>" + splitString[ 1 ] + "\n\n";
 
-            for ( int i = 2; i < splitString.Length; i++ ) {
-                entryTexts[ 2 ].text += splitString[ i ];
-                if ( i < splitString.Length - 1 ) {
-                    entryTexts[ 2 ].text += ",";
+            entryTexts.text += "<size=80%>";
+            for ( int i = 2; i < splitString.Length; i++ )
+            {
+                entryTexts.text += splitString[ i ];
+                if ( i < splitString.Length - 1 )
+                {
+                    entryTexts.text += ",";
                 }
             }
 
@@ -44,15 +65,23 @@ public class JournalPastView : View, IDataPersistence {
         }
     }
 
-    public override void Show () {
-        base.Show ();
+    public override void Hide ()
+    {
+        base.Hide ();
+
+        foreach (Transform child in _pastEntryParent.transform)
+        {
+            Destroy( child.gameObject );
+        }
     }
 
-    public void LoadData ( UserData data ) {
+    public void LoadData ( UserData data )
+    {
         _pastEntries = data.dataEntries;
     }
 
-    public void SaveData ( ref UserData data ) {
+    public void SaveData ( ref UserData data )
+    {
 
     }
 }

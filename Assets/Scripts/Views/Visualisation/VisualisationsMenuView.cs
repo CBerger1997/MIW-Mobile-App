@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,17 +8,19 @@ public class VisualisationsMenuView : View {
     [SerializeField] private List<Button> _audioButtons;
     [SerializeField] private GameObject _toggleContent;
     [SerializeField] private VisualisationPlayerView _playerView;
-    [SerializeField] private Button _leftButton;
-    [SerializeField] private Button _rightButton;
 
     public AudioClip[] _audioFilesMale;
     public AudioClip[] _audioFilesFemale;
-    private int _currentOptionSelection;
+    public int _currentOptionSelection;
     private HelpScreen _helpScreen;
 
     public override void Initialise () {
 
         _toggleContent.GetComponent<ScrollSwipe> ().OnSelectionChange += OnSelectionChangeHandler;
+
+        _toggleContent.GetComponent<ScrollSwipe> ().PresetPosition ( 2 );
+
+        _toggleContent.GetComponent<ScrollSwipe>().isInfiniteScroll = true;
 
         for ( int i = 0; i < _audioButtons.Count; i++ ) {
             int copy = i;
@@ -29,9 +32,6 @@ public class VisualisationsMenuView : View {
 
         _helpScreen = this.GetComponent<HelpScreen> ();
         _helpScreen.ConfigureHelpScreen ();
-
-        _leftButton.onClick.AddListener ( OnLeftButtonClicked );
-        _rightButton.onClick.AddListener ( OnRightButtonClicked );
     }
 
     private void OnAudioButtonClick ( int index ) {
@@ -40,6 +40,8 @@ public class VisualisationsMenuView : View {
         } else {
             _playerView.SetAudioClip ( _audioFilesFemale[ index ] );
         }
+
+        _playerView.SetTitle ( _audioButtons[ index ].GetComponentInChildren<TMP_Text>().text );
 
         ViewManager.Show<VisualisationPlayerView> ();
     }
@@ -51,23 +53,10 @@ public class VisualisationsMenuView : View {
     }
 
     private void OnSelectionChangeHandler () {
-        int val = _toggleContent.GetComponent<ScrollSwipe> ().selection;
+        int val = _toggleContent.GetComponent<ScrollSwipe> ().selection % 2;
 
         if ( val != _currentOptionSelection ) {
             _currentOptionSelection = val;
         }
-    }
-
-    //TODO: This needs work, need to figure out a way of changing the first and last sibling without messing up the scrollswipe script
-
-
-    private void OnLeftButtonClicked () {
-        int childCount = _toggleContent.transform.childCount;
-
-        _toggleContent.transform.GetChild ( childCount - 1 ).SetAsFirstSibling ();
-    }
-
-    private void OnRightButtonClicked () {
-        _toggleContent.transform.GetChild ( 0 ).SetAsLastSibling ();
     }
 }

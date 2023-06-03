@@ -7,11 +7,12 @@ public class CheckinManager : MonoBehaviour, IDataPersistence {
     public int curEmotionVal { get; set; }
 
     public List<int> emotionVals { get; set; } = new List<int> ();
-    public List<int> reasonVals { get; set; } = new List<int> ();
+    public List<string> reasonVals { get; set; } = new List<string> ();
     public bool hasCheckedIn { get; set; } = false;
+    public bool isHistoryAvailable { get; set; } = false;
 
     public void LoadData ( UserData data ) {
-
+        isHistoryAvailable = data.emotionDates.Contains ( DateTime.Now.ToString ( "yyyy/MM/dd" ) );
     }
 
     public void SaveData ( ref UserData data ) {
@@ -19,7 +20,7 @@ public class CheckinManager : MonoBehaviour, IDataPersistence {
             foreach ( int emotion in emotionVals ) {
                 data.emotionValues.Add ( emotion );
             }
-            foreach ( int reason in reasonVals ) {
+            foreach ( string reason in reasonVals ) {
                 data.reasonValues.Add ( reason );
             }
             for ( int i = 0; i < emotionVals.Count; i++ ) {

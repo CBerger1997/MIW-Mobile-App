@@ -27,7 +27,7 @@ public class UserData {
     //CheckIn Variables
     public List<string> emotionDates;
     public List<int> emotionValues;
-    public List<int> reasonValues;
+    public List<string> reasonValues;
     public int date;
     public bool shouldSaveCheckin;
 
@@ -53,7 +53,7 @@ public class UserData {
 
         emotionDates = new List<string> ();
         emotionValues = new List<int> ();
-        reasonValues = new List<int> ();
+        reasonValues = new List<string> ();
         date = 0;
         shouldSaveCheckin = false;
 
