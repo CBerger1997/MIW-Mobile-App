@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuView : View {
+public class MainMenuView : View
+{
     [SerializeField] private Button _affirmationButton;
     [SerializeField] private Button _visualisationsButton;
     [SerializeField] private Button _justBreathButton;
@@ -9,7 +10,10 @@ public class MainMenuView : View {
     [SerializeField] private Button _checkInButton;
     [SerializeField] private Button _commitmentButton;
 
-    public override void Initialise () {
+    [SerializeField] private CheckinManager _checkInManager;
+
+    public override void Initialise ()
+    {
         _affirmationButton.onClick.AddListener ( () => ViewManager.Show<AffirmationMenuView> () );
 
         _visualisationsButton.onClick.AddListener ( () => ViewManager.Show<VisualisationsMenuView> () );
@@ -18,8 +22,15 @@ public class MainMenuView : View {
 
         _journalButton.onClick.AddListener ( () => ViewManager.Show<JournalMenuView> () );
 
-        _checkInButton.onClick.AddListener ( () => ViewManager.Show<CheckInMoodMenu> () );
+        _checkInButton.onClick.AddListener ( OnCheckInClicked );
 
         _commitmentButton.onClick.AddListener ( () => ViewManager.Show<SelfCommitmentMenuView> () );
+    }
+
+    private void OnCheckInClicked ()
+    {
+        _checkInManager.isHistoryAvailable = true;
+
+        ViewManager.Show<CheckInMoodMenu> ();
     }
 }

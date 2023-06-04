@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.Networking;
+using static CheckInAnalysisMenuView;
 
 public class CheckInAnalysisMenuView : View, IDataPersistence
 {
@@ -13,14 +14,14 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
         public int dayNum;
         public Color dayColour;
         public GameObject obj;
-        public int userDataIndex;
+        public List<int> userDataIndex;
 
         public Day ( int dayNum, Color dayColour, GameObject obj )
         {
             this.dayNum = dayNum;
             this.dayColour = dayColour;
             this.obj = obj;
-            this.userDataIndex = -1;
+            this.userDataIndex = new List<int> ();
             obj.GetComponent<Image> ().color = dayColour;
             UpdateDay ( dayNum );
         }
@@ -49,6 +50,8 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
     [SerializeField] private Transform[] Weeks;
     [SerializeField] private TMP_Text MonthAndYear;
     [SerializeField] private GameObject CheckInTextPanel;
+    [SerializeField] private GameObject _toggleContent;
+    [SerializeField] private GameObject _checkInValuePrefab;
 
     private DateTime curDate = DateTime.Now;
     private List<Day> days = new List<Day> ();
@@ -62,8 +65,13 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
     private List<int> emotionVals = new List<int> ();
     private List<string> reasonVals = new List<string> ();
 
+    private int _currentOptionSelection;
+    private Day _selectedDay;
+
     public override void Initialise ()
     {
+        _toggleContent.GetComponent<ScrollSwipe> ().OnSelectionChange += OnSelectionChangeHandler;
+
         UpdateCalendar ( DateTime.Now.Year, DateTime.Now.Month );
 
         foreach ( TMP_Text text in CheckInTextPanel.GetComponentsInChildren<TMP_Text> () )
@@ -77,6 +85,13 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
         }
 
         ReadInTextData ();
+    }
+
+    public override void Show ()
+    {
+        base.Show ();
+
+        UpdateCalendar ( DateTime.Now.Year, DateTime.Now.Month );
     }
 
     private void UpdateCalendar ( int year, int month )
@@ -128,7 +143,7 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
                 }
 
                 days[ i ].UpdateDay ( i - startDay );
-                days[ i ].userDataIndex = -1;
+                days[ i ].userDataIndex.Clear ();
             }
         }
 
@@ -149,7 +164,7 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
             if ( int.Parse ( splitDate[ 0 ] ) == year && int.Parse ( splitDate[ 1 ] ) == month )
             {
                 days[ int.Parse ( splitDate[ 2 ] ) + startDay - 1 ].UpdateColour ( Color.blue );
-                days[ int.Parse ( splitDate[ 2 ] ) + startDay - 1 ].userDataIndex = i;
+                days[ int.Parse ( splitDate[ 2 ] ) + startDay - 1 ].userDataIndex.Add ( i );
             }
         }
     }
@@ -182,18 +197,43 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
 
     private void OnDateButtonClicked ( Day day )
     {
+        //Sets the selected day to the selected day variable
+        _selectedDay = day;
+
+        //Destroys all existing children of the scroll swipe content
+        foreach ( Transform child in _toggleContent.transform )
+        {
+            Destroy ( child.gameObject );
+        }
+
         //Presets the text for mood and reason
         checkInTexts[ 0 ].text = "Mood: ";
         checkInTexts[ 1 ].text = "Reason: ";
 
         //Checks the selected day contains data for mood and reason
-        if ( day.userDataIndex >= 0 )
+        if ( day.userDataIndex.Count > 0 )
         {
+            //Instantiates text for each available user data for the selected day
+            for ( int i = 0; i < day.userDataIndex.Count; i++ )
+            {
+                GameObject newScrollText = Instantiate ( _checkInValuePrefab, _toggleContent.transform );
+                newScrollText.GetComponent<TMP_Text> ().text = ( i + 1 ).ToString ();
+            }
+
+            //Recalculates the object positions for the scroll swipe
+            _toggleContent.GetComponent<ScrollSwipe> ().ReinitialiseScrollPositions ( day.userDataIndex.Count );
+
+            //Presets the scroll swipe position to the first position
+            _toggleContent.GetComponent<ScrollSwipe> ().PresetPosition ( 0 );
+
+            //Reset the current option selection to 0
+            _currentOptionSelection = 0;
+
             //Sets the text for the mood chosen on the selected day
-            checkInTexts[ 0 ].text += moods[ emotionVals[ day.userDataIndex ] ].ToString ();
+            checkInTexts[ 0 ].text += moods[ emotionVals[ day.userDataIndex[ _currentOptionSelection ] ] ].ToString ();
 
             //Splits the string of the saved reasons for the selected day
-            string[] reasons = reasonVals[ day.userDataIndex ].Split ( ':' );
+            string[] reasons = reasonVals[ day.userDataIndex[ _currentOptionSelection ] ].Split ( ':' );
 
             //Adds each reason to the reasons text to show all reasons selected on the selected day
             for ( int i = 0; i < reasons.Length; i++ )
@@ -213,6 +253,46 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
             //Sets the mood and reason texts to no data found if the date contains no past data
             checkInTexts[ 0 ].text += "No data found";
             checkInTexts[ 1 ].text += "No data found";
+        }
+    }
+
+    private void OnSelectionChangeHandler ()
+    {
+        //Checks that the toggle contains children
+        if ( _toggleContent.transform.childCount > 0 )
+        {
+            //Sets val to the current selection of the toggle content
+            int val = _toggleContent.GetComponent<ScrollSwipe> ().selection;
+
+            //Checks if the new selection is different from the previous selection
+            if ( val != _currentOptionSelection )
+            {
+                //Sets the current selection to the new selection
+                _currentOptionSelection = val;
+
+                //Presets the text for mood and reason
+                checkInTexts[ 0 ].text = "Mood: ";
+                checkInTexts[ 1 ].text = "Reason: ";
+
+                //Sets the text for the mood chosen on the selected day
+                checkInTexts[ 0 ].text += moods[ emotionVals[ _selectedDay.userDataIndex[ _currentOptionSelection ] ] ].ToString ();
+
+                //Splits the string of the saved reasons for the selected day
+                string[] reasons = reasonVals[ _selectedDay.userDataIndex[ _currentOptionSelection ] ].Split ( ':' );
+
+                //Adds each reason to the reasons text to show all reasons selected on the selected day
+                for ( int i = 0; i < reasons.Length; i++ )
+                {
+                    checkInTexts[ 1 ].text += contexts[ int.Parse ( reasons[ i ] ) ].ToString ();
+
+                    if ( reasons.Length > 0 && i < reasons.Length - 1 )
+                    {
+                        checkInTexts[ 1 ].text += ", ";
+                    }
+                }
+                //Remove overlapping text by removing the carriage return character
+                checkInTexts[ 1 ].text = checkInTexts[ 1 ].text.Replace ( "\r", "" );
+            }
         }
     }
 

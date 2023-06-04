@@ -62,13 +62,9 @@ public class CheckInMoodMenu : View
             emotion.GetComponent<Image> ().color = Color.white;
         }
 
-        if ( _checkinManager.isHistoryAvailable)
+        if ( _checkinManager.isHistoryAvailable )
         {
             _historyUI.gameObject.SetActive ( true );
-        }
-        else
-        {
-            _checkinManager.isHistoryAvailable = true;
         }
     }
 

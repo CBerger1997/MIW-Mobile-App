@@ -136,4 +136,15 @@ public class ScrollSwipe : MonoBehaviour
         scrollbar.GetComponent<Scrollbar> ().value = scrollPositions[ selection ];
         scroll_pos = scrollPositions[ selection ];
     }
+
+    public void ReinitialiseScrollPositions ( int childCount )
+    {
+        scrollPositions = new float[ childCount ];
+        distance = 1f / ( scrollPositions.Length - 1 );
+
+        for ( int i = 0; i < scrollPositions.Length; i++ )
+        {
+            scrollPositions[ i ] = distance * i;
+        }
+    }
 }
