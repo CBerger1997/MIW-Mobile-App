@@ -19,13 +19,14 @@ public class AffirmationMenuView : View, IDataPersistence
     private string _savedPersonalSelection;
 
     private int _currentOptionSelection;
+    private int _newOptionSelection = -1;
     public int _currentListSelection;
     private GameObject _listButton;
     private HelpScreen _helpScreen;
 
     public override void Initialise ()
     {
-        _saveButton.onClick.AddListener ( ViewManager.ShowLast );
+        _saveButton.onClick.AddListener ( OnSaveButtonClicked );
 
         _personalInputText.onValueChanged.AddListener ( delegate { OnInputFieldChanged (); } );
 
@@ -51,6 +52,11 @@ public class AffirmationMenuView : View, IDataPersistence
 
         _helpScreen.ToggleOffHelpMenu ();
         _saveButton.gameObject.SetActive ( true );
+
+        SetupAffirmationList ();
+
+        _toggleContent.GetComponent<ScrollSwipe> ().PresetPosition ( _savedOptionSelection );
+        _personalInputText.text = _savedPersonalSelection;
     }
 
     private void OnSelectionChangeHandler ()
@@ -118,8 +124,7 @@ public class AffirmationMenuView : View, IDataPersistence
             GameObject affirmationButton = Instantiate ( _buttonPrefab, _listContent.gameObject.transform );
             affirmationButton.name = i.ToString ();
             affirmationButton.GetComponentInChildren<TMP_Text> ().text = AppManager.instance._aManager.affirmationSelection[ i ];
-            affirmationButton.GetComponent<Button> ().onClick.AddListener ( delegate
-            { OnListAffirmationClicked ( int.Parse ( affirmationButton.name ), affirmationButton ); } );
+            affirmationButton.GetComponent<Button> ().onClick.AddListener ( delegate { OnListAffirmationClicked ( int.Parse ( affirmationButton.name ), affirmationButton ); } );
 
             if ( _savedListSelection >= 0 )
             {
@@ -166,6 +171,16 @@ public class AffirmationMenuView : View, IDataPersistence
         }
     }
 
+    private void OnSaveButtonClicked ()
+    {
+        _newOptionSelection = _currentOptionSelection;
+
+        DataPersistenceManager.Instance.SaveUser ();
+        DataPersistenceManager.Instance.LoadUser ();
+
+        ViewManager.ShowLast ();
+    }
+
     public void LoadData ( UserData data )
     {
         _savedOptionSelection = data.AffSelection;
@@ -179,18 +194,21 @@ public class AffirmationMenuView : View, IDataPersistence
 
     public void SaveData ( ref UserData data )
     {
-        data.AffSelection = _currentOptionSelection;
-        data.AffPersonalSelection = "";
-        data.AffListSelection = -1;
-
-        switch ( _currentOptionSelection )
+        if ( _newOptionSelection >= 0 )
         {
-            case 1:
-                data.AffListSelection = _currentListSelection;
-                break;
-            case 2:
-                data.AffPersonalSelection = _personalInputText.text;
-                break;
+            data.AffSelection = _currentOptionSelection;
+            data.AffPersonalSelection = "";
+            data.AffListSelection = -1;
+
+            switch ( _currentOptionSelection )
+            {
+                case 1:
+                    data.AffListSelection = _currentListSelection;
+                    break;
+                case 2:
+                    data.AffPersonalSelection = _personalInputText.text;
+                    break;
+            }
         }
     }
 }

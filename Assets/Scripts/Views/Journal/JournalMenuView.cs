@@ -34,6 +34,10 @@ public class JournalMenuView : View, IDataPersistence {
 
     private void OnContinueClicked () {
         _journalEntries.Add ( DateTime.Now.ToString ( "yyyy/MM/dd" ) + "," + DateTime.UtcNow.ToString ( "HH:mm" ) + "," + _journalEntryInput.text );
+
+        DataPersistenceManager.Instance.SaveUser ();
+        DataPersistenceManager.Instance.LoadUser ();
+
         ViewManager.ShowLast ();
     }
 

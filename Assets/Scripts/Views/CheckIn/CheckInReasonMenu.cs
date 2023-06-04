@@ -110,6 +110,9 @@ public class CheckInReasonMenu : View
         _checkinManager.reasonVals.Add ( reasons );
         _checkinManager.hasCheckedIn = true;
 
+        DataPersistenceManager.Instance.SaveUser ();
+        DataPersistenceManager.Instance.LoadUser ();
+
         ViewManager.Show<MainMenuView> ( false );
     }
 }
