@@ -75,7 +75,7 @@ public class AffirmationMenuView : View, IDataPersistence
         switch ( _currentOptionSelection )
         {
             case 0:
-                _infoText.text = "Provides you with a different affirmation every day";
+                _infoText.text = "Provides you with a different affirmation every day.";
                 _listContentParent.SetActive ( false );
                 _personalContent.SetActive ( false );
 
@@ -89,7 +89,7 @@ public class AffirmationMenuView : View, IDataPersistence
                 }
                 break;
             case 1:
-                _infoText.text = "Choose your affirmation from the list below";
+                _infoText.text = "Choose your affirmation from the list below.";
                 _listContentParent.SetActive ( true );
                 _personalContent.SetActive ( false );
 
@@ -100,7 +100,7 @@ public class AffirmationMenuView : View, IDataPersistence
 
                 break;
             case 2:
-                _infoText.text = "Create your own affirmation starting from \"I am\"";
+                _infoText.text = "Create you own, personalised affirmation below.";
                 _listContentParent.SetActive ( false );
                 _personalContent.SetActive ( true );
 

@@ -70,7 +70,8 @@ public class CheckInReasonMenu : View
         }
         else
         {
-            //Set the current selected button to grey and add it to the reason values list, also enable the save button
+            //Set the current selected button to
+            //and add it to the reason values list, also enable the save button
             button.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.grey;
             reasonVals.Add ( val );
             _saveButton.interactable = true;

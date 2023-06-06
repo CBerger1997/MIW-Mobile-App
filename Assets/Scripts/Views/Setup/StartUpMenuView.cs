@@ -82,7 +82,7 @@ public class StartUpMenuView : View, IDataPersistence {
                 text = AppManager.instance._aManager.affirmationSelection[ _savedListSelection ];
                 break;
             case 2:
-                text = "I am " + _savedPersonalSelection;
+                text = _savedPersonalSelection;
                 break;
         }
 

@@ -36,7 +36,7 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
         {
             this.dayNum = newDayNum;
 
-            if ( dayColour == Color.white || dayColour == Color.green )
+            if ( obj.GetComponent<Button>().IsInteractable() )
             {
                 obj.GetComponentInChildren<TMP_Text> ().text = ( dayNum + 1 ).ToString ();
             }
@@ -135,11 +135,15 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
             {
                 if ( i < startDay || i - startDay >= totalDays )
                 {
-                    days[ i ].UpdateColour ( Color.grey );
-                }
+                    days[ i ].UpdateColour ( Color.white );
+                    days[ i ].obj.GetComponent<Button> ().interactable = false;
+                    days[ i ].obj.GetComponent<Image> ().enabled = false;
+                } 
                 else
                 {
                     days[ i ].UpdateColour ( Color.white );
+                    days[ i ].obj.GetComponent<Button> ().interactable = true;
+                    days[ i ].obj.GetComponent<Image> ().enabled = true;
                 }
 
                 days[ i ].UpdateDay ( i - startDay );
@@ -161,9 +165,14 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
         {
             string[] splitDate = emotionDates[ i ].Split ( '/' );
 
-            if ( int.Parse ( splitDate[ 0 ] ) == year && int.Parse ( splitDate[ 1 ] ) == month )
-            {
-                days[ int.Parse ( splitDate[ 2 ] ) + startDay - 1 ].UpdateColour ( Color.blue );
+            if ( int.Parse ( splitDate[ 0 ] ) == year && int.Parse ( splitDate[ 1 ] ) == month ) {
+
+                Color blue;
+
+                if ( ColorUtility.TryParseHtmlString ( "#8bd2eb", out blue ) ) {
+                    days[ int.Parse ( splitDate[ 2 ] ) + startDay - 1 ].UpdateColour ( blue );
+                }
+                    
                 days[ int.Parse ( splitDate[ 2 ] ) + startDay - 1 ].userDataIndex.Add ( i );
             }
         }
