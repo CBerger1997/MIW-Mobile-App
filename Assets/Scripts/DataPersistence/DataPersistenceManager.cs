@@ -38,6 +38,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadUser ()
     {
+        Debug.Log ( "User LOADED" );
         // Load any saved data from a file using the data handler
         this.userData = dataHandler.Load ();
 
@@ -57,6 +58,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveUser ()
     {
+        Debug.Log ( "User SAVED" );
+
         // Pass data to other scripts so they can update it
         foreach ( IDataPersistence persistence in dataPersistences )
         {
@@ -67,14 +70,14 @@ public class DataPersistenceManager : MonoBehaviour
         dataHandler.Save ( userData );
     }
 
-    private void OnApplicationPause ()
-    {
-        SaveUser ();
-    }
+    //private void OnApplicationPause ()
+    //{
+    //    SaveUser ();
+    //}
 
-    private void OnApplicationQuit () {
-        SaveUser ();
-    }
+    //private void OnApplicationQuit () {
+    //    SaveUser ();
+    //}
 
     private List<IDataPersistence> FindAllDataPersistences ()
     {

@@ -11,6 +11,7 @@ public class MainMenuView : View
     [SerializeField] private Button _commitmentButton;
 
     [SerializeField] private CheckinManager _checkInManager;
+    [SerializeField] private CommitmentManager _commitmentManager;
 
     public override void Initialise ()
     {
@@ -24,7 +25,7 @@ public class MainMenuView : View
 
         _checkInButton.onClick.AddListener ( OnCheckInClicked );
 
-        _commitmentButton.onClick.AddListener ( () => ViewManager.Show<SelfCommitmentMenuView> () );
+        _commitmentButton.onClick.AddListener ( OnCommitmentClicked );
     }
 
     private void OnCheckInClicked ()
@@ -32,5 +33,17 @@ public class MainMenuView : View
         _checkInManager.isHistoryAvailable = true;
 
         ViewManager.Show<CheckInMoodMenu> ();
+    }
+
+    private void OnCommitmentClicked ()
+    {
+        if ( _commitmentManager._commitmentExists )
+        {
+            ViewManager.Show<SelfCommitmentMainView> ();
+        }
+        else
+        {
+            ViewManager.Show<SelfCommitmentEditView> ();
+        }
     }
 }

@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class UserData {
+public class UserData
+{
     //Initial Setup Variables
     public bool hasOnboarded;
     //public bool isDataSet;
@@ -34,7 +35,18 @@ public class UserData {
     //Journal Variables
     public List<string> dataEntries;
 
-    public UserData () {
+    //Commitment Variables
+    public string commitmentString;
+    public int commitmentOftenVal;
+    public bool isReminder;
+    public int reminderOftenVal;
+    public int reminderHourVal;
+    public int reminderMinuteVal;
+    public bool isCommitmentDone;
+    public bool commitmentExists;
+
+    public UserData ()
+    {
         hasOnboarded = false;
 
         checkinNotificationsSet = true;
@@ -58,5 +70,13 @@ public class UserData {
         shouldSaveCheckin = false;
 
         dataEntries = new List<string> ();
+
+        commitmentString = "";
+        commitmentOftenVal = 0;
+        isReminder = false;
+        reminderHourVal = 0;
+        reminderMinuteVal = 0;
+        isCommitmentDone = false;
+        commitmentExists = false;
     }
 }
