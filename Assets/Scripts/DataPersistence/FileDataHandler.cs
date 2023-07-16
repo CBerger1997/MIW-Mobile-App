@@ -52,6 +52,7 @@ public class FileDataHandler
 
     public void Save ( UserData data )
     {
+        Debug.Log ( data.password );
         //Path.Combine accounts for different OS's having different path separators
         string fullPath = Path.Combine ( dataDirPath, dataFileName );
 

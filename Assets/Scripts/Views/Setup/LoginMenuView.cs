@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using MySql.Data.MySqlClient;
 
 public class LoginMenuView : View, IDataPersistence
 {
@@ -9,10 +10,12 @@ public class LoginMenuView : View, IDataPersistence
     [SerializeField] private TMP_InputField _usernameInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private GameObject _warningText;
+    [SerializeField] private Toggle _rememberToggle;
 
     private string username;
     private string password;
-    private bool isLoginSuccessful;
+    private bool isLoginChecked;
+    private bool isDataLoaded;
 
     public override void Initialise ()
     {
@@ -21,37 +24,60 @@ public class LoginMenuView : View, IDataPersistence
         _warningText.gameObject.SetActive ( false );
     }
 
-    public override void Show ()
-    {
-        base.Show ();
-
-        if ( username == "" && password == "" )
-        {
-            isLoginSuccessful = true;
-        }
-    }
-
     private void Update ()
     {
-        if ( isLoginSuccessful )
+        if ( DatabaseHandler.connection.State == System.Data.ConnectionState.Open && !isLoginChecked && isDataLoaded)
         {
-            ViewManager.Show<StartUpMenuView> ( false );
+            Debug.Log ( "Checking" );
+
+            string sql = "SELECT user_login AND user_pass FROM wp_users WHERE user_login='" + username + "' AND user_pass='" + password + "' LIMIT 1";
+            MySqlCommand cmd = new MySqlCommand ( sql, DatabaseHandler.connection );
+            MySqlDataReader rdr = cmd.ExecuteReader ();
+
+            Debug.Log ( username );
+            Debug.Log ( password );
+
+            if ( rdr.Read () )
+            {
+                Debug.Log ( "Found" );
+                rdr.Close ();
+                isLoginChecked = true;
+                ViewManager.Show<StartUpMenuView> (false);
+            }
+
+            Debug.Log ( "Not Found" );
+            rdr.Close ();
+            isLoginChecked = true;
         }
     }
 
     public void LoginButtonOnClick ()
     {
-        username = _usernameInput.text;
-        password = _passwordInput.text;
+        string sql = "SELECT user_login AND user_pass FROM wp_users WHERE user_login='" + _usernameInput.text + "' AND user_pass='" + _passwordInput.text + "' LIMIT 1";
+        MySqlCommand cmd = new MySqlCommand ( sql, DatabaseHandler.connection );
+        MySqlDataReader rdr = cmd.ExecuteReader ();
 
-        if ( username == "" && password == "" )
+        if ( rdr.Read () )
         {
+            if ( _rememberToggle.enabled )
+            {
+                username = _usernameInput.text;
+                password = _passwordInput.text;
+
+                DataPersistenceManager.Instance.SaveUser ();
+                DataPersistenceManager.Instance.LoadUser ();
+            }
+
+            rdr.Close ();
+
             ViewManager.Show<StartUpMenuView> ();
         }
         else
         {
             _warningText.SetActive ( true );
         }
+
+        rdr.Close ();
     }
 
     public void ResetPasswordButtonOnClick ()
@@ -63,11 +89,16 @@ public class LoginMenuView : View, IDataPersistence
     {
         username = data.username;
         password = data.password;
+        isDataLoaded = true;
     }
 
     public void SaveData ( ref UserData data )
     {
+        Debug.Log ( username );
+        Debug.Log ( password );
         data.username = username;
         data.password = password;
+
+        Debug.Log ( data.password );
     }
 }

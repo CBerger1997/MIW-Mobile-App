@@ -13,6 +13,7 @@ public class ChangePasswordView : View, IDataPersistence
     [SerializeField] private Button _saveButton;
 
     private string password;
+    private bool isPasswordChanged = false;
 
     public override void Initialise ()
     {
@@ -27,6 +28,7 @@ public class ChangePasswordView : View, IDataPersistence
             if ( _newPasswordInputField.text == _newCopyPasswordInputField.text )
             {
                 password = _newPasswordInputField.text;
+                isPasswordChanged = true;
                 ViewManager.ShowLast ();
             }
             else
@@ -48,6 +50,9 @@ public class ChangePasswordView : View, IDataPersistence
 
     public void SaveData ( ref UserData data )
     {
-        data.password = password;
+        if ( isPasswordChanged )
+        {
+            data.password = password;
+        }
     }
 }
