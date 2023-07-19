@@ -40,10 +40,9 @@ public class LoginMenuView : View, IDataPersistence
             if ( rdr.Read () )
             {
                 Debug.Log ( "Found" );
-                rdr.Close ();
-                isLoginChecked = true;
                 ViewManager.Show<StartUpMenuView> (false);
             }
+
 
             Debug.Log ( "Not Found" );
             rdr.Close ();
@@ -59,7 +58,7 @@ public class LoginMenuView : View, IDataPersistence
 
         if ( rdr.Read () )
         {
-            if ( _rememberToggle.enabled )
+            if ( _rememberToggle.isOn )
             {
                 username = _usernameInput.text;
                 password = _passwordInput.text;
