@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 public class LoginMenuView : View, IDataPersistence
 {
     [SerializeField] private Button _loginButton;
+    [SerializeField] private Button _bypassLoginButton;
     [SerializeField] private Button _resetPasswordButton;
     [SerializeField] private TMP_InputField _usernameInput;
     [SerializeField] private TMP_InputField _passwordInput;
@@ -19,14 +20,15 @@ public class LoginMenuView : View, IDataPersistence
 
     public override void Initialise ()
     {
-        _loginButton.onClick.AddListener ( delegate { LoginButtonOnClick (); } );
-        _resetPasswordButton.onClick.AddListener ( delegate { ResetPasswordButtonOnClick (); } );
+        _loginButton.onClick.AddListener ( LoginButtonOnClick );
+        _bypassLoginButton.onClick.AddListener ( BypassLoginOnClick );
+        _resetPasswordButton.onClick.AddListener ( ResetPasswordButtonOnClick );
         _warningText.gameObject.SetActive ( false );
     }
 
     private void Update ()
     {
-        if ( DatabaseHandler.connection.State == System.Data.ConnectionState.Open && !isLoginChecked && isDataLoaded)
+        if ( DatabaseHandler.connection.State == System.Data.ConnectionState.Open && !isLoginChecked && isDataLoaded )
         {
             Debug.Log ( "Checking" );
 
@@ -34,13 +36,10 @@ public class LoginMenuView : View, IDataPersistence
             MySqlCommand cmd = new MySqlCommand ( sql, DatabaseHandler.connection );
             MySqlDataReader rdr = cmd.ExecuteReader ();
 
-            Debug.Log ( username );
-            Debug.Log ( password );
-
             if ( rdr.Read () )
             {
                 Debug.Log ( "Found" );
-                ViewManager.Show<StartUpMenuView> (false);
+                ViewManager.Show<StartUpMenuView> ( false );
             }
 
 
@@ -79,6 +78,11 @@ public class LoginMenuView : View, IDataPersistence
         rdr.Close ();
     }
 
+    void BypassLoginOnClick ()
+    {
+        ViewManager.Show<StartUpMenuView> ();
+    }
+
     public void ResetPasswordButtonOnClick ()
     {
         //Input password reset code
@@ -93,11 +97,7 @@ public class LoginMenuView : View, IDataPersistence
 
     public void SaveData ( ref UserData data )
     {
-        Debug.Log ( username );
-        Debug.Log ( password );
         data.username = username;
         data.password = password;
-
-        Debug.Log ( data.password );
     }
 }

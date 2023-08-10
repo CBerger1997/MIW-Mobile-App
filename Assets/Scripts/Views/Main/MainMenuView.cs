@@ -9,6 +9,7 @@ public class MainMenuView : View
     [SerializeField] private Button _journalButton;
     [SerializeField] private Button _checkInButton;
     [SerializeField] private Button _commitmentButton;
+    [SerializeField] private Button _prioiritisationButton;
 
     [SerializeField] private CheckinManager _checkInManager;
     [SerializeField] private CommitmentManager _commitmentManager;
@@ -22,6 +23,8 @@ public class MainMenuView : View
         _justBreathButton.onClick.AddListener ( () => ViewManager.Show<JustBreatheMenuView> () );
 
         _journalButton.onClick.AddListener ( () => ViewManager.Show<JournalMenuView> () );
+
+        _prioiritisationButton.onClick.AddListener ( () => ViewManager.Show<PrioritisationHelperView> () );
 
         _checkInButton.onClick.AddListener ( OnCheckInClicked );
 
