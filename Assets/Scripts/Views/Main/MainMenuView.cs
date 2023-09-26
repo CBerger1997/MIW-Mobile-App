@@ -24,7 +24,7 @@ public class MainMenuView : View
 
         _journalButton.onClick.AddListener ( () => ViewManager.Show<JournalMenuView> () );
 
-        _prioiritisationButton.onClick.AddListener ( () => ViewManager.Show<PrioritisationHelperView> () );
+        _prioiritisationButton.onClick.AddListener ( () => ViewManager.Show<PrioritisationSelectionView> () );
 
         _checkInButton.onClick.AddListener ( OnCheckInClicked );
 

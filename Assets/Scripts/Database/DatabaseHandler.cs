@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using UnityEngine.Networking;
 
 public class DatabaseHandler : MonoBehaviour
 {
@@ -31,5 +33,43 @@ public class DatabaseHandler : MonoBehaviour
 
         connection = new MySqlConnection ( connectionstring );
         connection.Open ();
+    }
+
+    private void Start ()
+    {
+        GetUsers ();
+    }
+
+    public string apiUrl = "https://matthews335.sg-host.com/api/users.py";
+
+    public void GetUsers ()
+    {
+        Debug.Log ( "Getting Users" );
+        // Create a new UnityWebRequest object.
+        UnityWebRequest request = new UnityWebRequest ( apiUrl );
+
+        // Set the request method to GET.
+        request.method = UnityWebRequest.kHttpVerbGET;
+
+        // Send the request and wait for the response.
+        request.SendWebRequest ();
+
+        // Check if the request was successful.
+        if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
+        {
+            Debug.LogError ( "Failed to get users from API: " + request.error );
+            return;
+        }
+
+        // Get the response data.
+        string responseData = request.downloadHandler.text;
+
+        Debug.Log ( "RESPONSE!" );
+        Debug.Log ( responseData );
+
+        // Deserialize the JSON response into a list of users.
+        //List<User> users = JsonUtility.FromJson<List<User>> ( responseData );
+
+        // Do something with the users list, such as populate a UI element or create game objects.
     }
 }
