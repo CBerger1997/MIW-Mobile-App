@@ -9,6 +9,7 @@ public class LoginMenuView : View, IDataPersistence
 {
     [SerializeField] private Button _loginButton;
     [SerializeField] private Button _resetPasswordButton;
+    [SerializeField] private Button _showPasswordButton;
     [SerializeField] private TMP_InputField _usernameInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private GameObject _warningText;
@@ -16,8 +17,6 @@ public class LoginMenuView : View, IDataPersistence
 
     private string username;
     private string password;
-    private bool isLoginChecked;
-    private bool isDataLoaded;
 
     string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=verify-user";
 
@@ -25,9 +24,15 @@ public class LoginMenuView : View, IDataPersistence
     {
         _loginButton.onClick.AddListener ( LoginButtonOnClick );
         _resetPasswordButton.onClick.AddListener ( ResetPasswordButtonOnClick );
+        _showPasswordButton.onClick.AddListener ( ShowPasswordButtonOnClick );
         _warningText.gameObject.SetActive ( false );
+    }
 
-        StartCoroutine ( GetUsers ( username, password ) );
+    public override void Show()
+    {
+        base.Show();
+
+        //StartCoroutine(GetUsers(username, password));
     }
 
     public void LoginButtonOnClick ()
@@ -46,6 +51,8 @@ public class LoginMenuView : View, IDataPersistence
 
     IEnumerator GetUsers ( string username, string password )
     {
+        Debug.Log("Checking Verification");
+
         string userPassText = "&username=" + username + "&password=" + password;
 
         // Create a new UnityWebRequest object.
@@ -67,6 +74,7 @@ public class LoginMenuView : View, IDataPersistence
         }
         else
         {
+            Debug.Log(request.downloadHandler.text);
             // Get the response data.
             if ( request.downloadHandler.text == "true" )
             {
@@ -80,6 +88,12 @@ public class LoginMenuView : View, IDataPersistence
         }
     }
 
+    public void ShowPasswordButtonOnClick()
+    {
+        _passwordInput.contentType = _passwordInput.contentType == TMP_InputField.ContentType.Password ? TMP_InputField.ContentType.Standard : TMP_InputField.ContentType.Password;
+        _passwordInput.Select();
+    }
+
     public void ResetPasswordButtonOnClick ()
     {
         //Input password reset code
@@ -89,7 +103,6 @@ public class LoginMenuView : View, IDataPersistence
     {
         username = data.username;
         password = data.password;
-        isDataLoaded = true;
     }
 
     public void SaveData ( ref UserData data )

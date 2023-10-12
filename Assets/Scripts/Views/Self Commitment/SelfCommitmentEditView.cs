@@ -51,7 +51,7 @@ public class SelfCommitmentEditView : View, IDataPersistence
         {
             if ( i < 10 )
             {
-                dropdownMinutes.Add ( "0" + ( i ).ToString () );
+                dropdownMinutes.Add ( "0" + ( i ).ToString () );    
             }
             else
             {
@@ -122,8 +122,6 @@ public class SelfCommitmentEditView : View, IDataPersistence
         _commitmentInputfield.text = data.commitmentString;
         _commitmentDropdown.value = data.commitmentOftenVal;
         _reminderToggle.isOn = data.isReminder;
-
-        Debug.Log ( _reminderToggle.isOn );
 
         if ( _reminderToggle.isOn )
         {
