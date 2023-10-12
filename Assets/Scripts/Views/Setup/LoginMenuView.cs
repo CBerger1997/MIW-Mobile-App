@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using MySql.Data.MySqlClient;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class LoginMenuView : View, IDataPersistence
 {
     [SerializeField] private Button _loginButton;
-    [SerializeField] private Button _bypassLoginButton;
     [SerializeField] private Button _resetPasswordButton;
     [SerializeField] private TMP_InputField _usernameInput;
     [SerializeField] private TMP_InputField _passwordInput;
@@ -18,69 +19,65 @@ public class LoginMenuView : View, IDataPersistence
     private bool isLoginChecked;
     private bool isDataLoaded;
 
+    string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=verify-user";
+
     public override void Initialise ()
     {
         _loginButton.onClick.AddListener ( LoginButtonOnClick );
-        _bypassLoginButton.onClick.AddListener ( BypassLoginOnClick );
         _resetPasswordButton.onClick.AddListener ( ResetPasswordButtonOnClick );
         _warningText.gameObject.SetActive ( false );
-    }
 
-    private void Update ()
-    {
-        if ( DatabaseHandler.connection.State == System.Data.ConnectionState.Open && !isLoginChecked && isDataLoaded )
-        {
-            Debug.Log ( "Checking" );
-
-            string sql = "SELECT user_login AND user_pass FROM wp_users WHERE user_login='" + username + "' AND user_pass='" + password + "' LIMIT 1";
-            MySqlCommand cmd = new MySqlCommand ( sql, DatabaseHandler.connection );
-            MySqlDataReader rdr = cmd.ExecuteReader ();
-
-            if ( rdr.Read () )
-            {
-                Debug.Log ( "Found" );
-                ViewManager.Show<StartUpMenuView> ( false );
-            }
-
-
-            Debug.Log ( "Not Found" );
-            rdr.Close ();
-            isLoginChecked = true;
-        }
+        StartCoroutine ( GetUsers ( username, password ) );
     }
 
     public void LoginButtonOnClick ()
     {
-        string sql = "SELECT user_login AND user_pass FROM wp_users WHERE user_login='" + _usernameInput.text + "' AND user_pass='" + _passwordInput.text + "' LIMIT 1";
-        MySqlCommand cmd = new MySqlCommand ( sql, DatabaseHandler.connection );
-        MySqlDataReader rdr = cmd.ExecuteReader ();
-
-        if ( rdr.Read () )
+        if ( _rememberToggle.isOn )
         {
-            if ( _rememberToggle.isOn )
-            {
-                username = _usernameInput.text;
-                password = _passwordInput.text;
+            username = _usernameInput.text;
+            password = _passwordInput.text;
 
-                DataPersistenceManager.Instance.SaveUser ();
-                DataPersistenceManager.Instance.LoadUser ();
-            }
+            DataPersistenceManager.Instance.SaveUser ();
+            DataPersistenceManager.Instance.LoadUser ();
+        }
 
-            rdr.Close ();
+        StartCoroutine ( GetUsers ( _usernameInput.text, _passwordInput.text ) );
+    }
 
-            ViewManager.Show<StartUpMenuView> ();
+    IEnumerator GetUsers ( string username, string password )
+    {
+        string userPassText = "&username=" + username + "&password=" + password;
+
+        // Create a new UnityWebRequest object.
+        UnityWebRequest request = new UnityWebRequest ( apiUrl + userPassText );
+
+        DownloadHandlerBuffer dH = new DownloadHandlerBuffer ();
+        request.downloadHandler = dH;
+
+        // Set the request method to GET.
+        request.method = UnityWebRequest.kHttpVerbGET;
+
+        // Send the request and wait for the response.
+        yield return request.SendWebRequest ();
+
+        // Check if the request was successful.
+        if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
+        {
+            Debug.LogError ( "Failed to get users from API: " + request.error );
         }
         else
         {
-            _warningText.SetActive ( true );
+            // Get the response data.
+            if ( request.downloadHandler.text == "true" )
+            {
+                ViewManager.Show<StartUpMenuView> ( false );
+            }
+
+            // Deserialize the JSON response into a list of users.
+            //List<User> users = JsonUtility.FromJson<List<User>> ( responseData );
+
+            // Do something with the users list, such as populate a UI element or create game objects.
         }
-
-        rdr.Close ();
-    }
-
-    void BypassLoginOnClick ()
-    {
-        ViewManager.Show<StartUpMenuView> ();
     }
 
     public void ResetPasswordButtonOnClick ()
