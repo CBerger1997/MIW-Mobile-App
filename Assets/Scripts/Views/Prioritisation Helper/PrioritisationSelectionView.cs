@@ -41,6 +41,7 @@ public class PrioritisationSelectionView : View
 
     public GameObject ItemPrefab;
     public GameObject RankedItemContents;
+    public PrioritisationComparisonView comparisonView;
 
     Color defaultColor = new Color(0.5450981f, 0.8235294f, 0.9215686f);
     Color selectedColor = new Color(0.2470588f, 0.8627451f, 0.6901961f);
@@ -62,12 +63,15 @@ public class PrioritisationSelectionView : View
 
         isBackToMenu = true;
 
-        foreach (Transform child in RankedItemContents.transform)
+        if (comparisonView.isComplete)
         {
-            Destroy(child.gameObject);
-        }
+            foreach (Transform child in RankedItemContents.transform)
+            {
+                Destroy(child.gameObject);
+            }
 
-        rankedItems.Clear();
+            rankedItems.Clear();
+        }
     }
 
     public override void Hide()

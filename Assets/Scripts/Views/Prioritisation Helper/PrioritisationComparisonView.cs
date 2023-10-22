@@ -17,6 +17,8 @@ public class PrioritisationComparisonView : View
     int iterations = 0;
     bool isInitialLoop = true;
 
+    public bool isComplete = false;
+
     public override void Initialise()
     {
         TopItemButton.onClick.AddListener(delegate
@@ -28,6 +30,8 @@ public class PrioritisationComparisonView : View
     public override void Show()
     {
         base.Show();
+
+        isComplete = false;
 
         rankedItems.Clear();
         currentItems.Clear();
@@ -52,7 +56,7 @@ public class PrioritisationComparisonView : View
 
     /// <summary>
     /// TODO Fix this for repeating
-    /// Appears to be an issue with values not being reset properly
+    /// Appears to be an issue with values not being reset properly when doing a rerun
     /// </summary>
     private void SelectNextItems()
     {
@@ -122,6 +126,8 @@ public class PrioritisationComparisonView : View
             }
 
             rankedItems = reorderedRankedList;
+
+            isComplete = true;
 
             ViewManager.Show<PrioritisationResultsView>(false);
         }
