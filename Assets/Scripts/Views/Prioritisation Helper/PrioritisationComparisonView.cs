@@ -19,8 +19,10 @@ public class PrioritisationComparisonView : View
 
     public override void Initialise ()
     {
-        TopItemButton.onClick.AddListener ( delegate { OnRankedItemClicked ( 1 ); } );
-        BottomItemButton.onClick.AddListener ( delegate { OnRankedItemClicked ( 2 ); } );
+        TopItemButton.onClick.AddListener ( delegate
+        { OnRankedItemClicked ( 1 ); } );
+        BottomItemButton.onClick.AddListener ( delegate
+        { OnRankedItemClicked ( 2 ); } );
     }
 
     public override void Show ()
@@ -28,12 +30,20 @@ public class PrioritisationComparisonView : View
         base.Show ();
 
         rankedItems.Clear ();
+        currentItems.Clear ();
 
         rankedItems = new List<RankedItem> ( PrioritisationSelectionView.rankedItems );
+
+        isInitialLoop = true;
+        iterations = 0;
 
         SelectNextItems ();
     }
 
+    /// <summary>
+    /// TODO Fix this for a count of two
+    /// TODO Fix this for repeating
+    /// </summary>
     private void SelectNextItems ()
     {
         if ( isInitialLoop )
@@ -52,6 +62,9 @@ public class PrioritisationComparisonView : View
                 iterations = rankedItems.Count - 1;
                 isInitialLoop = false;
             }
+
+            TopItemButton.GetComponentInChildren<TMP_Text> ().text = currentItems[ 0 ];
+            BottomItemButton.GetComponentInChildren<TMP_Text> ().text = currentItems[ 1 ];
         }
         else
         {
@@ -78,17 +91,24 @@ public class PrioritisationComparisonView : View
                 }
             }
 
-            Debug.Log ( "Ended" );
+            List<RankedItem> reorderedRankedList = new List<RankedItem> ();
 
-            foreach ( var item in rankedItems )
+            for ( int i = 0; i < rankedItems.Count; i++ )
             {
-                Debug.Log ( item.Name );
-                Debug.Log ( item.value );
+                foreach ( var item in rankedItems )
+                {
+                    if ( item.value == 5 - i )
+                    {
+                        reorderedRankedList.Add ( item );
+                        continue;
+                    }
+                }
             }
-        }
 
-        TopItemButton.GetComponentInChildren<TMP_Text> ().text = currentItems[ 0 ];
-        BottomItemButton.GetComponentInChildren<TMP_Text> ().text = currentItems[ 1 ];
+            rankedItems = reorderedRankedList;
+
+            ViewManager.Show<PrioritisationResultsView> ( false );
+        }
     }
 
     private void ModifyRankedItems ( int value1, int value2 )
