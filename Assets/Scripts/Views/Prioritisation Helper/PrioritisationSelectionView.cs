@@ -11,28 +11,28 @@ public class RankedItem
     public List<string> upperComparisonIDs;
     public List<string> lowerComparisonIDs;
 
-    public RankedItem()
+    public RankedItem ()
     {
         this.Name = "";
         this.value = 0;
-        this.upperComparisonIDs = new List<string>();
-        this.lowerComparisonIDs = new List<string>();
+        this.upperComparisonIDs = new List<string> ();
+        this.lowerComparisonIDs = new List<string> ();
     }
 
-    public RankedItem(string Name)
+    public RankedItem ( string Name )
     {
         this.Name = Name;
         this.value = 0;
-        this.upperComparisonIDs = new List<string>();
-        this.lowerComparisonIDs = new List<string>();
+        this.upperComparisonIDs = new List<string> ();
+        this.lowerComparisonIDs = new List<string> ();
     }
 }
 
 public class PrioritisationSelectionView : View
 {
-    List<GameObject> listItems = new List<GameObject>();
+    List<GameObject> listItems = new List<GameObject> ();
 
-    public List<RankedItem> rankedItems = new List<RankedItem>();
+    public List<RankedItem> rankedItems = new List<RankedItem> ();
     public TMP_InputField itemNameInputField;
 
     public Button addButton;
@@ -43,57 +43,57 @@ public class PrioritisationSelectionView : View
     public GameObject RankedItemContents;
     public PrioritisationComparisonView comparisonView;
 
-    Color defaultColor = new Color(0.5450981f, 0.8235294f, 0.9215686f);
-    Color selectedColor = new Color(0.2470588f, 0.8627451f, 0.6901961f);
+    Color defaultColor = new Color ( 0.5450981f, 0.8235294f, 0.9215686f );
+    Color selectedColor = new Color ( 0.2470588f, 0.8627451f, 0.6901961f );
 
     int currentItemIndex = -1;
 
     bool isBackToMenu = true;
 
-    public override void Initialise()
+    public override void Initialise ()
     {
-        addButton.onClick.AddListener(OnAddClicked);
-        removeButton.onClick.AddListener(OnRemoveClicked);
-        startButton.onClick.AddListener(OnStartClicked);
+        addButton.onClick.AddListener ( OnAddClicked );
+        removeButton.onClick.AddListener ( OnRemoveClicked );
+        startButton.onClick.AddListener ( OnStartClicked );
     }
 
-    public override void Show()
+    public override void Show ()
     {
-        base.Show();
+        base.Show ();
 
         isBackToMenu = true;
 
-        if (comparisonView.isComplete)
+        if ( comparisonView.isComplete )
         {
-            foreach (Transform child in RankedItemContents.transform)
+            foreach ( Transform child in RankedItemContents.transform )
             {
-                Destroy(child.gameObject);
+                Destroy ( child.gameObject );
             }
 
-            rankedItems.Clear();
+            rankedItems.Clear ();
         }
     }
 
-    public override void Hide()
+    public override void Hide ()
     {
-        base.Hide();
+        base.Hide ();
 
-        if (isBackToMenu)
+        if ( isBackToMenu )
         {
-            rankedItems.Clear();
-            listItems.Clear();
+            rankedItems.Clear ();
+            listItems.Clear ();
             currentItemIndex = -1;
 
-            foreach (Transform child in RankedItemContents.transform)
+            foreach ( Transform child in RankedItemContents.transform )
             {
-                Destroy(child.gameObject);
+                Destroy ( child.gameObject );
             }
         }
     }
 
-    private void Update()
+    private void Update ()
     {
-        if (currentItemIndex >= 0)
+        if ( currentItemIndex >= 0 )
         {
             removeButton.interactable = true;
         }
@@ -102,7 +102,7 @@ public class PrioritisationSelectionView : View
             removeButton.interactable = false;
         }
 
-        if (itemNameInputField.text != "")
+        if ( itemNameInputField.text != "" )
         {
             addButton.interactable = true;
         }
@@ -110,7 +110,7 @@ public class PrioritisationSelectionView : View
         {
             addButton.interactable = false;
         }
-        if (listItems.Count > 2)
+        if ( listItems.Count > 2 )
         {
             startButton.interactable = true;
         }
@@ -120,32 +120,33 @@ public class PrioritisationSelectionView : View
         }
     }
 
-    void OnAddClicked()
+    void OnAddClicked ()
     {
-        AddItemToList(itemNameInputField.text);
+        AddItemToList ( itemNameInputField.text );
 
-        GameObject newItem = Instantiate(ItemPrefab, RankedItemContents.transform);
-        newItem.GetComponent<Button>().image.color = defaultColor;
-        newItem.GetComponentInChildren<TMP_Text>().text = itemNameInputField.text;
-        newItem.GetComponent<Button>().onClick.AddListener(delegate { ListItemSelected(newItem.GetComponent<Button>()); });
-        listItems.Add(newItem);
+        GameObject newItem = Instantiate ( ItemPrefab, RankedItemContents.transform );
+        newItem.GetComponent<Button> ().image.color = defaultColor;
+        newItem.GetComponentInChildren<TMP_Text> ().text = itemNameInputField.text;
+        newItem.GetComponent<Button> ().onClick.AddListener ( delegate
+        { ListItemSelected ( newItem.GetComponent<Button> () ); } );
+        listItems.Add ( newItem );
 
         itemNameInputField.text = "";
     }
 
-    void AddItemToList(string Name)
+    void AddItemToList ( string Name )
     {
-        rankedItems.Add(new RankedItem(Name));
+        rankedItems.Add ( new RankedItem ( Name ) );
     }
 
-    void ListItemSelected(Button button)
+    void ListItemSelected ( Button button )
     {
         int index = -1;
         int count = 0;
 
-        foreach (Transform child in RankedItemContents.transform)
+        foreach ( Transform child in RankedItemContents.transform )
         {
-            if (child.GetComponent<Button>() == button)
+            if ( child.GetComponent<Button> () == button )
             {
                 index = count;
                 break;
@@ -156,32 +157,32 @@ public class PrioritisationSelectionView : View
             }
         }
 
-        if (currentItemIndex != index && currentItemIndex != -1)
+        if ( currentItemIndex != index && currentItemIndex != -1 )
         {
-            listItems[currentItemIndex].GetComponent<Button>().image.color = defaultColor;
+            listItems[ currentItemIndex ].GetComponent<Button> ().image.color = defaultColor;
         }
 
         button.image.color = selectedColor;
         currentItemIndex = index;
     }
 
-    public void OnRemoveClicked()
+    public void OnRemoveClicked ()
     {
-        Destroy(listItems[currentItemIndex].gameObject);
-        listItems.RemoveAt(currentItemIndex);
-        rankedItems.RemoveAt(currentItemIndex);
+        Destroy ( listItems[ currentItemIndex ].gameObject );
+        listItems.RemoveAt ( currentItemIndex );
+        rankedItems.RemoveAt ( currentItemIndex );
         currentItemIndex = -1;
     }
 
-    public void RemoveItemFromList(int value)
+    public void RemoveItemFromList ( int value )
     {
-        rankedItems.RemoveAt(value);
+        rankedItems.RemoveAt ( value );
     }
 
-    public void OnStartClicked()
+    public void OnStartClicked ()
     {
         isBackToMenu = false;
 
-        ViewManager.Show<PrioritisationComparisonView>();
+        ViewManager.Show<PrioritisationComparisonView> ();
     }
 }

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JustBreatheMenuView : View
+public class JustBreatheSetupView : View
 {
     [SerializeField] private Button _startButton;
     [SerializeField] private TMP_Dropdown _sessionDropdown;

@@ -20,7 +20,7 @@ public class MainMenuView : View
 
         _visualisationsButton.onClick.AddListener ( () => ViewManager.Show<VisualisationsMenuView> () );
 
-        _justBreathButton.onClick.AddListener ( () => ViewManager.Show<JustBreatheMenuView> () );
+        _justBreathButton.onClick.AddListener ( () => ViewManager.Show<JustBreatheSetupView> () );
 
         _journalButton.onClick.AddListener ( () => ViewManager.Show<JournalMenuView> () );
 

@@ -11,64 +11,57 @@ public class PrioritisationComparisonView : View
     public PrioritisationSelectionView PrioritisationSelectionView;
     public Button TopItemButton;
     public Button BottomItemButton;
-    public List<RankedItem> rankedItems = new List<RankedItem>();
+    public List<RankedItem> rankedItems = new List<RankedItem> ();
 
-    List<string> currentItems = new List<string>();
+    List<string> currentItems = new List<string> ();
     int iterations = 0;
     bool isInitialLoop = true;
 
     public bool isComplete = false;
 
-    public override void Initialise()
+    public override void Initialise ()
     {
-        TopItemButton.onClick.AddListener(delegate
-        { OnRankedItemClicked(1); });
-        BottomItemButton.onClick.AddListener(delegate
-        { OnRankedItemClicked(2); });
+        TopItemButton.onClick.AddListener ( delegate
+        { OnRankedItemClicked ( 1 ); } );
+        BottomItemButton.onClick.AddListener ( delegate
+        { OnRankedItemClicked ( 2 ); } );
     }
 
-    public override void Show()
+    public override void Show ()
     {
-        base.Show();
+        base.Show ();
 
         isComplete = false;
 
-        rankedItems.Clear();
-        currentItems.Clear();
+        rankedItems.Clear ();
+        currentItems.Clear ();
 
-        rankedItems = new List<RankedItem>(PrioritisationSelectionView.rankedItems);
+        rankedItems = new List<RankedItem> ( PrioritisationSelectionView.rankedItems );
 
-        foreach (RankedItem item in rankedItems)
+        foreach ( RankedItem item in rankedItems )
         {
             item.value = 0;
+            item.upperComparisonIDs.Clear ();
+            item.lowerComparisonIDs.Clear ();
         }
 
         isInitialLoop = true;
         iterations = 0;
 
-        foreach (RankedItem item in rankedItems)
-        {
-            Debug.Log(item.value);
-        }
-
-        SelectNextItems();
+        SelectNextItems ();
     }
 
-    /// <summary>
-    /// TODO Fix this for repeating
-    /// Appears to be an issue with values not being reset properly when doing a rerun
-    /// </summary>
-    private void SelectNextItems()
+    private void SelectNextItems ()
     {
-        if (isInitialLoop)
+        if ( isInitialLoop )
         {
-            if (iterations + 1 <= rankedItems.Count - 1)
+            if ( iterations + 1 <= rankedItems.Count - 1 )
             {
-                currentItems.Add(rankedItems[iterations].Name);
-                currentItems.Add(rankedItems[iterations + 1].Name);
+                currentItems.Add ( rankedItems[ iterations ].Name );
+                currentItems.Add ( rankedItems[ iterations + 1 ].Name );
                 iterations += 2;
 
-                if (iterations == rankedItems.Count)
+                if ( iterations == rankedItems.Count )
                 {
                     iterations = 0;
                     isInitialLoop = false;
@@ -76,50 +69,50 @@ public class PrioritisationComparisonView : View
             }
             else
             {
-                currentItems.Add(rankedItems[iterations].Name);
+                currentItems.Add ( rankedItems[ iterations ].Name );
                 iterations = 0;
-                currentItems.Add(rankedItems[iterations].Name);
+                currentItems.Add ( rankedItems[ iterations ].Name );
                 iterations = rankedItems.Count - 1;
                 isInitialLoop = false;
             }
 
-            TopItemButton.GetComponentInChildren<TMP_Text>().text = currentItems[0];
-            BottomItemButton.GetComponentInChildren<TMP_Text>().text = currentItems[1];
+            TopItemButton.GetComponentInChildren<TMP_Text> ().text = currentItems[ 0 ];
+            BottomItemButton.GetComponentInChildren<TMP_Text> ().text = currentItems[ 1 ];
         }
         else
         {
-            for (int i = rankedItems.Count; i > 0; i--)
+            for ( int i = rankedItems.Count; i > 0; i-- )
             {
                 int valuesMatched = 0;
-                currentItems.Clear();
+                currentItems.Clear ();
 
-                foreach (var item in rankedItems)
+                foreach ( var item in rankedItems )
                 {
-                    if (item.value == i)
+                    if ( item.value == i )
                     {
-                        currentItems.Add(item.Name);
+                        currentItems.Add ( item.Name );
                         valuesMatched++;
                     }
 
-                    if (valuesMatched == 2)
+                    if ( valuesMatched == 2 )
                     {
-                        TopItemButton.GetComponentInChildren<TMP_Text>().text = currentItems[0];
-                        BottomItemButton.GetComponentInChildren<TMP_Text>().text = currentItems[1];
+                        TopItemButton.GetComponentInChildren<TMP_Text> ().text = currentItems[ 0 ];
+                        BottomItemButton.GetComponentInChildren<TMP_Text> ().text = currentItems[ 1 ];
 
                         return;
                     }
                 }
             }
 
-            List<RankedItem> reorderedRankedList = new List<RankedItem>();
+            List<RankedItem> reorderedRankedList = new List<RankedItem> ();
 
-            for (int i = 0; i < rankedItems.Count; i++)
+            for ( int i = 0; i < rankedItems.Count; i++ )
             {
-                foreach (var item in rankedItems)
+                foreach ( var item in rankedItems )
                 {
-                    if (item.value == rankedItems.Count - i)
+                    if ( item.value == rankedItems.Count - i )
                     {
-                        reorderedRankedList.Add(item);
+                        reorderedRankedList.Add ( item );
                         continue;
                     }
                 }
@@ -129,28 +122,28 @@ public class PrioritisationComparisonView : View
 
             isComplete = true;
 
-            ViewManager.Show<PrioritisationResultsView>(false);
+            ViewManager.Show<PrioritisationResultsView> ( false );
         }
     }
 
-    private void ModifyRankedItems(int value1, int value2)
+    private void ModifyRankedItems ( int value1, int value2 )
     {
-        foreach (var item in rankedItems)
+        foreach ( var item in rankedItems )
         {
-            if (item.Name == currentItems[0])
+            if ( item.Name == currentItems[ 0 ] )
             {
-                if (value1 == 1)
+                if ( value1 == 1 )
                 {
-                    if (item.value == 0)
+                    if ( item.value == 0 )
                     {
                         item.value = rankedItems.Count;
                     }
 
-                    item.lowerComparisonIDs.Add(currentItems[1]);
+                    item.lowerComparisonIDs.Add ( currentItems[ 1 ] );
                 }
                 else
                 {
-                    if (item.value == 0)
+                    if ( item.value == 0 )
                     {
                         item.value = rankedItems.Count - 1;
                     }
@@ -159,23 +152,23 @@ public class PrioritisationComparisonView : View
                         item.value--;
                     }
 
-                    item.upperComparisonIDs.Add(currentItems[1]);
+                    item.upperComparisonIDs.Add ( currentItems[ 1 ] );
                 }
             }
-            else if (item.Name == currentItems[1])
+            else if ( item.Name == currentItems[ 1 ] )
             {
-                if (value2 == 1)
+                if ( value2 == 1 )
                 {
-                    if (item.value == 0)
+                    if ( item.value == 0 )
                     {
                         item.value = rankedItems.Count;
                     }
 
-                    item.lowerComparisonIDs.Add(currentItems[0]);
+                    item.lowerComparisonIDs.Add ( currentItems[ 0 ] );
                 }
                 else
                 {
-                    if (item.value == 0)
+                    if ( item.value == 0 )
                     {
                         item.value = rankedItems.Count - 1;
                     }
@@ -184,7 +177,7 @@ public class PrioritisationComparisonView : View
                         item.value--;
                     }
 
-                    item.upperComparisonIDs.Add(currentItems[0]);
+                    item.upperComparisonIDs.Add ( currentItems[ 0 ] );
                 }
             }
         }
@@ -195,36 +188,36 @@ public class PrioritisationComparisonView : View
         {
             valuesToChange = false;
 
-            foreach (var rankedItem in rankedItems)
+            foreach ( var rankedItem in rankedItems )
             {
-                foreach (var comparisonItem in rankedItems)
+                foreach ( var comparisonItem in rankedItems )
                 {
-                    if (rankedItem.lowerComparisonIDs.Contains(comparisonItem.Name) && rankedItem.value == comparisonItem.value)
+                    if ( rankedItem.lowerComparisonIDs.Contains ( comparisonItem.Name ) && rankedItem.value == comparisonItem.value )
                     {
                         comparisonItem.value--;
                         valuesToChange = true;
                     }
                 }
             }
-        } while (valuesToChange);
+        } while ( valuesToChange );
 
-        currentItems.Clear();
+        currentItems.Clear ();
 
-        Debug.Log("Next Set");
+        Debug.Log ( "Next Set" );
 
-        foreach (var item in rankedItems)
+        foreach ( var item in rankedItems )
         {
-            Debug.Log("Name: " + item.Name);
-            Debug.Log("Value: " + item.value);
+            Debug.Log ( "Name: " + item.Name );
+            Debug.Log ( "Value: " + item.value );
         }
     }
 
-    public void OnRankedItemClicked(int value)
+    public void OnRankedItemClicked ( int value )
     {
         int value1 = 0;
         int value2 = 0;
 
-        if (value == 1)
+        if ( value == 1 )
         {
             value1 = 1;
         }
@@ -233,7 +226,7 @@ public class PrioritisationComparisonView : View
             value2 = 1;
         }
 
-        ModifyRankedItems(value1, value2);
-        SelectNextItems();
+        ModifyRankedItems ( value1, value2 );
+        SelectNextItems ();
     }
 }
