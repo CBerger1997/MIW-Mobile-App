@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class JustBreathePlayerView : View
 {
     [SerializeField] private Image logoFull;
+    [SerializeField] private TMP_Text breathingText;
+    [SerializeField] private TMP_Text timerText;
+    [SerializeField] private Button endSessionButton;
+    [SerializeField] private JustBreatheSetupView justBreatheSetup;
 
     float emptyImageVal = 0.048f;
     float fullImageVal = 0.388f;
@@ -14,19 +19,19 @@ public class JustBreathePlayerView : View
     float secondsOut;
 
     float t = 0.0f;
-
-    public bool isBreathingOut = false;
-
-    [SerializeField] private JustBreatheSetupView justBreatheSetup;
+    bool isBreathingOut = false;
 
     public override void Initialise ()
     {
-        logoFull.fillAmount = emptyImageVal;
+        endSessionButton.onClick.AddListener ( delegate
+        { ViewManager.Show<MainMenuView> ( false ); } );
     }
 
     public override void Show ()
     {
         base.Show ();
+
+        logoFull.fillAmount = emptyImageVal;
 
         switch ( justBreatheSetup.BreathingDropdown.value )
         {
@@ -49,28 +54,34 @@ public class JustBreathePlayerView : View
     {
         if ( !isBreathingOut )
         {
-            logoFull.fillAmount = Mathf.Lerp ( logoFull.fillAmount, fullImageVal, t / secondsIn );
+            logoFull.fillAmount = Mathf.Lerp ( emptyImageVal, fullImageVal, t / secondsIn );
 
             t += Time.deltaTime;
+
+            timerText.text = ( ( int ) t + 1 ).ToString ();
 
             if ( logoFull.fillAmount >= fullImageVal - 0.001f )
             {
                 logoFull.fillAmount = fullImageVal;
                 t = 0.0f;
                 isBreathingOut = true;
+                breathingText.text = "Breathing Out";
             }
         }
         else
         {
-            logoFull.fillAmount = Mathf.Lerp ( logoFull.fillAmount, emptyImageVal, t / secondsOut );
+            logoFull.fillAmount = Mathf.Lerp ( fullImageVal, emptyImageVal, t / secondsOut );
 
             t += Time.deltaTime;
+
+            timerText.text = ( ( int ) t + 1 ).ToString ();
 
             if ( logoFull.fillAmount <= emptyImageVal + 0.001f )
             {
                 logoFull.fillAmount = emptyImageVal;
                 t = 0.0f;
                 isBreathingOut = false;
+                breathingText.text = "Breathing In";
             }
         }
     }
