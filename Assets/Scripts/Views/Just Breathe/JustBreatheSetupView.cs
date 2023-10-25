@@ -8,11 +8,12 @@ public class JustBreatheSetupView : View
 {
     [SerializeField] private Button _startButton;
     [SerializeField] private TMP_Dropdown _sessionDropdown;
-    [SerializeField] private TMP_Dropdown _breathingDropdown;
     [SerializeField] private Toggle _yesToggle;
     [SerializeField] private Toggle _noToggle;
     [SerializeField] private Toggle _visualToggle;
     [SerializeField] private Toggle _voicedToggle;
+
+    public TMP_Dropdown BreathingDropdown;
 
     private HelpScreen _helpScreen;
 
@@ -35,6 +36,8 @@ public class JustBreatheSetupView : View
 
         _visualToggle.onValueChanged.AddListener ( delegate
         { OnToggleTriggered ( _visualToggle, _voicedToggle ); } );
+
+        _startButton.onClick.AddListener ( OnStartClicked );
     }
 
     public override void Show ()
@@ -67,8 +70,8 @@ public class JustBreatheSetupView : View
             "6 seconds in; 10 seconds out"
         };
 
-        _breathingDropdown.ClearOptions ();
-        _breathingDropdown.AddOptions ( breathingList );
+        BreathingDropdown.ClearOptions ();
+        BreathingDropdown.AddOptions ( breathingList );
     }
 
     private void OnToggleTriggered ( Toggle triggeredToggle, Toggle affectedToggle )
@@ -81,5 +84,10 @@ public class JustBreatheSetupView : View
         {
             triggeredToggle.isOn = true;
         }
+    }
+
+    private void OnStartClicked ()
+    {
+        ViewManager.Show<JustBreathePlayerView> ();
     }
 }
