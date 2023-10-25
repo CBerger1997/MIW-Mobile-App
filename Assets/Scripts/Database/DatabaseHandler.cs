@@ -1,25 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System;
 
 public class DatabaseHandler : MonoBehaviour
 {
-    void Awake ()
-    {
-        DontDestroyOnLoad ( this.gameObject );
-    }
+    User user = new User ();
 
-    private void Start ()
+    public IEnumerator GetUsers ( string username, string password )
     {
-        StartCoroutine ( GetUsers () );
-    }
+        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=verify-user";
 
-    string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=verify-user&username=charlie.jones@myinternalworld.com&password=$P$Bhy1IsTVIdohmBFld2nmJ1.QdAvM9e0";
+        string userPassText = "&username=" + username + "&password=" + password;
 
-    IEnumerator GetUsers ()
-    {
         // Create a new UnityWebRequest object.
-        UnityWebRequest request = new UnityWebRequest ( apiUrl );
+        UnityWebRequest request = new UnityWebRequest ( apiUrl + userPassText );
 
         DownloadHandlerBuffer dH = new DownloadHandlerBuffer ();
         request.downloadHandler = dH;
@@ -37,15 +32,61 @@ public class DatabaseHandler : MonoBehaviour
         }
         else
         {
+            user = JsonUtility.FromJson<User> ( request.downloadHandler.text );
+
             // Get the response data.
-            string responseData = request.downloadHandler.text;
+            if ( request.downloadHandler.text != "false" )
+            {
+                ViewManager.Show<StartUpMenuView> ( false );
+            }
+        }
+    }
 
-            Debug.Log ( responseData );
 
-            // Deserialize the JSON response into a list of users.
-            //List<User> users = JsonUtility.FromJson<List<User>> ( responseData );
+    public IEnumerator CheckInUser ( string feeling, string reason )
+    {
+        Debug.Log ( "Setting URL" );
 
-            // Do something with the users list, such as populate a UI element or create game objects.
+        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=checkin-user";
+
+        string checkInText =
+            "&id=" + user.ID +
+            "&time=" + DateTime.Now.ToString ( "MM-dd-yyyy HH:mm:ss" ) +
+            "&date=" + DateTime.Now.ToString ( "MM-dd-yyyy" ) +
+            "&feeling=" + feeling +
+            "&reason=" + reason;
+
+
+        // Create a new UnityWebRequest object.
+        UnityWebRequest request = new UnityWebRequest ( apiUrl + checkInText );
+
+        DownloadHandlerBuffer dH = new DownloadHandlerBuffer ();
+        request.downloadHandler = dH;
+
+        // Set the request method to GET.
+        request.method = UnityWebRequest.kHttpVerbPOST;
+
+        // Send the request and wait for the response.
+        yield return request.SendWebRequest ();
+
+        Debug.Log ( "URL Response" );
+
+        // Check if the request was successful.
+        if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
+        {
+            Debug.LogError ( "Failed to get users from API: " + request.error );
+        }
+        else
+        {
+            // Get the response data.
+            if ( request.downloadHandler.text == "false" )
+            {
+                Debug.LogError ( "Checkin DB insert failed" );
+            }
+            else
+            {
+                Debug.LogError ( request.downloadHandler.text );
+            }
         }
     }
 }

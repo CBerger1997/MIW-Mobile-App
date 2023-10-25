@@ -14,11 +14,10 @@ public class LoginMenuView : View, IDataPersistence
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private GameObject _warningText;
     [SerializeField] private Toggle _rememberToggle;
+    [SerializeField] private DatabaseHandler _databaseHandler;
 
     private string username;
     private string password;
-
-    string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=verify-user";
 
     public override void Initialise ()
     {
@@ -32,7 +31,7 @@ public class LoginMenuView : View, IDataPersistence
     {
         base.Show ();
 
-        StartCoroutine ( GetUsers ( username, password ) );
+        StartCoroutine ( _databaseHandler.GetUsers ( username, password ) );
     }
 
     public void LoginButtonOnClick ()
@@ -46,51 +45,7 @@ public class LoginMenuView : View, IDataPersistence
             DataPersistenceManager.Instance.LoadUser ();
         }
 
-        StartCoroutine ( GetUsers ( _usernameInput.text, _passwordInput.text ) );
-    }
-
-    IEnumerator GetUsers ( string username, string password )
-    {
-        Debug.Log ( "Checking Verification" );
-
-        string userPassText = "&username=" + username + "&password=" + password;
-
-        // Create a new UnityWebRequest object.
-        UnityWebRequest request = new UnityWebRequest ( apiUrl + userPassText );
-
-        DownloadHandlerBuffer dH = new DownloadHandlerBuffer ();
-        request.downloadHandler = dH;
-
-        // Set the request method to GET.
-        request.method = UnityWebRequest.kHttpVerbGET;
-
-        // Send the request and wait for the response.
-        yield return request.SendWebRequest ();
-
-        // Check if the request was successful.
-        if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
-        {
-            Debug.LogError ( "Failed to get users from API: " + request.error );
-        }
-        else
-        {
-            Debug.Log ( request.downloadHandler.text );
-
-            User user = JsonUtility.FromJson<User> ( request.downloadHandler.text );
-
-            Debug.Log ( user.ID );
-            Debug.Log ( user.display_name );
-
-            // Get the response data.
-            if ( request.downloadHandler.text != "false" )
-            {
-                ViewManager.Show<StartUpMenuView> ( false );
-            }
-
-            // Deserialize the JSON response into a list of users.
-
-            // Do something with the users list, such as populate a UI element or create game objects.
-        }
+        StartCoroutine ( _databaseHandler.GetUsers ( _usernameInput.text, _passwordInput.text ) );
     }
 
     public void ShowPasswordButtonOnClick ()

@@ -9,6 +9,7 @@ public class CheckInReasonMenu : View
     [SerializeField] private Button _iDontKnowButton;
     [SerializeField] private Button _saveButton;
     [SerializeField] private CheckinManager _checkinManager;
+    [SerializeField] private DatabaseHandler _databaseHandler;
 
     private HelpScreen _helpScreen;
 
@@ -19,7 +20,8 @@ public class CheckInReasonMenu : View
         for ( int i = 0; i < _reasonButtons.Count; i++ )
         {
             int copy = i;
-            _reasonButtons[ copy ].onClick.AddListener ( delegate { OnClickContextSelected ( copy, _reasonButtons[ copy ] ); } );
+            _reasonButtons[ copy ].onClick.AddListener ( delegate
+            { OnClickContextSelected ( copy, _reasonButtons[ copy ] ); } );
         }
 
         _iDontKnowButton.onClick.AddListener ( OnIDKButtonClicked );
@@ -53,7 +55,7 @@ public class CheckInReasonMenu : View
             _iDontKnowButton.GetComponentInChildren<TMPro.TMP_Text> ().color = Color.white;
             reasonVals.Clear ();
         }
-    
+
         //Checks there is a current reason value in the list and if it is the same as the value just pressed
         if ( reasonVals.Count > 0 && reasonVals.Contains ( val ) )
         {
@@ -62,7 +64,7 @@ public class CheckInReasonMenu : View
             reasonVals.Remove ( val );
 
             //Check if the reason values list is now empty
-            if(reasonVals.Count == 0)
+            if ( reasonVals.Count == 0 )
             {
                 //Disable the save button
                 _saveButton.interactable = false;
@@ -105,7 +107,9 @@ public class CheckInReasonMenu : View
             }
         }
 
-        Debug.Log ( reasons );
+        Debug.Log ( "Check In Coroutine" );
+
+        StartCoroutine ( _databaseHandler.CheckInUser ( _checkinManager.curEmotionVal.ToString (), reasons ) );
 
         _checkinManager.emotionVals.Add ( _checkinManager.curEmotionVal );
         _checkinManager.reasonVals.Add ( reasons );
