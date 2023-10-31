@@ -51,8 +51,8 @@ public class DatabaseHandler : MonoBehaviour
 
         string checkInText =
             "&id=" + user.ID +
-            "&time=" + DateTime.Now.ToString ( "MM-dd-yyyy HH:mm:ss" ) +
-            "&date=" + DateTime.Now.ToString ( "MM-dd-yyyy" ) +
+            "&time=" + DateTime.Now.ToString ( "yyyy-MM-dd HH:mm:ss" ) +
+            "&date=" + DateTime.Now.ToString ( "yyyy-MM-dd" ) +
             "&feeling=" + feeling +
             "&reason=" + reason;
 
@@ -81,11 +81,21 @@ public class DatabaseHandler : MonoBehaviour
             // Get the response data.
             if ( request.downloadHandler.text == "false" )
             {
-                Debug.LogError ( "Checkin DB insert failed" );
+                Debug.LogError ( "Checkin Save Failed" );
+
+                DataPersistenceManager.Instance.SaveUser ();
+                DataPersistenceManager.Instance.LoadUser ();
+
+                ViewManager.Show<MainMenuView> ( false );
             }
             else
             {
-                Debug.LogError ( request.downloadHandler.text );
+                Debug.Log ( request.downloadHandler.text );
+
+                DataPersistenceManager.Instance.SaveUser ();
+                DataPersistenceManager.Instance.LoadUser ();
+
+                ViewManager.Show<MainMenuView> ( false );
             }
         }
     }

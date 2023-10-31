@@ -12,7 +12,6 @@ public class CheckInReasonMenu : View
     [SerializeField] private DatabaseHandler _databaseHandler;
 
     private HelpScreen _helpScreen;
-
     private List<int> reasonVals = new List<int> ();
 
     public override void Initialise ()
@@ -109,15 +108,10 @@ public class CheckInReasonMenu : View
 
         Debug.Log ( "Check In Coroutine" );
 
-        StartCoroutine ( _databaseHandler.CheckInUser ( _checkinManager.curEmotionVal.ToString (), reasons ) );
-
         _checkinManager.emotionVals.Add ( _checkinManager.curEmotionVal );
         _checkinManager.reasonVals.Add ( reasons );
         _checkinManager.hasCheckedIn = true;
 
-        DataPersistenceManager.Instance.SaveUser ();
-        DataPersistenceManager.Instance.LoadUser ();
-
-        ViewManager.Show<MainMenuView> ( false );
+        StartCoroutine ( _databaseHandler.CheckInUser ( _checkinManager.curEmotionVal.ToString (), reasons ) );
     }
 }

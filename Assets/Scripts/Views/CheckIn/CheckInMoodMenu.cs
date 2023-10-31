@@ -64,6 +64,8 @@ public class CheckInMoodMenu : View
         {
             _historyUI.gameObject.SetActive ( true );
         }
+
+        _continueButton.interactable = false;
     }
 
     private void OnClickEmotionSelected ( int val, Button button )
