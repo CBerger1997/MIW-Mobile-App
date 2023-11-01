@@ -1,0 +1,24 @@
+--------------------------------------------------------------------
+DATABASE SOLUTION FOR NO INTERNET
+--------------------------------------------------------------------
+
+Make a backlog of required database injections
+Once internet is back, push these
+
+--------------------------------------------------------------------
+BUTTON CODES / FONT
+--------------------------------------------------------------------
+
+.text-yellow {color: #ffc91d;}
+.text-navy {color: #011e41;}
+.text-turquoise {color: #3fdcb0;}
+.text-green {color: #74d14a;}
+.text-pink {color: #fc59a3;}
+.text-purple {color: #bf83e5;}
+.text-red {color: #ff5c35;}
+.text-blue {color: #8bd2eb;}
+.text-grey {color: #aaaaaa;}
+
+Montserrat font
+
+https://icons8.com/icons/set/settings-button
