@@ -75,39 +75,32 @@ public class DatabaseHandler : MonoBehaviour
         if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
         {
             Debug.LogError ( "Failed to get users from API: " + request.error );
+
+            ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: you appear to have no internet connection, please try again" );
         }
         else
         {
-            Debug.LogError ( "Checkin Save Failed" );
+            // Get the response data.
+            if ( request.downloadHandler.text == "false" )
+            {
+                Debug.LogError ( "Checkin Save DB Input Failed" );
 
-            ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: please check internet connection and try again" );
+                ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: some information appears to be incorrect, please let Inner Calm know" );
 
-            DataPersistenceManager.Instance.SaveUser ();
-            DataPersistenceManager.Instance.LoadUser ();
+                DataPersistenceManager.Instance.SaveUser ();
+                DataPersistenceManager.Instance.LoadUser ();
 
-            ViewManager.Show<MainMenuView> ( false );
+                ViewManager.Show<MainMenuView> ( false );
+            }
+            else
+            {
+                Debug.Log ( request.downloadHandler.text );
 
-            //// Get the response data.
-            //if ( request.downloadHandler.text == "false" )
-            //{
-            //    Debug.LogError ( "Checkin Save Failed" );
+                DataPersistenceManager.Instance.SaveUser ();
+                DataPersistenceManager.Instance.LoadUser ();
 
-            //    ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: please check internet connection and try again" );
-
-            //    DataPersistenceManager.Instance.SaveUser ();
-            //    DataPersistenceManager.Instance.LoadUser ();
-
-            //    ViewManager.Show<MainMenuView> ( false );
-            //}
-            //else
-            //{
-            //    Debug.Log ( request.downloadHandler.text );
-
-            //    DataPersistenceManager.Instance.SaveUser ();
-            //    DataPersistenceManager.Instance.LoadUser ();
-
-            //    ViewManager.Show<MainMenuView> ( false );
-            //}
+                ViewManager.Show<MainMenuView> ( false );
+            }
         }
     }
 }
