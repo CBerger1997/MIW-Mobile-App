@@ -78,25 +78,36 @@ public class DatabaseHandler : MonoBehaviour
         }
         else
         {
-            // Get the response data.
-            if ( request.downloadHandler.text == "false" )
-            {
-                Debug.LogError ( "Checkin Save Failed" );
+            Debug.LogError ( "Checkin Save Failed" );
 
-                DataPersistenceManager.Instance.SaveUser ();
-                DataPersistenceManager.Instance.LoadUser ();
+            ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: please check internet connection and try again" );
 
-                ViewManager.Show<MainMenuView> ( false );
-            }
-            else
-            {
-                Debug.Log ( request.downloadHandler.text );
+            DataPersistenceManager.Instance.SaveUser ();
+            DataPersistenceManager.Instance.LoadUser ();
 
-                DataPersistenceManager.Instance.SaveUser ();
-                DataPersistenceManager.Instance.LoadUser ();
+            ViewManager.Show<MainMenuView> ( false );
 
-                ViewManager.Show<MainMenuView> ( false );
-            }
+            //// Get the response data.
+            //if ( request.downloadHandler.text == "false" )
+            //{
+            //    Debug.LogError ( "Checkin Save Failed" );
+
+            //    ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: please check internet connection and try again" );
+
+            //    DataPersistenceManager.Instance.SaveUser ();
+            //    DataPersistenceManager.Instance.LoadUser ();
+
+            //    ViewManager.Show<MainMenuView> ( false );
+            //}
+            //else
+            //{
+            //    Debug.Log ( request.downloadHandler.text );
+
+            //    DataPersistenceManager.Instance.SaveUser ();
+            //    DataPersistenceManager.Instance.LoadUser ();
+
+            //    ViewManager.Show<MainMenuView> ( false );
+            //}
         }
     }
 }

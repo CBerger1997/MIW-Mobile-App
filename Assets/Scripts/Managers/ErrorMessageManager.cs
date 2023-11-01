@@ -8,26 +8,32 @@ public class ErrorMessageManager : MonoBehaviour
 
     [SerializeField] private Button _closeButton;
     [SerializeField] private TMP_Text _errorText;
+    private Animator _anim;
 
     private void Awake ()
     {
         s_instance = this;
 
         _closeButton.onClick.AddListener ( CloseButtonOnClick );
+
+        _anim = GetComponent<Animator> ();
     }
 
-    public void SetErrorText ( string errorText )
+    public static void ActivateErrorMessage ( string errorText )
     {
-        _errorText.text = errorText;
-    }
+        Debug.Log ( "Error Activate" );
 
-    public void ActivateErrorMessage()
-    {
+        s_instance._anim.enabled = true;
 
+        s_instance._errorText.text = errorText;
+
+        s_instance._anim.Play ( "Show" );
     }
 
     private void CloseButtonOnClick ()
     {
+        Debug.Log ( "Error Activate" );
 
+        s_instance._anim.Play ( "Hide" );
     }
 }
