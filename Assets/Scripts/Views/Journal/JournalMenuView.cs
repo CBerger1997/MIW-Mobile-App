@@ -9,6 +9,7 @@ public class JournalMenuView : View, IDataPersistence
 {
 
     [SerializeField] private TMP_Text _dateText;
+    [SerializeField] private TMP_Text _limitText;
     [SerializeField] private TMP_InputField _journalEntryInput;
     [SerializeField] private Button _saveEntryButton;
     [SerializeField] private Button _pastEntriesButton;
@@ -21,8 +22,10 @@ public class JournalMenuView : View, IDataPersistence
         _dateText.text = "Entry: " + DateTime.Now.ToString ( "ddd" ) + ", " + DateTime.Now.ToString ( "d" );
 
         _saveEntryButton.onClick.AddListener ( OnSaveEntryClicked );
-        _pastEntriesButton.onClick.AddListener ( delegate { ViewManager.Show<JournalPastView> (); } );
-        _journalEntryInput.onValueChanged.AddListener ( delegate { OnInputFieldChanged (); } );
+        _pastEntriesButton.onClick.AddListener ( delegate
+        { ViewManager.Show<JournalPastView> (); } );
+        _journalEntryInput.onValueChanged.AddListener ( delegate
+        { OnInputFieldChanged (); } );
 
         _helpScreen = this.GetComponent<HelpScreen> ();
         _helpScreen.ConfigureHelpScreen ();
@@ -41,10 +44,7 @@ public class JournalMenuView : View, IDataPersistence
     {
         _journalEntries.Add ( DateTime.Now.ToString ( "yyyy/MM/dd" ) + "," + DateTime.UtcNow.ToString ( "HH:mm" ) + "," + _journalEntryInput.text );
 
-        DataPersistenceManager.Instance.SaveUser ();
-        DataPersistenceManager.Instance.LoadUser ();
-
-        ViewManager.ShowLast ();
+        StartCoroutine ( DatabaseHandler.JournalUser ( _journalEntryInput.text ) );
     }
 
     private void OnInputFieldChanged ()
@@ -57,6 +57,8 @@ public class JournalMenuView : View, IDataPersistence
         {
             _saveEntryButton.GetComponent<Button> ().interactable = false;
         }
+
+        _limitText.text = "Limit : " + _journalEntryInput.text.Length + " / 500";
     }
 
     public void LoadData ( UserData data )

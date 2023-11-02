@@ -112,6 +112,6 @@ public class CheckInReasonMenu : View
         _checkinManager.reasonVals.Add ( reasons );
         _checkinManager.hasCheckedIn = true;
 
-        StartCoroutine ( _databaseHandler.CheckInUser ( _checkinManager.curEmotionVal.ToString (), reasons ) );
+        StartCoroutine ( DatabaseHandler.CheckInUser ( _checkinManager.curEmotionVal.ToString (), reasons ) );
     }
 }

@@ -31,7 +31,7 @@ public class LoginMenuView : View, IDataPersistence
     {
         base.Show ();
 
-        StartCoroutine ( _databaseHandler.GetUsers ( username, password ) );
+        StartCoroutine ( DatabaseHandler.GetUsers ( username, password ) );
     }
 
     public void LoginButtonOnClick ()
@@ -45,7 +45,7 @@ public class LoginMenuView : View, IDataPersistence
             DataPersistenceManager.Instance.LoadUser ();
         }
 
-        StartCoroutine ( _databaseHandler.GetUsers ( _usernameInput.text, _passwordInput.text ) );
+        StartCoroutine ( DatabaseHandler.GetUsers ( _usernameInput.text, _passwordInput.text ) );
     }
 
     public void ShowPasswordButtonOnClick ()
