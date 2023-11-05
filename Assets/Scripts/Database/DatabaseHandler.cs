@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System;
 using System.Runtime.InteropServices;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class DatabaseHandler : MonoBehaviour
 {
@@ -120,6 +121,57 @@ public class DatabaseHandler : MonoBehaviour
             "&entry=" + entry +
             "&time=" + DateTime.Now.ToString ( "yyyy-MM-dd HH:mm:ss" ) +
             "&date=" + DateTime.Now.ToString ( "yyyy-MM-dd" );
+
+        // Create a new UnityWebRequest object.
+        UnityWebRequest request = new UnityWebRequest ( apiUrl + journalText );
+
+        DownloadHandlerBuffer dH = new DownloadHandlerBuffer ();
+        request.downloadHandler = dH;
+
+        // Set the request method to GET.
+        request.method = UnityWebRequest.kHttpVerbPOST;
+
+        // Send the request and wait for the response.
+        yield return request.SendWebRequest ();
+
+        // Check if the request was successful.
+        if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
+        {
+            Debug.LogError ( "Failed to get users from API: " + request.error );
+
+            ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: you appear to have no internet connection, please try again" );
+        }
+        else
+        {
+            // Get the response data.
+            if ( request.downloadHandler.text == "false" )
+            {
+                Debug.LogError ( "Checkin DB Input Failed" );
+
+                ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: some information appears to be incorrect, please let Inner Calm know" );
+
+                DataPersistenceManager.Instance.SaveUser ();
+                DataPersistenceManager.Instance.LoadUser ();
+
+                ViewManager.ShowLast ();
+            }
+            else
+            {
+                Debug.Log ( request.downloadHandler.text );
+
+                DataPersistenceManager.Instance.SaveUser ();
+                DataPersistenceManager.Instance.LoadUser ();
+
+                ViewManager.ShowLast ();
+            }
+        }
+    }
+
+    public static IEnumerator GetUserCheckinData ()
+    {
+        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=journal-user";
+
+        string checkinText = "&id=" + s_instance.user.ID;
 
         // Create a new UnityWebRequest object.
         UnityWebRequest request = new UnityWebRequest ( apiUrl + journalText );
