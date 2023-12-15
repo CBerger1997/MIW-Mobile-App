@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.Networking;
-using static CheckInAnalysisMenuView;
 
 public class CheckInAnalysisMenuView : View, IDataPersistence
 {
@@ -36,7 +35,7 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
         {
             this.dayNum = newDayNum;
 
-            if ( obj.GetComponent<Button>().IsInteractable() )
+            if ( obj.GetComponent<Button> ().IsInteractable () )
             {
                 obj.GetComponentInChildren<TMP_Text> ().text = ( dayNum + 1 ).ToString ();
             }
@@ -81,7 +80,8 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
 
         foreach ( Day day in days )
         {
-            day.obj.GetComponent<Button> ().onClick.AddListener ( delegate { OnDateButtonClicked ( day ); } );
+            day.obj.GetComponent<Button> ().onClick.AddListener ( delegate
+            { OnDateButtonClicked ( day ); } );
         }
 
         ReadInTextData ();
@@ -92,9 +92,11 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
         base.Show ();
 
         UpdateCalendar ( DateTime.Now.Year, DateTime.Now.Month );
+
+        StartCoroutine ( DatabaseHandler.CheckInHistory () );
     }
 
-    private void UpdateCalendar ( int year, int month )
+    public void UpdateCalendar ( int year, int month )
     {
         DateTime temp = new DateTime ( year, month, 1 );
         curDate = temp;
@@ -138,7 +140,7 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
                     days[ i ].UpdateColour ( Color.white );
                     days[ i ].obj.GetComponent<Button> ().interactable = false;
                     days[ i ].obj.GetComponent<Image> ().enabled = false;
-                } 
+                }
                 else
                 {
                     days[ i ].UpdateColour ( Color.white );
@@ -163,16 +165,18 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
     {
         for ( int i = 0; i < emotionDates.Count; i++ )
         {
-            string[] splitDate = emotionDates[ i ].Split ( '/' );
+            string[] splitDate = emotionDates[ i ].Split ( '-' );
 
-            if ( int.Parse ( splitDate[ 0 ] ) == year && int.Parse ( splitDate[ 1 ] ) == month ) {
+            if ( int.Parse ( splitDate[ 0 ] ) == year && int.Parse ( splitDate[ 1 ] ) == month )
+            {
 
                 Color blue;
 
-                if ( ColorUtility.TryParseHtmlString ( "#8bd2eb", out blue ) ) {
+                if ( ColorUtility.TryParseHtmlString ( "#8bd2eb", out blue ) )
+                {
                     days[ int.Parse ( splitDate[ 2 ] ) + startDay - 1 ].UpdateColour ( blue );
                 }
-                    
+
                 days[ int.Parse ( splitDate[ 2 ] ) + startDay - 1 ].userDataIndex.Add ( i );
             }
         }
@@ -351,11 +355,23 @@ public class CheckInAnalysisMenuView : View, IDataPersistence
         }
     }
 
+    public void UpdateCheckInData ( List<CheckInData> checkinHistory )
+    {
+        this.emotionDates.Clear ();
+        this.emotionVals.Clear ();
+        this.reasonVals.Clear ();
+
+        foreach ( CheckInData check in checkinHistory )
+        {
+            this.emotionDates.Add ( check.check_in_date );
+            this.emotionVals.Add ( check.feeling );
+            this.reasonVals.Add ( check.reason );
+        }
+    }
+
     public void LoadData ( UserData data )
     {
-        emotionDates = data.emotionDates;
-        emotionVals = data.emotionValues;
-        reasonVals = data.reasonValues;
+
     }
 
     public void SaveData ( ref UserData data )

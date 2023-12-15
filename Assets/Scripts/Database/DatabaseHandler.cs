@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using System.Runtime.InteropServices;
 using static UnityEngine.EventSystems.EventTrigger;
+using System.Collections.Generic;
 
 public class DatabaseHandler : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class DatabaseHandler : MonoBehaviour
         s_instance = this;
     }
 
+    /// <summary>
+    /// Checks user credentials for log in, keeps a hold of the user id and display name
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public static IEnumerator GetUsers ( string username, string password )
     {
         string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=verify-user";
@@ -41,6 +48,8 @@ public class DatabaseHandler : MonoBehaviour
         }
         else
         {
+            Debug.Log ( request.downloadHandler.text );
+
             s_instance.user = JsonUtility.FromJson<User> ( request.downloadHandler.text );
 
             // Get the response data.
@@ -51,6 +60,14 @@ public class DatabaseHandler : MonoBehaviour
         }
     }
 
+    #region CHECKIN DATABASE
+
+    /// <summary>
+    /// Sends user check in data to the database
+    /// </summary>
+    /// <param name="feeling"></param>
+    /// <param name="reason"></param>
+    /// <returns></returns>
     public static IEnumerator CheckInUser ( string feeling, string reason )
     {
         Debug.Log ( "Setting URL" );
@@ -58,7 +75,7 @@ public class DatabaseHandler : MonoBehaviour
         string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=checkin-user";
 
         string checkInText =
-            "&id=" + s_instance.user.ID +
+            "&id=" + s_instance.user.user_id +
             "&time=" + DateTime.Now.ToString ( "yyyy-MM-dd HH:mm:ss" ) +
             "&date=" + DateTime.Now.ToString ( "yyyy-MM-dd" ) +
             "&feeling=" + feeling +
@@ -82,7 +99,7 @@ public class DatabaseHandler : MonoBehaviour
         // Check if the request was successful.
         if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
         {
-            Debug.LogError ( "Failed to get users from API: " + request.error );
+            Debug.LogError ( "Failed to get request from API: " + request.error );
 
             ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: you appear to have no internet connection, please try again" );
         }
@@ -112,12 +129,87 @@ public class DatabaseHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets user check in data from the database for check in history
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerator CheckInHistory ()
+    {
+        Debug.Log ( "Setting URL" );
+
+        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=checkin-history";
+
+        string checkInText = "&id=" + s_instance.user.user_id;
+
+        Debug.Log ( "ID: " + s_instance.user.user_id );
+
+        // Create a new UnityWebRequest object.
+        UnityWebRequest request = new UnityWebRequest ( apiUrl + checkInText );
+
+        DownloadHandlerBuffer dH = new DownloadHandlerBuffer ();
+        request.downloadHandler = dH;
+
+        // Set the request method to GET.
+        request.method = UnityWebRequest.kHttpVerbGET;
+
+        // Send the request and wait for the response.
+        yield return request.SendWebRequest ();
+
+        Debug.Log ( "URL Response" );
+
+        // Check if the request was successful.
+        if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
+        {
+            Debug.LogError ( "Failed to get request from API: " + request.error );
+
+            ErrorMessageManager.ActivateErrorMessage ( "Checkin History Failed: you appear to have no internet connection, please try again" );
+
+            ViewManager.ShowLast ();
+        }
+        else
+        {
+            // Get the response data.
+            if ( request.downloadHandler.text == "false" )
+            {
+                Debug.LogError ( "Checkin DB Request Failed" );
+
+                ErrorMessageManager.ActivateErrorMessage ( "Checkin History Failed: some information appears to be incorrect, please let Inner Calm know" );
+
+                ViewManager.ShowLast ();
+            }
+            else
+            {
+                Debug.Log ( request.downloadHandler.text );
+
+                CheckinList checkinList = JsonUtility.FromJson<CheckinList> ( request.downloadHandler.text );
+
+                Debug.Log ( checkinList.checkinList.Count );
+
+                foreach ( CheckInData data in checkinList.checkinList )
+                {
+                    Debug.Log ( "Date: " + data.check_in_date + ", Emotion: " + data.feeling + ", Reason: " + data.reason );
+                }
+
+                ViewManager.GetView<CheckInAnalysisMenuView> ().UpdateCheckInData ( checkinList.checkinList );
+                ViewManager.GetView<CheckInAnalysisMenuView> ().UpdateCalendar ( DateTime.Now.Year, DateTime.Now.Month );
+
+            }
+        }
+    }
+
+    #endregion //CHECKIN DATABASE
+
+    /// <summary>
+    /// Sends a journal entry to the database
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <returns></returns>
     public static IEnumerator JournalUser ( string entry )
     {
-        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=journal-user";
+        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=user-journal-entry";
 
         string journalText =
-            "&id=" + s_instance.user.ID +
+            "&id=" + s_instance.user.user_id +
             "&entry=" + entry +
             "&time=" + DateTime.Now.ToString ( "yyyy-MM-dd HH:mm:ss" ) +
             "&date=" + DateTime.Now.ToString ( "yyyy-MM-dd" );
@@ -137,18 +229,18 @@ public class DatabaseHandler : MonoBehaviour
         // Check if the request was successful.
         if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
         {
-            Debug.LogError ( "Failed to get users from API: " + request.error );
+            Debug.LogError ( "Failed to get request from API: " + request.error );
 
-            ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: you appear to have no internet connection, please try again" );
+            ErrorMessageManager.ActivateErrorMessage ( "Journal Save Failed: you appear to have no internet connection, please try again" );
         }
         else
         {
             // Get the response data.
             if ( request.downloadHandler.text == "false" )
             {
-                Debug.LogError ( "Checkin DB Input Failed" );
+                Debug.LogError ( "Journal DB Input Failed" );
 
-                ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: some information appears to be incorrect, please let Inner Calm know" );
+                ErrorMessageManager.ActivateErrorMessage ( "Journal Save Failed: some information appears to be incorrect, please let Inner Calm know" );
 
                 DataPersistenceManager.Instance.SaveUser ();
                 DataPersistenceManager.Instance.LoadUser ();
@@ -167,20 +259,24 @@ public class DatabaseHandler : MonoBehaviour
         }
     }
 
-    public static IEnumerator GetUserCheckinData ()
+    /// <summary>
+    /// Returns the user check in data from the database to populate the check in (history) calendar view
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerator GetUserJournalData ()
     {
-        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=journal-user";
+        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=user-journal-history";
 
-        string checkinText = "&id=" + s_instance.user.ID;
+        string checkinText = "&id=" + s_instance.user.user_id;
 
         // Create a new UnityWebRequest object.
-        UnityWebRequest request = new UnityWebRequest ( apiUrl + journalText );
+        UnityWebRequest request = new UnityWebRequest ( apiUrl + checkinText );
 
         DownloadHandlerBuffer dH = new DownloadHandlerBuffer ();
         request.downloadHandler = dH;
 
         // Set the request method to GET.
-        request.method = UnityWebRequest.kHttpVerbPOST;
+        request.method = UnityWebRequest.kHttpVerbGET;
 
         // Send the request and wait for the response.
         yield return request.SendWebRequest ();
@@ -188,21 +284,18 @@ public class DatabaseHandler : MonoBehaviour
         // Check if the request was successful.
         if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
         {
-            Debug.LogError ( "Failed to get users from API: " + request.error );
+            Debug.LogError ( "Failed to get request from API: " + request.error );
 
-            ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: you appear to have no internet connection, please try again" );
+            ErrorMessageManager.ActivateErrorMessage ( "Journal Hsitory Failed: you appear to have no internet connection, please try again" );
         }
         else
         {
             // Get the response data.
             if ( request.downloadHandler.text == "false" )
             {
-                Debug.LogError ( "Checkin DB Input Failed" );
+                Debug.LogError ( "Journal DB Request Failed" );
 
-                ErrorMessageManager.ActivateErrorMessage ( "Checkin Save Failed: some information appears to be incorrect, please let Inner Calm know" );
-
-                DataPersistenceManager.Instance.SaveUser ();
-                DataPersistenceManager.Instance.LoadUser ();
+                ErrorMessageManager.ActivateErrorMessage ( "Journal History Failed: some information appears to be incorrect, please let Inner Calm know" );
 
                 ViewManager.ShowLast ();
             }
@@ -210,10 +303,12 @@ public class DatabaseHandler : MonoBehaviour
             {
                 Debug.Log ( request.downloadHandler.text );
 
-                DataPersistenceManager.Instance.SaveUser ();
-                DataPersistenceManager.Instance.LoadUser ();
+                JournalList journalList = JsonUtility.FromJson<JournalList> ( request.downloadHandler.text );
 
-                ViewManager.ShowLast ();
+                Debug.Log ( journalList.journalList.Count );
+
+                ViewManager.GetView<JournalPastView> ().SetPastEntries ( journalList.journalList );
+                ViewManager.GetView<JournalPastView> ().PopulatePastEntries ();
             }
         }
     }

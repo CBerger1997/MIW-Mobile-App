@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class JournalPastView : View, IDataPersistence
 {
@@ -23,11 +20,26 @@ public class JournalPastView : View, IDataPersistence
     {
         base.Show ();
 
+        StartCoroutine ( DatabaseHandler.GetUserJournalData () );
+    }
+
+    public void SetPastEntries ( List<JournalData> journalHistory )
+    {
+        _pastEntries.Clear ();
+
+        foreach ( JournalData journal in journalHistory )
+        {
+            _pastEntries.Add ( journal.journal_date + "," + journal.journal_time + "," + journal.journal_entry );
+        }
+    }
+
+    public void PopulatePastEntries ()
+    {
         string previousDate = "";
 
         foreach ( string entry in _pastEntries )
         {
-            if(_pastEntryParent.transform.childCount > 0)
+            if ( _pastEntryParent.transform.childCount > 0 )
             {
                 Instantiate ( _lineSeparator, _pastEntryParent.transform );
             }
@@ -69,15 +81,15 @@ public class JournalPastView : View, IDataPersistence
     {
         base.Hide ();
 
-        foreach (Transform child in _pastEntryParent.transform)
+        foreach ( Transform child in _pastEntryParent.transform )
         {
-            Destroy( child.gameObject );
+            Destroy ( child.gameObject );
         }
     }
 
     public void LoadData ( UserData data )
     {
-        _pastEntries = data.dataEntries;
+
     }
 
     public void SaveData ( ref UserData data )
