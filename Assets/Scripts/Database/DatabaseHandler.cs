@@ -286,7 +286,7 @@ public class DatabaseHandler : MonoBehaviour
         {
             Debug.LogError ( "Failed to get request from API: " + request.error );
 
-            ErrorMessageManager.ActivateErrorMessage ( "Journal Hsitory Failed: you appear to have no internet connection, please try again" );
+            ErrorMessageManager.ActivateErrorMessage ( "Journal History Failed: you appear to have no internet connection, please try again" );
         }
         else
         {

@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "R3CW50K1ZCB",
         "name": "com.MyHappinessQuotientLTD.InnerCalm",
-        "processId": 732,
+        "processId": 6569,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -96,6 +96,12 @@
             "deviceId": "R3CW50K1ZCB",
             "name": "com.MyHappinessQuotientLTD.InnerCalm",
             "processId": 732,
+            "exited": false
+        },
+        {
+            "deviceId": "R3CW50K1ZCB",
+            "name": "com.MyHappinessQuotientLTD.InnerCalm",
+            "processId": 6569,
             "exited": false
         }
     ],
