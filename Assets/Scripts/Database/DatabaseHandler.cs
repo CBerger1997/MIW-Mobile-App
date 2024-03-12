@@ -5,6 +5,8 @@ using System;
 using System.Runtime.InteropServices;
 using static UnityEngine.EventSystems.EventTrigger;
 using System.Collections.Generic;
+using TMPro;
+using System.Runtime.CompilerServices;
 
 public class DatabaseHandler : MonoBehaviour
 {
@@ -45,17 +47,23 @@ public class DatabaseHandler : MonoBehaviour
         if ( request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError )
         {
             Debug.LogError ( "Failed to get users from API: " + request.error );
+
+            FindObjectOfType<LoginMenuView> ().ErrorText.text = "Failed to get users from API: " + request.error;
         }
         else
         {
             Debug.Log ( request.downloadHandler.text );
 
-            s_instance.user = JsonUtility.FromJson<User> ( request.downloadHandler.text );
-
             // Get the response data.
             if ( request.downloadHandler.text != "false" )
             {
+                s_instance.user = JsonUtility.FromJson<User> ( request.downloadHandler.text );
+
                 ViewManager.Show<StartUpMenuView> ( false );
+            }
+            else
+            {
+                FindObjectOfType<LoginMenuView> ().ErrorText.text = "Failed to login, user doesn't exist";
             }
         }
     }

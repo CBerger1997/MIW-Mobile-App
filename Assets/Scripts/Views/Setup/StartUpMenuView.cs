@@ -103,7 +103,8 @@ public class StartUpMenuView : View, IDataPersistence {
 
     public void LoadData ( UserData data ) {
         hasOnboarded = data.hasOnboarded;
-        hasCheckedIn = data.emotionDates.Contains ( DateTime.Now.ToString ( "yyyy/MM/dd" ) );
+
+        //hasCheckedIn = data.emotionDates.Contains ( DateTime.Now.ToString ( "yyyy/MM/dd" ) );
 
         _savedOptionSelection = data.AffSelection;
         _savedListSelection = data.AffListSelection;

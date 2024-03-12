@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public class JournalMenuView : View, IDataPersistence
+public class JournalMenuView : View
 {
 
     [SerializeField] private TMP_Text _dateText;
@@ -59,20 +59,5 @@ public class JournalMenuView : View, IDataPersistence
         }
 
         _limitText.text = "Limit : " + _journalEntryInput.text.Length + " / 500";
-    }
-
-    public void LoadData ( UserData data )
-    {
-
-    }
-
-    public void SaveData ( ref UserData data )
-    {
-        foreach ( string entry in _journalEntries )
-        {
-            data.dataEntries.Add ( entry );
-        }
-
-        _journalEntries.Clear ();
     }
 }
