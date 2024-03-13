@@ -12,6 +12,13 @@ public class JustBreatheSetupView : View
     [SerializeField] private Toggle _noToggle;
     [SerializeField] private Toggle _visualToggle;
     [SerializeField] private Toggle _voicedToggle;
+    [SerializeField] private Toggle _maleToggle;
+    [SerializeField] private Toggle _femaleToggle;
+    [SerializeField] private GameObject _genderVoiceSelection;
+
+    bool yesNoSelected = false;
+    bool voicedVisualSelected = false;
+    bool maleFemaleSelected = false;
 
     public TMP_Dropdown BreathingDropdown;
 
@@ -26,16 +33,28 @@ public class JustBreatheSetupView : View
         CalibrateBreathingDropdown ();
 
         _yesToggle.onValueChanged.AddListener ( delegate
-        { OnToggleTriggered ( _yesToggle, _noToggle ); } );
+        { OnToggleTriggered ( _yesToggle, _noToggle, "YesNo" ); } );
 
         _noToggle.onValueChanged.AddListener ( delegate
-        { OnToggleTriggered ( _noToggle, _yesToggle ); } );
+        { OnToggleTriggered ( _noToggle, _yesToggle, "YesNo" ); } );
 
         _voicedToggle.onValueChanged.AddListener ( delegate
-        { OnToggleTriggered ( _voicedToggle, _visualToggle ); } );
+        { OnToggleTriggered ( _voicedToggle, _visualToggle, "VoicedVisual" ); } );
 
         _visualToggle.onValueChanged.AddListener ( delegate
-        { OnToggleTriggered ( _visualToggle, _voicedToggle ); } );
+        { OnToggleTriggered ( _visualToggle, _voicedToggle, "VoicedVisual" ); } );
+
+        _voicedToggle.onValueChanged.AddListener ( delegate
+        { OnVoicedToggleTriggered ( true ); } );
+
+        _visualToggle.onValueChanged.AddListener ( delegate
+        { OnVoicedToggleTriggered ( false ); } );
+
+        _maleToggle.onValueChanged.AddListener ( delegate
+        { OnToggleTriggered ( _maleToggle, _femaleToggle, "MaleFemale" ); } );
+
+        _femaleToggle.onValueChanged.AddListener ( delegate
+        { OnToggleTriggered ( _femaleToggle, _maleToggle, "MaleFemale" ); } );
 
         _startButton.onClick.AddListener ( OnStartClicked );
     }
@@ -45,17 +64,31 @@ public class JustBreatheSetupView : View
         base.Show ();
 
         _helpScreen.ToggleOffHelpMenu ();
+
+        _yesToggle.isOn = false;
+        _noToggle.isOn = false;
+        _voicedToggle.isOn = false;
+        _visualToggle.isOn = false;
+        _maleToggle.isOn = false;
+        _femaleToggle.isOn = false;
+
+        _genderVoiceSelection.SetActive ( false );
+
+        _startButton.interactable = false;
+
+        yesNoSelected = false;
+        voicedVisualSelected = false;
+        maleFemaleSelected = false;
     }
 
     private void CalibrateSessionDropdown ()
     {
-        List<string> minuteList = new List<string> ();
-
-        for ( int i = 1; i < 11; i++ )
+        List<string> minuteList = new List<string>
         {
-            string minuteString = i > 1 ? " Minutes" : " Minute";
-            minuteList.Add ( i.ToString () + minuteString );
-        }
+            "3 Minutes",
+            "5 Minutes",
+            "10 Minutes"
+        };
 
         _sessionDropdown.ClearOptions ();
         _sessionDropdown.AddOptions ( minuteList );
@@ -74,7 +107,7 @@ public class JustBreatheSetupView : View
         BreathingDropdown.AddOptions ( breathingList );
     }
 
-    private void OnToggleTriggered ( Toggle triggeredToggle, Toggle affectedToggle )
+    private void OnToggleTriggered ( Toggle triggeredToggle, Toggle affectedToggle, string toggleGroup )
     {
         if ( triggeredToggle.isOn )
         {
@@ -83,6 +116,44 @@ public class JustBreatheSetupView : View
         else if ( !affectedToggle.isOn )
         {
             triggeredToggle.isOn = true;
+        }
+
+        if ( toggleGroup == "YesNo" )
+        {
+            yesNoSelected = true;
+        }
+        else if ( toggleGroup == "VoicedVisual" )
+        {
+            voicedVisualSelected = true;
+        }
+        else if ( toggleGroup == "MaleFemale" )
+        {
+            maleFemaleSelected = true;
+        }
+
+        if ( yesNoSelected && voicedVisualSelected && _visualToggle.isOn )
+        {
+            _startButton.interactable = true;
+        }
+        else if ( yesNoSelected && voicedVisualSelected && maleFemaleSelected )
+        {
+            _startButton.interactable = true;
+        }
+        else
+        {
+            _startButton.interactable = false;
+        }
+    }
+
+    private void OnVoicedToggleTriggered ( bool isVoiced )
+    {
+        if ( isVoiced )
+        {
+            _genderVoiceSelection.SetActive ( true );
+        }
+        else
+        {
+            _genderVoiceSelection.SetActive ( false );
         }
     }
 

@@ -30,8 +30,8 @@ public class VisualisationsMenuView : View
             _audioButtons[ copy ].onClick.AddListener ( () => OnAudioButtonClick ( copy ) );
         }
 
-        _audioFilesMale = Resources.LoadAll<AudioClip> ( @"Audio\Male" );
-        _audioFilesFemale = Resources.LoadAll<AudioClip> ( @"Audio\Female" );
+        _audioFilesMale = Resources.LoadAll<AudioClip> ( @"Audio\Visualisations\Male" );
+        _audioFilesFemale = Resources.LoadAll<AudioClip> ( @"Audio\Visualisations\Female" );
 
         _helpScreen = this.GetComponent<HelpScreen> ();
         _helpScreen.ConfigureHelpScreen ();
