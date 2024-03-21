@@ -32,11 +32,9 @@ public class LoginMenuView : View, IDataPersistence
     public override void Show ()
     {
         base.Show ();
-
-        StartCoroutine ( DatabaseHandler.GetUsers ( username, password ) );
     }
 
-    public void LoginButtonOnClick ()
+    private void LoginButtonOnClick ()
     {
         if ( _rememberToggle.isOn )
         {
@@ -50,13 +48,13 @@ public class LoginMenuView : View, IDataPersistence
         StartCoroutine ( DatabaseHandler.GetUsers ( _usernameInput.text, _passwordInput.text ) );
     }
 
-    public void ShowPasswordButtonOnClick ()
+    private void ShowPasswordButtonOnClick ()
     {
         _passwordInput.contentType = _passwordInput.contentType == TMP_InputField.ContentType.Password ? TMP_InputField.ContentType.Standard : TMP_InputField.ContentType.Password;
         _passwordInput.Select ();
     }
 
-    public void ResetPasswordButtonOnClick ()
+    private void ResetPasswordButtonOnClick ()
     {
         //Input password reset code
         Debug.LogError ( "Functionality not yet implemented!" );
@@ -64,8 +62,7 @@ public class LoginMenuView : View, IDataPersistence
 
     public void LoadData ( UserData data )
     {
-        username = data.username;
-        password = data.password;
+
     }
 
     public void SaveData ( ref UserData data )

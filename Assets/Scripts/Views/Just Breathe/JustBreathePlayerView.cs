@@ -6,24 +6,32 @@ using UnityEngine.UI;
 
 public class JustBreathePlayerView : View
 {
-    [SerializeField] private Image logoFull;
-    [SerializeField] private TMP_Text breathingText;
-    [SerializeField] private TMP_Text timerText;
-    [SerializeField] private Button endSessionButton;
-    [SerializeField] private JustBreatheSetupView justBreatheSetup;
+    [SerializeField] private Image _logoFull;
+    [SerializeField] private TMP_Text _breathingText;
+    [SerializeField] private TMP_Text _timerText;
+    [SerializeField] private Button _endSessionButton;
+    [SerializeField] private AudioSource _currentAudioSource;
+    [SerializeField] private AudioClip _bellClip;
+    [SerializeField] private GameObject _countdownVisuals;
+    [SerializeField] private GameObject _breathingVisuals;
+    [SerializeField] private TMP_Text _countdownText;
 
     float emptyImageVal = 0.048f;
     float fullImageVal = 0.388f;
 
-    float secondsIn;
-    float secondsOut;
+    float _secondsIn;
+    float _secondsOut;
+
+    public float breathingLength;
 
     float t = 0.0f;
     bool isBreathingOut = false;
 
+    int countdownValue = 5;
+
     public override void Initialise ()
     {
-        endSessionButton.onClick.AddListener ( delegate
+        _endSessionButton.onClick.AddListener ( delegate
         { ViewManager.Show<MainMenuView> ( false ); } );
     }
 
@@ -31,58 +39,96 @@ public class JustBreathePlayerView : View
     {
         base.Show ();
 
-        logoFull.fillAmount = emptyImageVal;
+        _logoFull.fillAmount = emptyImageVal;
+        _breathingVisuals.SetActive ( false );
+        _countdownVisuals.SetActive ( true );
 
-        switch ( justBreatheSetup.BreathingDropdown.value )
-        {
-            case 0:
-                secondsIn = 4f;
-                secondsOut = 7f;
-                break;
-            case 1:
-                secondsIn = 5f;
-                secondsOut = 9f;
-                break;
-            case 2:
-                secondsIn = 6f;
-                secondsOut = 10f;
-                break;
-        }
+        StartCoroutine ( CountdownTimer () );
     }
 
     private void Update ()
     {
-        if ( !isBreathingOut )
+        //Timings need configuring
+
+        //There is a second delay when saying breathe in or breathe out
+
+        //Make the counter stop at the make value and hold for 1 second
+
+        if ( _breathingVisuals.activeSelf )
         {
-            logoFull.fillAmount = Mathf.Lerp ( emptyImageVal, fullImageVal, t / secondsIn );
+            breathingLength -= Time.deltaTime;
 
-            t += Time.deltaTime;
-
-            timerText.text = ( ( int ) t + 1 ).ToString ();
-
-            if ( logoFull.fillAmount >= fullImageVal - 0.001f )
+            if ( breathingLength <= 0.0f )
             {
-                logoFull.fillAmount = fullImageVal;
-                t = 0.0f;
-                isBreathingOut = true;
-                breathingText.text = "Breathing Out";
+                _currentAudioSource.clip = _bellClip;
+                _currentAudioSource.Play ();
+            }
+
+            if ( !isBreathingOut )
+            {
+                _logoFull.fillAmount = Mathf.Lerp ( emptyImageVal, fullImageVal, t / _secondsIn );
+
+                t += Time.deltaTime;
+
+                _timerText.text = ( ( int ) t + 1 ).ToString ();
+
+                if ( _logoFull.fillAmount >= fullImageVal - 0.001f )
+                {
+                    _logoFull.fillAmount = fullImageVal;
+                    t = 0.0f;
+                    isBreathingOut = true;
+                    _breathingText.text = "Breathing Out";
+                }
+            }
+            else
+            {
+                _logoFull.fillAmount = Mathf.Lerp ( fullImageVal, emptyImageVal, t / _secondsOut );
+
+                t += Time.deltaTime;
+
+                _timerText.text = ( ( int ) t + 1 ).ToString ();
+
+                if ( _logoFull.fillAmount <= emptyImageVal + 0.001f )
+                {
+                    _logoFull.fillAmount = emptyImageVal;
+                    t = 0.0f;
+                    isBreathingOut = false;
+                    _breathingText.text = "Breathing In";
+                }
             }
         }
-        else
+    }
+
+    IEnumerator CountdownTimer ()
+    {
+        while ( countdownValue > 0 )
         {
-            logoFull.fillAmount = Mathf.Lerp ( fullImageVal, emptyImageVal, t / secondsOut );
+            yield return new WaitForSeconds ( 1 );
 
-            t += Time.deltaTime;
+            countdownValue--;
 
-            timerText.text = ( ( int ) t + 1 ).ToString ();
-
-            if ( logoFull.fillAmount <= emptyImageVal + 0.001f )
-            {
-                logoFull.fillAmount = emptyImageVal;
-                t = 0.0f;
-                isBreathingOut = false;
-                breathingText.text = "Breathing In";
-            }
+            _countdownText.text = countdownValue.ToString ();
         }
+
+        _countdownVisuals.SetActive ( false );
+        _breathingVisuals.SetActive ( true );
+
+        _currentAudioSource.Play ();
+    }
+
+    public void SetInAndOut ( float secondsIn, float secondsOut )
+    {
+        _secondsIn = secondsIn;
+        _secondsOut = secondsOut;
+    }
+
+    public void SetAudioClip ( AudioClip clip )
+    {
+        _currentAudioSource.clip = clip;
+    }
+
+    public void SetBreathingLength ( int length )
+    {
+        breathingLength = length;
     }
 }

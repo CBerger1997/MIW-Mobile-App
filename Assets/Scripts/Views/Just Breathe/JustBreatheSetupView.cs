@@ -8,6 +8,7 @@ public class JustBreatheSetupView : View
 {
     [SerializeField] private Button _startButton;
     [SerializeField] private TMP_Dropdown _sessionDropdown;
+    [SerializeField] private TMP_Dropdown _breathingDropdown;
     [SerializeField] private Toggle _yesToggle;
     [SerializeField] private Toggle _noToggle;
     [SerializeField] private Toggle _visualToggle;
@@ -15,12 +16,15 @@ public class JustBreatheSetupView : View
     [SerializeField] private Toggle _maleToggle;
     [SerializeField] private Toggle _femaleToggle;
     [SerializeField] private GameObject _genderVoiceSelection;
+    [SerializeField] private JustBreathePlayerView _playerView;
 
     bool yesNoSelected = false;
     bool voicedVisualSelected = false;
     bool maleFemaleSelected = false;
+    bool isOpening = false;
 
-    public TMP_Dropdown BreathingDropdown;
+    public AudioClip[] _audioFilesMale;
+    public AudioClip[] _audioFilesFemale;
 
     private HelpScreen _helpScreen;
 
@@ -61,9 +65,16 @@ public class JustBreatheSetupView : View
 
     public override void Show ()
     {
-        base.Show ();
+        isOpening = true;
 
         _helpScreen.ToggleOffHelpMenu ();
+
+        _yesToggle.isOn = true;
+        _noToggle.isOn = true;
+        _voicedToggle.isOn = true;
+        _visualToggle.isOn = true;
+        _maleToggle.isOn = true;
+        _femaleToggle.isOn = true;
 
         _yesToggle.isOn = false;
         _noToggle.isOn = false;
@@ -72,6 +83,9 @@ public class JustBreatheSetupView : View
         _maleToggle.isOn = false;
         _femaleToggle.isOn = false;
 
+        _sessionDropdown.value = 0;
+        _breathingDropdown.value = 0;
+
         _genderVoiceSelection.SetActive ( false );
 
         _startButton.interactable = false;
@@ -79,6 +93,10 @@ public class JustBreatheSetupView : View
         yesNoSelected = false;
         voicedVisualSelected = false;
         maleFemaleSelected = false;
+
+        isOpening = false;
+
+        base.Show ();
     }
 
     private void CalibrateSessionDropdown ()
@@ -103,45 +121,48 @@ public class JustBreatheSetupView : View
             "6 seconds in; 10 seconds out"
         };
 
-        BreathingDropdown.ClearOptions ();
-        BreathingDropdown.AddOptions ( breathingList );
+        _breathingDropdown.ClearOptions ();
+        _breathingDropdown.AddOptions ( breathingList );
     }
 
     private void OnToggleTriggered ( Toggle triggeredToggle, Toggle affectedToggle, string toggleGroup )
     {
-        if ( triggeredToggle.isOn )
+        if ( !isOpening )
         {
-            affectedToggle.isOn = false;
-        }
-        else if ( !affectedToggle.isOn )
-        {
-            triggeredToggle.isOn = true;
-        }
+            if ( triggeredToggle.isOn )
+            {
+                affectedToggle.isOn = false;
+            }
+            else if ( !affectedToggle.isOn )
+            {
+                triggeredToggle.isOn = true;
+            }
 
-        if ( toggleGroup == "YesNo" )
-        {
-            yesNoSelected = true;
-        }
-        else if ( toggleGroup == "VoicedVisual" )
-        {
-            voicedVisualSelected = true;
-        }
-        else if ( toggleGroup == "MaleFemale" )
-        {
-            maleFemaleSelected = true;
-        }
+            if ( toggleGroup == "YesNo" )
+            {
+                yesNoSelected = true;
+            }
+            else if ( toggleGroup == "VoicedVisual" )
+            {
+                voicedVisualSelected = true;
+            }
+            else if ( toggleGroup == "MaleFemale" )
+            {
+                maleFemaleSelected = true;
+            }
 
-        if ( yesNoSelected && voicedVisualSelected && _visualToggle.isOn )
-        {
-            _startButton.interactable = true;
-        }
-        else if ( yesNoSelected && voicedVisualSelected && maleFemaleSelected )
-        {
-            _startButton.interactable = true;
-        }
-        else
-        {
-            _startButton.interactable = false;
+            if ( yesNoSelected && voicedVisualSelected && _visualToggle.isOn )
+            {
+                _startButton.interactable = true;
+            }
+            else if ( yesNoSelected && voicedVisualSelected && maleFemaleSelected )
+            {
+                _startButton.interactable = true;
+            }
+            else
+            {
+                _startButton.interactable = false;
+            }
         }
     }
 
@@ -159,6 +180,70 @@ public class JustBreatheSetupView : View
 
     private void OnStartClicked ()
     {
+        if ( _voicedToggle.isOn )
+        {
+            if ( _maleToggle.isOn )
+            {
+                _playerView.SetAudioClip ( _audioFilesMale[ _breathingDropdown.value ] );
+            }
+            else
+            {
+                _playerView.SetAudioClip ( _audioFilesFemale[ _breathingDropdown.value ] );
+            }
+        }
+
+        switch ( _breathingDropdown.value )
+        {
+            case 0:
+                _playerView.SetInAndOut ( 4f, 7f );
+
+                switch ( _sessionDropdown.value )
+                {
+                    case 0:
+                        _playerView.SetBreathingLength ( 195 );
+                        break;
+                    case 1:
+                        _playerView.SetBreathingLength ( 312 );
+                        break;
+                    case 2:
+                        _playerView.SetBreathingLength ( 585 );
+                        break;
+                }
+                break;
+            case 1:
+                _playerView.SetInAndOut ( 5f, 9f );
+
+                switch ( _sessionDropdown.value )
+                {
+                    case 0:
+                        _playerView.SetBreathingLength ( 192 );
+                        break;
+                    case 1:
+                        _playerView.SetBreathingLength ( 288 );
+                        break;
+                    case 2:
+                        _playerView.SetBreathingLength ( 608 );
+                        break;
+                }
+                break;
+            case 2:
+                _playerView.SetInAndOut ( 6f, 10f );
+
+                switch ( _sessionDropdown.value )
+                {
+                    case 0:
+                        _playerView.SetBreathingLength ( 180 );
+                        break;
+                    case 1:
+                        _playerView.SetBreathingLength ( 288 );
+                        break;
+                    case 2:
+                        _playerView.SetBreathingLength ( 612 );
+                        break;
+                }
+                break;
+        }
+
         ViewManager.Show<JustBreathePlayerView> ();
     }
 }

@@ -63,7 +63,7 @@ public class DatabaseHandler : MonoBehaviour
             }
             else
             {
-                FindObjectOfType<LoginMenuView> ().ErrorText.text = "Failed to login, user doesn't exist";
+                ViewManager.Show<LoginMenuView> ( false );
             }
         }
     }
