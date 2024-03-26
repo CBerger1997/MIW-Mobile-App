@@ -200,13 +200,13 @@ public class JustBreatheSetupView : View
                 switch ( _sessionDropdown.value )
                 {
                     case 0:
-                        _playerView.SetBreathingLength ( 195 );
+                        _playerView.SetBreathingIterations ( 15 );
                         break;
                     case 1:
-                        _playerView.SetBreathingLength ( 312 );
+                        _playerView.SetBreathingIterations ( 24 );
                         break;
                     case 2:
-                        _playerView.SetBreathingLength ( 585 );
+                        _playerView.SetBreathingIterations ( 45 );
                         break;
                 }
                 break;
@@ -216,13 +216,13 @@ public class JustBreatheSetupView : View
                 switch ( _sessionDropdown.value )
                 {
                     case 0:
-                        _playerView.SetBreathingLength ( 192 );
+                        _playerView.SetBreathingIterations ( 12 );
                         break;
                     case 1:
-                        _playerView.SetBreathingLength ( 288 );
+                        _playerView.SetBreathingIterations ( 18 );
                         break;
                     case 2:
-                        _playerView.SetBreathingLength ( 608 );
+                        _playerView.SetBreathingIterations ( 38 );
                         break;
                 }
                 break;
@@ -232,13 +232,13 @@ public class JustBreatheSetupView : View
                 switch ( _sessionDropdown.value )
                 {
                     case 0:
-                        _playerView.SetBreathingLength ( 180 );
+                        _playerView.SetBreathingIterations ( 10 );
                         break;
                     case 1:
-                        _playerView.SetBreathingLength ( 288 );
+                        _playerView.SetBreathingIterations ( 16 );
                         break;
                     case 2:
-                        _playerView.SetBreathingLength ( 612 );
+                        _playerView.SetBreathingIterations ( 34 );
                         break;
                 }
                 break;

@@ -22,7 +22,7 @@ public class JustBreathePlayerView : View
     float _secondsIn;
     float _secondsOut;
 
-    public float breathingLength;
+    public int breathingIterations;
 
     float t = 0.0f;
     bool isBreathingOut = false;
@@ -48,55 +48,7 @@ public class JustBreathePlayerView : View
 
     private void Update ()
     {
-        //Timings need configuring
 
-        //There is a second delay when saying breathe in or breathe out
-
-        //Make the counter stop at the make value and hold for 1 second
-
-        if ( _breathingVisuals.activeSelf )
-        {
-            breathingLength -= Time.deltaTime;
-
-            if ( breathingLength <= 0.0f )
-            {
-                _currentAudioSource.clip = _bellClip;
-                _currentAudioSource.Play ();
-            }
-
-            if ( !isBreathingOut )
-            {
-                _logoFull.fillAmount = Mathf.Lerp ( emptyImageVal, fullImageVal, t / _secondsIn );
-
-                t += Time.deltaTime;
-
-                _timerText.text = ( ( int ) t + 1 ).ToString ();
-
-                if ( _logoFull.fillAmount >= fullImageVal - 0.001f )
-                {
-                    _logoFull.fillAmount = fullImageVal;
-                    t = 0.0f;
-                    isBreathingOut = true;
-                    _breathingText.text = "Breathing Out";
-                }
-            }
-            else
-            {
-                _logoFull.fillAmount = Mathf.Lerp ( fullImageVal, emptyImageVal, t / _secondsOut );
-
-                t += Time.deltaTime;
-
-                _timerText.text = ( ( int ) t + 1 ).ToString ();
-
-                if ( _logoFull.fillAmount <= emptyImageVal + 0.001f )
-                {
-                    _logoFull.fillAmount = emptyImageVal;
-                    t = 0.0f;
-                    isBreathingOut = false;
-                    _breathingText.text = "Breathing In";
-                }
-            }
-        }
     }
 
     IEnumerator CountdownTimer ()
@@ -114,6 +66,78 @@ public class JustBreathePlayerView : View
         _breathingVisuals.SetActive ( true );
 
         _currentAudioSource.Play ();
+
+        StartCoroutine ( BreathingInCounter () );
+    }
+
+    IEnumerator BreathingInCounter ()
+    {
+        yield return new WaitForSeconds ( 1 );
+
+        while ( !isBreathingOut )
+        {
+            _logoFull.fillAmount = Mathf.Lerp ( emptyImageVal, fullImageVal, t / _secondsIn );
+
+            t += Time.deltaTime;
+
+            if ( t < _secondsIn )
+            {
+                _timerText.text = ( ( int ) t + 1 ).ToString ();
+            }
+
+            if ( _logoFull.fillAmount >= fullImageVal - 0.001f )
+            {
+                _logoFull.fillAmount = fullImageVal;
+                t = 0.0f;
+                isBreathingOut = true;
+                _breathingText.text = "Breathing Out";
+                StartCoroutine ( BreathingOutCounter () );
+            }
+
+            yield return new WaitForEndOfFrame ();
+        }
+    }
+
+    IEnumerator BreathingOutCounter ()
+    {
+        yield return new WaitForSeconds ( 1 );
+
+        while ( isBreathingOut )
+        {
+            _logoFull.fillAmount = Mathf.Lerp ( fullImageVal, emptyImageVal, t / _secondsOut );
+
+            t += Time.deltaTime;
+
+            if ( t < _secondsOut )
+            {
+                _timerText.text = ( ( int ) t + 1 ).ToString ();
+            }
+
+            if ( _logoFull.fillAmount <= emptyImageVal + 0.001f )
+            {
+                _logoFull.fillAmount = emptyImageVal;
+                t = 0.0f;
+                isBreathingOut = false;
+                _breathingText.text = "Breathing In";
+
+                if ( breathingIterations > 0 )
+                {
+                    breathingIterations--;
+                    StartCoroutine ( BreathingInCounter () );
+                }
+                else
+                {
+                    _currentAudioSource.clip = _bellClip;
+                    _currentAudioSource.Play ();
+
+                    yield return new WaitForSeconds ( 6 );
+
+                    ViewManager.Show<MainMenuView> ( false );
+                }
+            }
+
+            yield return new WaitForEndOfFrame ();
+        }
     }
 
     public void SetInAndOut ( float secondsIn, float secondsOut )
@@ -127,8 +151,8 @@ public class JustBreathePlayerView : View
         _currentAudioSource.clip = clip;
     }
 
-    public void SetBreathingLength ( int length )
+    public void SetBreathingIterations ( int iterations )
     {
-        breathingLength = length;
+        breathingIterations = iterations;
     }
 }
