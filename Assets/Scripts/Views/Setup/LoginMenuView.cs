@@ -18,9 +18,6 @@ public class LoginMenuView : View, IDataPersistence
 
     private string username;
     private string password;
-
-    public TMP_Text ErrorText;
-
     public override void Initialise ()
     {
         _loginButton.onClick.AddListener ( LoginButtonOnClick );

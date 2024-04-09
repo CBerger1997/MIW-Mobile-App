@@ -48,7 +48,7 @@ public class DatabaseHandler : MonoBehaviour
         {
             Debug.LogError ( "Failed to get users from API: " + request.error );
 
-            FindObjectOfType<LoginMenuView> ().ErrorText.text = "Failed to get users from API: " + request.error;
+            ViewManager.Show<LoginMenuView> ( false );
         }
         else
         {
