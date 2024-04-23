@@ -275,10 +275,10 @@ public class DatabaseHandler : MonoBehaviour
     {
         string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=user-journal-history";
 
-        string checkinText = "&id=" + s_instance.user.user_id;
+        string idText = "&id=" + s_instance.user.user_id;
 
         // Create a new UnityWebRequest object.
-        UnityWebRequest request = new UnityWebRequest ( apiUrl + checkinText );
+        UnityWebRequest request = new UnityWebRequest ( apiUrl + idText );
 
         DownloadHandlerBuffer dH = new DownloadHandlerBuffer ();
         request.downloadHandler = dH;

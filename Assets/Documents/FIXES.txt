@@ -1,8 +1,5 @@
-MD5 hash for login
-
-++ login screen waiting even if login
+MD5 hash for login - PHPass
 
 affirmation looping options
 
 breathing in / out counts up to 8 then flicks back to 1 disappears.
-
