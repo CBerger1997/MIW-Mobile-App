@@ -68,6 +68,47 @@ public class DatabaseHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks user password for correct input, replaces the old password with the new password
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="oldpassword"></param>
+    /// <param name="newpassword"></param>
+    /// <returns></returns>
+    public static IEnumerator ChangeUserPassword(string username, string oldpassword, string newpassword) {
+        string apiUrl = "https://matthews335.sg-host.com/api/index.php?resource=change-user-password";
+
+        string userPassText = "&username=" + username + "&oldpassword=" + oldpassword + "&newpassword=" + newpassword;
+
+        // Create a new UnityWebRequest object.
+        UnityWebRequest request = new UnityWebRequest(apiUrl + userPassText);
+
+        DownloadHandlerBuffer dH = new DownloadHandlerBuffer();
+        request.downloadHandler = dH;
+
+        // Set the request method to GET.
+        request.method = UnityWebRequest.kHttpVerbGET;
+
+        // Send the request and wait for the response.
+        yield return request.SendWebRequest();
+
+        // Check if the request was successful.
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
+            Debug.LogError("Failed to get user and password from API: " + request.error);
+        } else {
+            Debug.Log(request.downloadHandler.text);
+
+            // Get the response data.
+            if (request.downloadHandler.text != "false") {
+
+                ViewManager.ShowLast();
+
+            } else {
+                ErrorMessageManager.ActivateErrorMessage("Password Change Failed: Your current password is incorrect");
+            }
+        }
+    }
+
     #region CHECKIN DATABASE
 
     /// <summary>

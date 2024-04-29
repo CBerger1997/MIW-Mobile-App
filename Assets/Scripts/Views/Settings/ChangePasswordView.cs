@@ -13,6 +13,7 @@ public class ChangePasswordView : View, IDataPersistence
     [SerializeField] private Button _saveButton;
 
     private string password;
+    private string username;
     private bool isPasswordChanged = false;
 
     public override void Initialise ()
@@ -21,30 +22,30 @@ public class ChangePasswordView : View, IDataPersistence
         _saveButton.onClick.AddListener ( SaveButtonOnClick );
     }
 
+    public override void Show() {
+        base.Show();
+
+        _curPasswordInputField.text = "";
+        _newPasswordInputField.text = "";
+        _newCopyPasswordInputField.text = "";
+    }
+
     private void SaveButtonOnClick ()
     {
-        if ( _curPasswordInputField.text == password )
+        _warningText.SetActive(false);
+        if ( _newPasswordInputField.text == _newCopyPasswordInputField.text )
         {
-            if ( _newPasswordInputField.text == _newCopyPasswordInputField.text )
-            {
-                password = _newPasswordInputField.text;
-                isPasswordChanged = true;
-                ViewManager.ShowLast ();
-            }
-            else
-            {
-                _warningText.GetComponent<TextMeshProUGUI> ().text = "Your new passwords don't match";
-                _warningText.SetActive ( true );
-            }
+            StartCoroutine(DatabaseHandler.ChangeUserPassword(username, _curPasswordInputField.text, _newPasswordInputField.text));
         }
         else
         {
-            _warningText.GetComponent<TextMeshProUGUI> ().text = "Your current password is incorrect";
+            _warningText.GetComponent<TextMeshProUGUI> ().text = "Your new passwords don't match";
             _warningText.SetActive ( true );
         }
     }
     public void LoadData ( UserData data )
     {
+        username = data.username;
         password = data.password;
     }
 
