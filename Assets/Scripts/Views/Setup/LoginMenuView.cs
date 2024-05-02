@@ -12,7 +12,6 @@ public class LoginMenuView : View, IDataPersistence
     [SerializeField] private Button _showPasswordButton;
     [SerializeField] private TMP_InputField _usernameInput;
     [SerializeField] private TMP_InputField _passwordInput;
-    [SerializeField] private GameObject _warningText;
     [SerializeField] private Toggle _rememberToggle;
     [SerializeField] private DatabaseHandler _databaseHandler;
 
@@ -23,12 +22,19 @@ public class LoginMenuView : View, IDataPersistence
         _loginButton.onClick.AddListener ( LoginButtonOnClick );
         _resetPasswordButton.onClick.AddListener ( ResetPasswordButtonOnClick );
         _showPasswordButton.onClick.AddListener ( ShowPasswordButtonOnClick );
-        _warningText.gameObject.SetActive ( false );
     }
 
     public override void Show ()
     {
         base.Show ();
+
+        _usernameInput.text = "";
+        _passwordInput.text = "";
+        _rememberToggle.isOn = false;
+
+        username = "";
+        password = "";
+
     }
 
     private void LoginButtonOnClick ()

@@ -36,6 +36,11 @@ public class DataPersistenceManager : MonoBehaviour
         this.userData = new UserData ();
     }
 
+    public void DeleteUser() 
+    {
+        dataHandler.Delete();
+    }
+
     public void LoadUser ()
     {
         // Load any saved data from a file using the data handler

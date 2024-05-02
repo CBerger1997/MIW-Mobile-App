@@ -36,6 +36,10 @@ public class ViewManager : MonoBehaviour {
         return null;
     }
 
+    public static string GetCurrentView() {
+        return s_instance._currentView.name;
+    }
+
     public static void Show<T>(bool remember = true) where T : View {
         for (int i = 0; i < s_instance._views.Length; i++) {
             if (s_instance._views[i] is T) {

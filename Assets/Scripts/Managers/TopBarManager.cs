@@ -6,9 +6,10 @@ public class TopBarManager : MonoBehaviour {
     [SerializeField] private Button _crisisButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _backButton;
+    [SerializeField] private GameObject _topBar;
 
     private void Awake () {
-        this.gameObject.SetActive ( false );
+        _topBar.SetActive ( false );
     }
 
     void Start () {

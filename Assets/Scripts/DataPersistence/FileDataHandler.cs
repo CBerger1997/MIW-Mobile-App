@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using UnityEditor;
 
 public class FileDataHandler
 {
@@ -76,6 +77,20 @@ public class FileDataHandler
         catch ( Exception e )
         {
             Debug.LogError ( "Error occured when trying to save data to file: " + fullPath + "\n" + e );
+        }
+    }
+
+    public void Delete() 
+    {
+        //Path.Combine accounts for different OS's having different path separators
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+        try 
+        {
+            File.Delete(fullPath);
+        }
+        catch ( Exception e ) 
+        {
+            Debug.LogError("Error occured when trying to delete data to file: " + fullPath + "\n" + e);
         }
     }
 }

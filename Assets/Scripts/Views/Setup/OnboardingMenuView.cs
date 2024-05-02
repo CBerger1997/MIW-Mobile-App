@@ -80,6 +80,8 @@ public class OnboardingMenuView : View, IDataPersistence
         onBoardingDone = true;
 
         _permanentMenu.SetActive ( true );
+
+        DataPersistenceManager.Instance.SaveUser();
         ViewManager.Show<CheckInMoodMenu> ( false );
     }
 

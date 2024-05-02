@@ -12,8 +12,9 @@ public class SettingsMenuView : View, IDataPersistence
     [SerializeField] private Toggle _breathingToggle;
     [SerializeField] private Toggle _commitmentsToggle;
 
-    [SerializeField] private Button _deleteUserButton;
+    [SerializeField] private Button _logoutUserButton;
     [SerializeField] private Button _changePasswordButton;
+    [SerializeField] private GameObject _topBar;
 
     bool checkinNotificationsSet;
     bool affirmationNotificationsSet;
@@ -24,7 +25,7 @@ public class SettingsMenuView : View, IDataPersistence
 
     public override void Initialise ()
     {
-        _deleteUserButton.onClick.AddListener ( DeleteUserDataOnClick );
+        _logoutUserButton.onClick.AddListener ( LogoutUser );
         _changePasswordButton.onClick.AddListener ( () => ViewManager.Show<ChangePasswordView> () );
 
         _checkinToggle.onValueChanged.AddListener ( delegate { OnToggleValueChange ( _checkinToggle, 1 ); } );
@@ -67,9 +68,12 @@ public class SettingsMenuView : View, IDataPersistence
         }
     }
 
-    private void DeleteUserDataOnClick ()
+    private void LogoutUser ()
     {
-
+        DataPersistenceManager.Instance.DeleteUser();
+        ViewManager.ClearHistory();
+        _topBar.SetActive( false );
+        ViewManager.Show<LoginMenuView>(false);
     }
 
     public void LoadData ( UserData data )

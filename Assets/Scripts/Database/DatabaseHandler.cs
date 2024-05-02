@@ -55,15 +55,22 @@ public class DatabaseHandler : MonoBehaviour
             Debug.Log ( request.downloadHandler.text );
 
             // Get the response data.
-            if ( request.downloadHandler.text != "false" )
+            if (request.downloadHandler.text != "false") 
             {
-                s_instance.user = JsonUtility.FromJson<User> ( request.downloadHandler.text );
+                s_instance.user = JsonUtility.FromJson<User>(request.downloadHandler.text);
 
-                ViewManager.Show<StartUpMenuView> ( false );
-            }
-            else
+                ViewManager.Show<StartUpMenuView>(false);
+            } 
+            else 
             {
-                ViewManager.Show<LoginMenuView> ( false );
+                if (ViewManager.GetCurrentView() != "Login Menu") 
+                {
+                    ViewManager.Show<LoginMenuView>(false);
+                } 
+                else 
+                {
+                    ErrorMessageManager.ActivateErrorMessage("Login Failed: Your username or password is incorrect");
+                }
             }
         }
     }
