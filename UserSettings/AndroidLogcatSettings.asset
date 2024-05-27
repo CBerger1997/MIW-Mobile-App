@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "R3CW50K1ZCB",
     "m_SelectedPackage": {
-        "deviceId": "R3CW50K1ZCB",
-        "name": "com.MyHappinessQuotientLTD.InnerCalm",
-        "processId": 6249,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -96,6 +96,30 @@
             "deviceId": "R3CW50K1ZCB",
             "name": "com.MyHappinessQuotientLTD.InnerCalm",
             "processId": 6249,
+            "exited": false
+        },
+        {
+            "deviceId": "R3CW50K1ZCB",
+            "name": "com.MyHappinessQuotientLTD.InnerCalm",
+            "processId": 409,
+            "exited": false
+        },
+        {
+            "deviceId": "R3CW50K1ZCB",
+            "name": "com.MyHappinessQuotientLTD.InnerCalm",
+            "processId": 5531,
+            "exited": false
+        },
+        {
+            "deviceId": "R3CW50K1ZCB",
+            "name": "com.MyHappinessQuotientLTD.InnerCalm",
+            "processId": 9254,
+            "exited": false
+        },
+        {
+            "deviceId": "R3CW50K1ZCB",
+            "name": "com.MyHappinessQuotientLTD.InnerCalm",
+            "processId": 13767,
             "exited": false
         }
     ],

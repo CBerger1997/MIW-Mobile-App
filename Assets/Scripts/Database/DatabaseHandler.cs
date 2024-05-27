@@ -52,8 +52,6 @@ public class DatabaseHandler : MonoBehaviour
         }
         else
         {
-            Debug.Log ( request.downloadHandler.text );
-
             // Get the response data.
             if (request.downloadHandler.text != "false") 
             {
