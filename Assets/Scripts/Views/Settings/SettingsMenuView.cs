@@ -25,10 +25,9 @@ public class SettingsMenuView : View, IDataPersistence
     bool breathingNotificationsSet;
     bool commitmentsNotificationsSet;
 
-    List<Notification> notificationList = new List<Notification> ();
-
     public override void Initialise ()
     {
+#if UNITY_ANDROID
         if ( !Permission.HasUserAuthorizedPermission ( "android.permission.POST_NOTIFICATIONS" ) )
         {
             Permission.RequestUserPermission ( "android.permission.POST_NOTIFICATIONS" );
@@ -44,6 +43,9 @@ public class SettingsMenuView : View, IDataPersistence
         };
 
         AndroidNotificationCenter.RegisterNotificationChannel ( channel );
+#elif UNITY_IOS
+
+#endif
 
         _logoutUserButton.onClick.AddListener ( LogoutUser );
         _changePasswordButton.onClick.AddListener ( () => ViewManager.Show<ChangePasswordView> () );
@@ -129,6 +131,7 @@ public class SettingsMenuView : View, IDataPersistence
 
     private void ScheduleNotification ( string notifTitle, string notifText, int id, System.DateTime timeFrame )
     {
+#if UNITY_ANDROID
         var notification = new AndroidNotification ();
 
         notification.Title = notifTitle;
@@ -141,6 +144,9 @@ public class SettingsMenuView : View, IDataPersistence
 
         //Send notification
         AndroidNotificationCenter.SendNotificationWithExplicitID ( notification, "InnerCalm", id );
+#elif UNITY_IOS
+
+#endif
     }
 
     public void LoadData ( UserData data )
